@@ -23,6 +23,7 @@ export default defineConfig([
       'simple-import-sort': simpleImportSort,
     },
     rules: {
+      'react-hooks/exhaustive-deps': 'off',
       'simple-import-sort/imports': [
         'error',
         {

@@ -1,4 +1,4 @@
-import type { AuthFarm, AuthRole,AuthUser } from '@app/shared/models';
+import { AuthFarm, AuthRole, AuthUser } from '@app/shared/models';
 
 export type RegisterRequestData = {
   email: string;

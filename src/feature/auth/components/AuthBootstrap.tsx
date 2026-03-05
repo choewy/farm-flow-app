@@ -18,7 +18,7 @@ export function AuthBootstrap({ children }: Readonly<PropsWithChildren>) {
           return;
         }
 
-        setSession(data.accessToken, data.user);
+        setSession(data.accessToken, data.user, data.farm, data.role);
       } catch {
         if (!mounted) {
           return;
