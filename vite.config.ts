@@ -18,20 +18,24 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@',
+        find: '@app',
         replacement: path.resolve(__dirname, 'src'),
       },
       {
-        find: '@shared',
+        find: '@app/config',
+        replacement: path.resolve(__dirname, 'src/config'),
+      },
+      {
+        find: '@app/shared',
         replacement: path.resolve(__dirname, 'src/shared'),
       },
       {
-        find: '@features',
-        replacement: path.resolve(__dirname, 'src/features'),
+        find: '@app/feature',
+        replacement: path.resolve(__dirname, 'src/feature'),
       },
       {
-        find: '@pages',
-        replacement: path.resolve(__dirname, 'src/pages'),
+        find: '@app/page',
+        replacement: path.resolve(__dirname, 'src/page'),
       },
     ],
   },

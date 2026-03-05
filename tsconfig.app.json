@@ -11,7 +11,7 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
@@ -27,14 +27,16 @@
     /* Alias */
     "baseUrl": ".",
     "paths": {
-      "@shared": ["src/shared"],
-      "@shared/*": ["src/shared/*"],
-      "@features": ["src/features"],
-      "@features/*": ["src/features/*"],
-      "@pages": ["src/pages"],
-      "@pages/*": ["src/pages/*"],
-      "@": ["src"],
-      "@/*": ["src/*"]
+      "@app/config": ["src/config"],
+      "@app/config/*": ["src/config/*"],
+      "@app/shared": ["src/shared"],
+      "@app/shared/*": ["src/shared/*"],
+      "@app/feature": ["src/feature"],
+      "@app/feature/*": ["src/feature/*"],
+      "@app/page": ["src/page"],
+      "@app/page/*": ["src/page/*"],
+      "@app/": ["src"],
+      "@app/*": ["src/*"]
     }
   },
   "include": ["src"]
