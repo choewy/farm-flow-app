@@ -70,7 +70,34 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
         <div className="w-full max-w-sm aspect-square rounded-3xl overflow-hidden relative bg-slate-50 border-2 border-[#8fcf72]/50">
           <Scanner
             onScan={handleScan}
-            onError={(err) => console.error(err)}
+            onError={(e) => {
+              const getErrorMessage = (e: unknown) => {
+                if (e instanceof DOMException) {
+                  switch (e.name) {
+                    case 'NotAllowedError':
+                      return '카메라 권한이 차단되어 있습니다. Safari 설정에서 카메라 권한을 허용해주세요.';
+                    case 'NotFoundError':
+                      return '사용 가능한 카메라를 찾지 못했습니다.';
+                    case 'NotReadableError':
+                      return '카메라를 다른 앱이 사용 중일 수 있습니다.';
+                    case 'OverconstrainedError':
+                      return '카메라 설정이 기기와 맞지 않습니다.';
+                    default:
+                      return `${e.name}: ${e.message}`;
+                  }
+                }
+
+                if (e instanceof Error) {
+                  return e.message;
+                }
+
+                return '카메라 초기화 중 오류가 발생했습니다.';
+              };
+
+              const message = getErrorMessage(e);
+              setError(message);
+              alert(message);
+            }}
             constraints={{
               facingMode: { ideal: 'environment' },
             }}
