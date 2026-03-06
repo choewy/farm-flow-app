@@ -71,6 +71,9 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
           <Scanner
             onScan={handleScan}
             onError={(err) => console.error(err)}
+            constraints={{
+              facingMode: { ideal: 'environment' },
+            }}
             classNames={{
               container: 'w-full h-full object-cover',
             }}
