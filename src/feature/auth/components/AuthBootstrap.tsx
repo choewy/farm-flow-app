@@ -5,7 +5,7 @@ import { authApi } from '../api';
 import { useAuthStore } from '@app/shared/stores';
 
 export function AuthBootstrap({ children }: Readonly<PropsWithChildren>) {
-  const { setSession, clearSession, setHydrated } = useAuthStore();
+  const { setSession, clearSession, setHydrated, isHydrated } = useAuthStore();
 
   useEffect(() => {
     let mounted = true;
@@ -18,7 +18,7 @@ export function AuthBootstrap({ children }: Readonly<PropsWithChildren>) {
           return;
         }
 
-        setSession(data.accessToken, data.user, data.farm, data.role);
+        setSession(data.user, data.farm, data.role);
       } catch {
         if (!mounted) {
           return;
@@ -36,6 +36,10 @@ export function AuthBootstrap({ children }: Readonly<PropsWithChildren>) {
       mounted = false;
     };
   }, [setSession, clearSession, setHydrated]);
+
+  if (!isHydrated) {
+    return <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 text-sm text-gray-500">세션 확인 중...</div>;
+  }
 
   return <>{children}</>;
 }

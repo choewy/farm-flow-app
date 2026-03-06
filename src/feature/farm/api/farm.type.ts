@@ -1,7 +1,12 @@
 import { ListResponse } from '@app/shared/api';
-import { Farm } from '@app/shared/models';
+import { Farm, Role } from '@app/shared/models';
 
-export type FarmListResponse = ListResponse<Farm>;
+export type FarmListRow = {
+  farm: Farm;
+  role: Role;
+};
+
+export type FarmListResponse = ListResponse<FarmListRow>;
 
 export type FarmCreateRequestData = {
   name: string;
