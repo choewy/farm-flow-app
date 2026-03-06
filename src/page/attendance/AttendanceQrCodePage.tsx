@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { QRCodeCanvas } from 'qrcode.react';
 
 import { API_BASE_URL } from '@app/config';
 import { attendanceQrApi } from '@app/feature/attendance-qr';
@@ -70,6 +71,7 @@ export function AttendanceQrCodePage() {
 
   return (
     <div>
+      {data?.id && <QRCodeCanvas value={data.id} />}
       <div>{data?.id ?? '-'}</div>
       <div>{seconds}</div>
     </div>

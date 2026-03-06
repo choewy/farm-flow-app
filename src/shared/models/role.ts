@@ -6,4 +6,4 @@ export type Role = {
   permissions: string[];
 };
 
-export type AuthRole = Pick<Role, 'id' | 'name' | 'permissions'>;
+export type AuthRole = Pick<Role, 'id' | 'name' | 'required' | 'super' | 'permissions'>;

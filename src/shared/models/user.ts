@@ -5,5 +5,5 @@ export type User = {
   status: 'activated' | 'inactivated' | 'deleted';
 };
 
-export type AuthUser = Pick<User, 'email' | 'name' | 'status'>;
+export type AuthUser = Pick<User, 'id' | 'email' | 'name' | 'status'>;
 export type RoleUser = Pick<User, 'id' | 'name' | 'email'>;
