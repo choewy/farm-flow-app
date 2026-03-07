@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 
+import { FarmSwitcher } from './FarmSwitcher';
+
 import { ROUTES } from '@app/shared/routes';
 
 interface GlobalHeaderProps {
@@ -47,8 +49,7 @@ export function GlobalHeader({ title }: GlobalHeaderProps) {
         </div>
 
         <div className="flex items-center">
-          <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <span className="ml-2 text-[10px] font-bold text-primary uppercase tracking-widest">Live</span>
+          <FarmSwitcher />
         </div>
       </div>
     </header>
