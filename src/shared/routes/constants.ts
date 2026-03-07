@@ -1,10 +1,11 @@
 export const ROUTES = {
-  home: '/',
   login: '/login',
   register: '/register',
-  attendanceQrCode: '/attendance/qrcode',
+  home: '/',
   attendance: '/attendance',
-  farms: '/farms',
-  scan: '/scan',
+  attendanceQrCode: '/attendance/qrcode',
   menu: '/menu',
+  scan: '/scan',
+  farms: '/farms',
+  invitation: '/invitation',
 } as const;

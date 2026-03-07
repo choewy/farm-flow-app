@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Bell, ChevronRight, LayoutList, LogOut, QrCode, Scan, Settings, User } from 'lucide-react';
+import { Bell, ChevronRight, LayoutList, LogOut, QrCode, Settings, User, UserPlus } from 'lucide-react';
 
 import { authApi } from '@app/feature/auth';
 import { ROUTES } from '@app/shared/routes';
@@ -9,7 +9,7 @@ export function MenuPage() {
   const navigate = useNavigate();
   const { user, role, clearSession } = useAuthStore();
 
-  const isAdmin = role?.super || role?.permissions.includes('admin');
+  const isAdmin = role?.super || (role?.permissions as string[]).includes('admin');
 
   const handleLogout = async () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
@@ -48,12 +48,12 @@ export function MenuPage() {
           bgColor: 'bg-primary/10',
         },
         {
-          name: '출퇴근 스캔',
-          icon: Scan,
-          path: ROUTES.scan,
-          show: !isAdmin,
-          color: 'text-primary',
-          bgColor: 'bg-primary/10',
+          name: '농장 초대',
+          icon: UserPlus,
+          path: ROUTES.invitation,
+          show: isAdmin,
+          color: 'text-indigo-500',
+          bgColor: 'bg-indigo-50',
         },
       ],
     },

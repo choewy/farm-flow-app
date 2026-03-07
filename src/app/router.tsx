@@ -5,6 +5,7 @@ import { ProtectedRoute, PublicOnlyRoute } from './routes';
 import { AttendancePage, AttendanceQrCodePage } from '@app/page/attendance';
 import { FarmListPage } from '@app/page/farm';
 import { HomePage } from '@app/page/home';
+import { InvitationPage } from '@app/page/invitation';
 import { LoginPage } from '@app/page/login';
 import { MenuPage } from '@app/page/menu';
 import { RegisterPage } from '@app/page/register';
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
           { path: ROUTES.home, element: <HomePage /> },
           { path: ROUTES.menu, element: <MenuPage /> },
           { path: ROUTES.attendance, element: <AttendancePage /> },
+          { path: ROUTES.invitation, element: <InvitationPage /> },
           {
             element: <ProtectedRoute requireAdmin={true} />,
             children: [{ path: ROUTES.attendanceQrCode, element: <AttendanceQrCodePage /> }],
