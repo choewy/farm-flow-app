@@ -1,39 +1,41 @@
-import { SubmitEvent, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { AxiosError } from 'axios';
+import { z } from 'zod';
 
-import { authApi, LoginRequestData } from '@app/feature/auth';
+import { authApi } from '@app/feature/auth';
+import { getErrorCodeMessage } from '@app/shared/api';
 import { ROUTES } from '@app/shared/routes';
 import { useAuthStore } from '@app/shared/stores';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const loginSchema = z.object({
+  email: z.email('올바른 이메일 형식을 입력하세요.'),
+  password: z.string().min(1, '비밀번호를 입력하세요.'),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 export function LoginPage() {
   const { setSession } = useAuthStore();
   const navigate = useNavigate();
-  const [{ email, password }, setRequestData] = useState<LoginRequestData>({
-    email: '',
-    password: '',
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    mode: 'onSubmit',
+    defaultValues: { email: '', password: '' },
   });
 
-  const handleLogin = async (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = async ({ email, password }: LoginFormData) => {
     try {
       const { data } = await authApi.login({ email, password });
       setSession(data.user, data.farm, data.role);
       navigate(ROUTES.home);
     } catch (e) {
-      const error = e as AxiosError;
-      alert('로그인에 실패했습니다.');
-      alert(
-        JSON.stringify({
-          url: error?.config?.url,
-          name: error?.name,
-          message: error?.message,
-          code: error?.code,
-          cause: error?.cause,
-          stack: error?.stack,
-        }),
-      );
+      alert(getErrorCodeMessage(e));
     }
   };
 
@@ -45,41 +47,44 @@ export function LoginPage() {
           <p className="mt-2 text-sm text-slate-500">계정에 로그인하세요</p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div>
             <label className="block text-sm font-semibold text-slate-800 ml-1 mb-1">이메일</label>
             <input
               type="email"
-              required
+              autoComplete="email"
               className="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#8fcf72] text-slate-800 text-sm transition-shadow"
-              value={email}
-              onChange={(e) => setRequestData((prev) => ({ ...prev, email: e.target.value }))}
               placeholder="이메일을 입력하세요"
+              {...register('email')}
             />
+            {errors.email && <p className="mt-1 ml-1 text-sm text-red-500">{errors.email.message}</p>}
           </div>
+
           <div>
             <label className="block text-sm font-semibold text-slate-800 ml-1 mb-1">비밀번호</label>
             <input
               type="password"
-              required
+              autoComplete="current-password"
               className="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#8fcf72] text-slate-800 text-sm transition-shadow"
-              value={password}
-              onChange={(e) => setRequestData((prev) => ({ ...prev, password: e.target.value }))}
               placeholder="비밀번호를 입력하세요"
+              {...register('password')}
             />
+            {errors.password && <p className="mt-1 ml-1 text-sm text-red-500">{errors.password.message}</p>}
           </div>
 
           <button
             type="submit"
-            className="w-full py-4 bg-[#8fcf72] hover:opacity-95 transition-opacity text-white font-semibold rounded-2xl shadow-sm mt-2"
+            disabled={isSubmitting}
+            className="w-full py-4 bg-[#8fcf72] hover:opacity-95 transition-opacity text-white font-semibold rounded-2xl shadow-sm mt-2 disabled:opacity-60"
           >
-            로그인
+            {isSubmitting ? '로그인 중...' : '로그인'}
           </button>
         </form>
 
         <div className="text-center text-sm pt-2">
           <span className="text-slate-500">계정이 없으신가요? </span>
           <button
+            type="button"
             onClick={() => navigate(ROUTES.register)}
             className="font-semibold text-[#4f8b39] hover:text-[#3d6e2c] transition-colors ml-1"
           >

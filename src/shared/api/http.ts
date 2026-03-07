@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
-import { useAuthStore } from '../stores';
+import { ErrorCode } from './error-code';
 
 import { API_BASE_URL } from '@app/config';
 
@@ -10,12 +10,52 @@ export const http = axios.create({
   timeout: 15000,
 });
 
-http.interceptors.request.use((config) => {
-  const { accessToken } = useAuthStore.getState();
+let isRefreshing = false;
+let refreshSubscribers: ((token?: string) => void)[] = [];
 
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
-  }
+function subscribeTokenRefresh(cb: (token?: string) => void) {
+  refreshSubscribers.push(cb);
+}
 
-  return config;
-});
+function onRefreshed() {
+  refreshSubscribers.forEach((cb) => cb());
+  refreshSubscribers = [];
+}
+
+async function refreshToken() {
+  await axios.post(`${API_BASE_URL}/auth/refresh`, {}, { withCredentials: true });
+}
+
+http.interceptors.response.use(
+  (response) => response,
+  async (error: AxiosError<{ errorCode: ErrorCode }>) => {
+    const originalRequest = error.config as InternalAxiosRequestConfig & {
+      _retry?: boolean;
+    };
+
+    if (error.response?.data?.errorCode !== ErrorCode.ExpiredToken || originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    originalRequest._retry = true;
+
+    if (!isRefreshing) {
+      isRefreshing = true;
+
+      try {
+        await refreshToken();
+        isRefreshing = false;
+        onRefreshed();
+      } catch (err) {
+        isRefreshing = false;
+        return Promise.reject(err);
+      }
+    }
+
+    return new Promise((resolve) => {
+      subscribeTokenRefresh(() => {
+        resolve(http(originalRequest));
+      });
+    });
+  },
+);

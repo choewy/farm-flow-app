@@ -1,14 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { 
-  Bell,
-  ChevronRight,
-  LayoutList, 
-  LogOut, 
-  QrCode, 
-  Scan, 
-  Settings,
-  User} from 'lucide-react';
+import { Bell, ChevronRight, LayoutList, LogOut, QrCode, Scan, Settings, User } from 'lucide-react';
 
+import { authApi } from '@app/feature/auth';
 import { ROUTES } from '@app/shared/routes';
 import { useAuthStore } from '@app/shared/stores';
 
@@ -18,10 +11,10 @@ export function MenuPage() {
 
   const isAdmin = role?.super || role?.permissions.includes('admin');
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
+      await authApi.logout();
       clearSession();
-      navigate(ROUTES.login);
     }
   };
 
@@ -85,27 +78,27 @@ export function MenuPage() {
       <div className="space-y-6">
         {menuSections.map((section) => (
           <div key={section.title}>
-            <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider ml-2 mb-2">
-              {section.title}
-            </h3>
+            <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider ml-2 mb-2">{section.title}</h3>
             <div className="bg-white rounded-3xl shadow-sm ring-1 ring-slate-100 overflow-hidden">
-              {section.items.filter(item => item.show).map((item, idx, arr) => (
-                <button
-                  key={item.name}
-                  onClick={() => item.path !== '#' && navigate(item.path)}
-                  className={`w-full flex items-center justify-between p-4 hover:bg-slate-50 transition active:bg-slate-100 ${
-                    idx !== arr.length - 1 ? 'border-b border-slate-50' : ''
-                  }`}
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 rounded-xl bg-slate-50 text-slate-600">
-                      <item.icon size={20} />
+              {section.items
+                .filter((item) => item.show)
+                .map((item, idx, arr) => (
+                  <button
+                    key={item.name}
+                    onClick={() => item.path !== '#' && navigate(item.path)}
+                    className={`w-full flex items-center justify-between p-4 hover:bg-slate-50 transition active:bg-slate-100 ${
+                      idx !== arr.length - 1 ? 'border-b border-slate-50' : ''
+                    }`}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 rounded-xl bg-slate-50 text-slate-600">
+                        <item.icon size={20} />
+                      </div>
+                      <span className="font-medium text-slate-700">{item.name}</span>
                     </div>
-                    <span className="font-medium text-slate-700">{item.name}</span>
-                  </div>
-                  <ChevronRight size={18} className="text-slate-300" />
-                </button>
-              ))}
+                    <ChevronRight size={18} className="text-slate-300" />
+                  </button>
+                ))}
             </div>
           </div>
         ))}
