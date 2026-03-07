@@ -88,7 +88,7 @@ export function AttendanceQrCodePage() {
         </div>
 
         <div className="w-full text-center">
-          <div className="inline-flex items-center space-x-2 bg-[#edf7e8] text-[#4f8b39] px-5 py-2.5 rounded-full font-semibold text-sm shadow-sm">
+          <div className="inline-flex items-center space-x-2 bg-primary-light text-primary-dark px-5 py-2.5 rounded-full font-semibold text-sm shadow-sm">
             <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path

@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { ProtectedRoute, PublicOnlyRoute } from './routes';
 
-import { AttendanceQrCodePage, AttendanceRedirectPage } from '@app/page/attendance';
+import { AttendancePage, AttendanceQrCodePage } from '@app/page/attendance';
 import { FarmListPage } from '@app/page/farm';
 import { HomePage } from '@app/page/home';
 import { LoginPage } from '@app/page/login';
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
         children: [
           { path: ROUTES.home, element: <HomePage /> },
           { path: ROUTES.menu, element: <MenuPage /> },
-          { path: ROUTES.attendance, element: <AttendanceRedirectPage /> },
+          { path: ROUTES.attendance, element: <AttendancePage /> },
           {
             element: <ProtectedRoute requireAdmin={true} />,
             children: [{ path: ROUTES.attendanceQrCode, element: <AttendanceQrCodePage /> }],

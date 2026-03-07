@@ -1,69 +1,41 @@
-import { useEffect, useState } from 'react';
-
-import { attendanceApi, AttendanceScannerModal, AttendanceTodayResponse } from '@app/feature/attendance';
 import { useAuthStore } from '@app/shared/stores';
 
 export function HomePage() {
-  const { user } = useAuthStore();
-  const [attendance, setAttendance] = useState<AttendanceTodayResponse | null>(null);
-  const [isScannerOpen, setIsScannerOpen] = useState(false);
-  const [scannerType, setScannerType] = useState<'in' | 'out'>('in');
-
-  const fetchAttendance = async () => {
-    try {
-      const { data } = await attendanceApi.today();
-      setAttendance(data);
-    } catch (error) {
-      console.error('Failed to fetch attendance', error);
-    }
-  };
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchAttendance();
-  }, []);
-
-  const openScanner = (type: 'in' | 'out') => {
-    setScannerType(type);
-    setIsScannerOpen(true);
-  };
+  const { user, role } = useAuthStore();
 
   return (
-    <div className="flex flex-col space-y-5 pb-5 w-full">
-      <header className="rounded-b-4xl bg-white p-5 shadow-sm -mx-4 -mt-16 pt-16">
-        <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold bg-linear-to-r from-[#4f8b39] to-[#8fcf72] bg-clip-text text-transparent">Farm Flow</h1>
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100">
-            <span className="font-semibold text-slate-500">{user?.name?.charAt(0) || '계정'}</span>
+    <div className="flex flex-col space-y-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Welcome Section */}
+      <div className="relative overflow-hidden bg-white rounded-4xl p-8 shadow-premium ring-1 ring-slate-100">
+        <div className="absolute top-0 right-0 -mr-12 -mt-12 w-48 h-48 bg-primary/5 rounded-full blur-3xl" />
+        <div className="relative flex flex-col items-center py-4">
+          <div className="relative mb-6">
+            <div className="w-28 h-28 rounded-[2.5rem] bg-primary-light flex items-center justify-center text-primary border-4 border-white shadow-premium">
+              <span className="text-4xl font-black">{user?.name?.charAt(0) || 'U'}</span>
+            </div>
+            <div className="absolute -bottom-1 -right-1 h-8 w-8 rounded-full bg-primary border-4 border-white shadow-sm flex items-center justify-center">
+              <div className="h-2 w-2 rounded-full bg-white animate-pulse" />
+            </div>
+          </div>
+          <h2 className="text-sm font-black text-slate-400 uppercase tracking-[0.3em] mb-2">Authenticated User</h2>
+          <h1 className="text-3xl font-bold text-slate-800 tracking-tight text-center">
+            안녕하세요, <br />
+            <span className="text-primary">{user?.name || '사용자'}님</span>
+          </h1>
+          <div className="mt-4 px-4 py-1.5 rounded-full bg-slate-50 border border-slate-100">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{role?.name || '일반 사용자'}</span>
           </div>
         </div>
+      </div>
 
-        <div className="mt-6">
-          <div className="mt-5 grid grid-cols-2 gap-3">
-            <button
-              disabled={!!attendance?.id}
-              onClick={() => openScanner('in')}
-              className="rounded-2xl bg-[#8fcf72] px-4 py-4 text-base font-semibold text-white shadow-sm transition hover:opacity-95"
-            >
-              출근하기
-            </button>
-            <button
-              disabled={attendance?.status === 'in'}
-              onClick={() => openScanner('out')}
-              className="rounded-2xl bg-slate-100 px-4 py-4 text-base font-semibold text-slate-700 transition hover:bg-slate-200"
-            >
-              퇴근하기
-            </button>
-          </div>
+      {/* Summary Section */}
+      <div className="bg-white rounded-4xl p-6 shadow-premium ring-1 ring-slate-100 flex items-center justify-between">
+        <div>
+          <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-1">오늘의 한마디</h3>
+          <p className="text-sm font-bold text-slate-600">오늘도 활기찬 하루 되세요!</p>
         </div>
-      </header>
-
-      <AttendanceScannerModal
-        isOpen={isScannerOpen}
-        onClose={() => setIsScannerOpen(false)}
-        type={scannerType}
-        onSuccess={fetchAttendance}
-      />
+        <div className="h-10 w-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-500">✨</div>
+      </div>
     </div>
   );
 }
