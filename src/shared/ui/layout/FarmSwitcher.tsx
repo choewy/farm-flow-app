@@ -2,24 +2,15 @@ import { useEffect, useRef,useState } from 'react';
 import { Check, ChevronDown, ShieldCheck, User as UserIcon } from 'lucide-react';
 
 import { authApi } from '@app/feature/auth';
-import { farmApi, FarmListRow } from '@app/feature/farm';
-import { useAuthStore } from '@app/shared/stores';
+import { useAuthStore, useFarmStore } from '@app/shared/stores';
 
 export function FarmSwitcher() {
   const { farm: currentFarm, user, role, setSession } = useAuthStore();
+  const { rows: farms, fetchFarms } = useFarmStore();
   const [isOpen, setIsOpen] = useState(false);
-  const [farms, setFarms] = useState<FarmListRow[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fetchFarms = async () => {
-      try {
-        const { data } = await farmApi.list();
-        setFarms(data.rows);
-      } catch (error) {
-        console.error('Failed to fetch farms for switcher', error);
-      }
-    };
     fetchFarms();
   }, []);
 
