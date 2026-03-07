@@ -2,10 +2,11 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { ProtectedRoute, PublicOnlyRoute } from './routes';
 
-import { AttendanceQrCodePage } from '@app/page/attendance';
+import { AttendanceQrCodePage, AttendanceRedirectPage } from '@app/page/attendance';
 import { FarmListPage } from '@app/page/farm';
 import { HomePage } from '@app/page/home';
 import { LoginPage } from '@app/page/login';
+import { MenuPage } from '@app/page/menu';
 import { RegisterPage } from '@app/page/register';
 import { ROUTES } from '@app/shared/routes';
 import { GlobalLayout } from '@app/shared/ui/layout';
@@ -30,6 +31,8 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute requireFarm={true} />,
         children: [
           { path: ROUTES.home, element: <HomePage /> },
+          { path: ROUTES.menu, element: <MenuPage /> },
+          { path: ROUTES.attendance, element: <AttendanceRedirectPage /> },
           {
             element: <ProtectedRoute requireAdmin={true} />,
             children: [{ path: ROUTES.attendanceQrCode, element: <AttendanceQrCodePage /> }],

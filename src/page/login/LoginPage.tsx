@@ -1,5 +1,6 @@
-import { FormEvent, useState } from 'react';
+import { SubmitEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 import { authApi, LoginRequestData } from '@app/feature/auth';
 import { ROUTES } from '@app/shared/routes';
@@ -13,16 +14,26 @@ export function LoginPage() {
     password: '',
   });
 
-  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const { data } = await authApi.login({ email, password });
       setSession(data.user, data.farm, data.role);
       navigate(ROUTES.home);
-    } catch (error) {
-      console.error('Login failed', error);
+    } catch (e) {
+      const error = e as AxiosError;
       alert('로그인에 실패했습니다.');
+      alert(
+        JSON.stringify({
+          url: error?.config?.url,
+          name: error?.name,
+          message: error?.message,
+          code: error?.code,
+          cause: error?.cause,
+          stack: error?.stack,
+        }),
+      );
     }
   };
 

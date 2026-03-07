@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Home, HomeIcon, Menu, MenuIcon, UserCircle, UserCircleIcon } from 'lucide-react';
+import { Clock, ClockIcon, Home, HomeIcon, Menu, MenuIcon } from 'lucide-react';
 
 import { ROUTES } from '@app/shared/routes';
 
@@ -8,9 +8,9 @@ export function GlobalLayout() {
   const location = useLocation();
 
   const navItems = [
-    { name: 'Home', path: ROUTES.home, icon: Home, activeIcon: HomeIcon },
-    { name: 'Menu', path: '/menu', icon: Menu, activeIcon: MenuIcon },
-    { name: 'Admin', path: ROUTES.attendanceQrCode, icon: UserCircle, activeIcon: UserCircleIcon },
+    { name: '홈', path: ROUTES.home, icon: Home, activeIcon: HomeIcon },
+    { name: '출퇴근', path: ROUTES.attendance, icon: Clock, activeIcon: ClockIcon },
+    { name: '메뉴', path: ROUTES.menu, icon: Menu, activeIcon: MenuIcon },
   ];
 
   const hideNavPaths = [ROUTES.login, ROUTES.register] as string[];
