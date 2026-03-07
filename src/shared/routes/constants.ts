@@ -8,4 +8,5 @@ export const ROUTES = {
   scan: '/scan',
   farms: '/farms',
   invitation: '/invitation',
+  invitationAccept: '/invitation/accept',
 } as const;

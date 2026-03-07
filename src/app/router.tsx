@@ -5,7 +5,7 @@ import { ProtectedRoute, PublicOnlyRoute } from './routes';
 import { AttendancePage, AttendanceQrCodePage } from '@app/page/attendance';
 import { FarmListPage } from '@app/page/farm';
 import { HomePage } from '@app/page/home';
-import { InvitationPage } from '@app/page/invitation';
+import { InvitationAcceptPage, InvitationPage } from '@app/page/invitation';
 import { LoginPage } from '@app/page/login';
 import { MenuPage } from '@app/page/menu';
 import { RegisterPage } from '@app/page/register';
@@ -25,8 +25,11 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        element: <ProtectedRoute requireFarm={false} />,
-        children: [{ path: ROUTES.farms, element: <FarmListPage /> }],
+        element: <ProtectedRoute requireFarm={false} unauthenticatedRedirectTo={ROUTES.login} />,
+        children: [
+          { path: ROUTES.farms, element: <FarmListPage /> },
+          { path: ROUTES.invitationAccept, element: <InvitationAcceptPage /> },
+        ],
       },
       {
         element: <ProtectedRoute requireFarm={true} />,

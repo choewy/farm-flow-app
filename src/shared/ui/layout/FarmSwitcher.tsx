@@ -1,4 +1,4 @@
-import { useEffect, useRef,useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Check, ChevronDown, ShieldCheck, User as UserIcon } from 'lucide-react';
 
 import { authApi } from '@app/feature/auth';
@@ -53,31 +53,27 @@ export function FarmSwitcher() {
         <ChevronDown size={14} className={`text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      {isOpen && (farms.length > 0) && (
+      {isOpen && farms.length > 0 && (
         <div className="absolute right-0 mt-3 w-64 bg-white/90 backdrop-blur-2xl rounded-[2rem] shadow-premium-lg ring-1 ring-slate-100 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200 origin-top-right">
           <div className="p-3 space-y-1">
             <div className="px-4 py-3 border-b border-slate-50 mb-1">
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">접속 농장 전환</p>
             </div>
-            
+
             {farms.map(({ farm, role: farmRole }) => {
-              const isAdmin = farmRole?.super || farmRole?.permissions?.includes('admin');
+              const isAdmin = farmRole?.super || farmRole?.permissionKeys?.includes('admin');
               const isActive = farm.id === currentFarm?.id;
-              
+
               return (
                 <button
                   key={farm.id}
                   onClick={() => handleFarmSelect(farm.id)}
                   className={`w-full flex items-center justify-between p-3 rounded-2xl transition-all ${
-                    isActive
-                      ? 'bg-primary/10 text-primary shadow-sm'
-                      : 'text-slate-600 hover:bg-slate-50/80 active:bg-slate-100/50'
+                    isActive ? 'bg-primary/10 text-primary shadow-sm' : 'text-slate-600 hover:bg-slate-50/80 active:bg-slate-100/50'
                   }`}
                 >
                   <div className="flex items-center space-x-3 text-left">
-                    <div className={`p-2 rounded-xl ${
-                      isActive ? 'bg-white shadow-sm' : 'bg-slate-50'
-                    }`}>
+                    <div className={`p-2 rounded-xl ${isActive ? 'bg-white shadow-sm' : 'bg-slate-50'}`}>
                       {isAdmin ? (
                         <ShieldCheck size={16} className={isActive ? 'text-primary' : 'text-slate-400'} />
                       ) : (
@@ -102,11 +98,9 @@ export function FarmSwitcher() {
               );
             })}
           </div>
-          
+
           <div className="bg-slate-50/50 px-5 py-3 border-t border-slate-50">
-            <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest text-center">
-              Farm Flow Identity Service
-            </p>
+            <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest text-center">Farm Flow Identity Service</p>
           </div>
         </div>
       )}

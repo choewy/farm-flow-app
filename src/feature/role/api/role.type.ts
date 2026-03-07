@@ -10,7 +10,7 @@ export type RoleDetailsResponse = {
 
 export type RoleCreateRequestData = {
   name: string;
-  permissions: PermissionKey[];
+  permissionKeys: PermissionKey[];
 };
 
 export type RoleCreateResponse = {
@@ -19,5 +19,5 @@ export type RoleCreateResponse = {
 
 export type RoleUpdateRequestData = {
   name: string;
-  permissions: PermissionKey[];
+  permissionKeys: PermissionKey[];
 };

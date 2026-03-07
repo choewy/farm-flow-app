@@ -9,7 +9,7 @@ export function MenuPage() {
   const navigate = useNavigate();
   const { user, role, clearSession } = useAuthStore();
 
-  const isAdmin = role?.super || (role?.permissions as string[]).includes('admin');
+  const isAdmin = role?.super || (role?.permissionKeys as string[]).includes('admin');
 
   const handleLogout = async () => {
     if (window.confirm('로그아웃 하시겠습니까?')) {
@@ -94,9 +94,7 @@ export function MenuPage() {
           </div>
           <h2 className="text-2xl font-bold text-slate-800 tracking-tight">{user?.name || '사용자'}</h2>
           <div className="mt-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-100">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-               {role?.name || '일반 사용자'}
-            </span>
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">{role?.name || '일반 사용자'}</span>
           </div>
         </div>
       </div>
@@ -104,14 +102,12 @@ export function MenuPage() {
       {/* Menu Sections */}
       <div className="space-y-8 pb-10">
         {menuSections.map((section) => {
-          const visibleItems = section.items.filter(item => item.show);
+          const visibleItems = section.items.filter((item) => item.show);
           if (visibleItems.length === 0) return null;
-          
+
           return (
             <div key={section.title} className="animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both">
-              <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-6 mb-3">
-                {section.title}
-              </h3>
+              <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-6 mb-3">{section.title}</h3>
               <div className="bg-white rounded-[2.5rem] shadow-premium ring-1 ring-slate-100 overflow-hidden">
                 {visibleItems.map((item, idx, arr) => (
                   <button

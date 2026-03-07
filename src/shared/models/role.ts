@@ -5,7 +5,7 @@ export type Role = {
   name: string;
   super: boolean;
   required: boolean;
-  permissions: PermissionKey[];
+  permissionKeys: PermissionKey[];
 };
 
-export type AuthRole = Pick<Role, 'id' | 'name' | 'required' | 'super' | 'permissions'>;
+export type AuthRole = Pick<Role, 'id' | 'name' | 'required' | 'super' | 'permissionKeys'>;

@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 import { authApi } from '@app/feature/auth';
@@ -18,6 +18,8 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export function LoginPage() {
   const { setSession } = useAuthStore();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname ?? ROUTES.home;
 
   const {
     register,
@@ -33,7 +35,7 @@ export function LoginPage() {
     try {
       const { data } = await authApi.login({ email, password });
       setSession(data.user, data.farm, data.role);
-      navigate(ROUTES.home);
+      navigate(from, { replace: true });
     } catch (e) {
       alert(getErrorCodeMessage(e));
     }
@@ -43,7 +45,7 @@ export function LoginPage() {
     <div className="flex flex-col items-center justify-center min-h-[80vh] w-full">
       <div className="w-full bg-white rounded-3xl shadow-sm ring-1 ring-slate-100 p-8 space-y-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold bg-linear-to-r from-[#4f8b39] to-[#8fcf72] bg-clip-text text-transparent">Farm Flow</h1>
+          <h1 className="text-2xl font-bold bg-linear-to-r from-primary-dark to-primary bg-clip-text text-transparent">Farm Flow</h1>
           <p className="mt-2 text-sm text-slate-500">계정에 로그인하세요</p>
         </div>
 
@@ -53,7 +55,7 @@ export function LoginPage() {
             <input
               type="email"
               autoComplete="email"
-              className="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#8fcf72] text-slate-800 text-sm transition-shadow"
+              className="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary text-slate-800 text-sm transition-shadow"
               placeholder="이메일을 입력하세요"
               {...register('email')}
             />
@@ -65,7 +67,7 @@ export function LoginPage() {
             <input
               type="password"
               autoComplete="current-password"
-              className="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#8fcf72] text-slate-800 text-sm transition-shadow"
+              className="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary text-slate-800 text-sm transition-shadow"
               placeholder="비밀번호를 입력하세요"
               {...register('password')}
             />
@@ -75,7 +77,7 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-4 bg-[#8fcf72] hover:opacity-95 transition-opacity text-white font-semibold rounded-2xl shadow-sm mt-2 disabled:opacity-60"
+            className="w-full py-4 bg-primary hover:opacity-95 transition-opacity text-white font-semibold rounded-2xl shadow-sm mt-2 disabled:opacity-60"
           >
             {isSubmitting ? '로그인 중...' : '로그인'}
           </button>
@@ -85,8 +87,8 @@ export function LoginPage() {
           <span className="text-slate-500">계정이 없으신가요? </span>
           <button
             type="button"
-            onClick={() => navigate(ROUTES.register)}
-            className="font-semibold text-[#4f8b39] hover:text-[#3d6e2c] transition-colors ml-1"
+            onClick={() => navigate(ROUTES.register, { state: location.state })}
+            className="font-semibold text-primary-dark hover:text-[#3d6e2c] transition-colors ml-1"
           >
             회원가입
           </button>
