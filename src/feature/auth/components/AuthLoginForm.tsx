@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 import { authApi } from '../api';
 
-import { AuthButton, AuthInput } from './ui';
+import { AuthButton, AuthErrorSection, AuthInput } from './ui';
 
 import { getErrorCodeMessage } from '@app/shared/api';
 import { ROUTES } from '@app/shared/routes';
@@ -19,9 +20,10 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export function AuthLoginForm() {
-  const { setSession } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
+  const { setSession } = useAuthStore();
+  const [error, setError] = useState<string>('');
   const from = location.state?.from?.pathname ?? ROUTES.home;
 
   const {
@@ -35,12 +37,13 @@ export function AuthLoginForm() {
   });
 
   const onSubmit = async ({ email, password }: LoginFormData) => {
+    setError('');
     try {
       const { data } = await authApi.login({ email, password });
       setSession(data.user, data.farm, data.role);
       navigate(from, { replace: true });
     } catch (e) {
-      alert(getErrorCodeMessage(e));
+      setError(getErrorCodeMessage(e));
     }
   };
 
@@ -59,6 +62,7 @@ export function AuthLoginForm() {
         errors={errors}
       />
 
+      <AuthErrorSection error={error} />
       <AuthButton text="로그인" disabled={isSubmitting} />
     </form>
   );

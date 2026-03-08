@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import z from 'zod';
 
 import { authApi } from '../api';
 
-import { AuthButton, AuthInput } from './ui';
+import { AuthButton, AuthErrorSection, AuthInput } from './ui';
 
 import { getErrorCodeMessage } from '@app/shared/api';
 import { ROUTES } from '@app/shared/routes';
@@ -26,9 +27,10 @@ const registerSchema = z
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 export function AuthRegisterForm() {
-  const { setSession } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
+  const { setSession } = useAuthStore();
+  const [error, setError] = useState<string>('');
   const from = location.state?.from?.pathname ?? ROUTES.home;
 
   const {
@@ -47,13 +49,14 @@ export function AuthRegisterForm() {
   });
 
   const onSubmit = async ({ email, name, password, confirmPassword }: RegisterFormData) => {
+    setError('');
+
     try {
       const { data } = await authApi.register({ email, name, password, confirmPassword });
-
       setSession(data.user, data.farm, data.role);
       navigate(from, { replace: true });
     } catch (e) {
-      alert(getErrorCodeMessage(e));
+      setError(getErrorCodeMessage(e));
     }
   };
 
@@ -88,6 +91,7 @@ export function AuthRegisterForm() {
       />
 
       <AuthButton text="회원가입" disabled={isSubmitting} />
+      <AuthErrorSection error={error} />
     </form>
   );
 }
