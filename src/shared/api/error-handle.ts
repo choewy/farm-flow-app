@@ -16,6 +16,8 @@ const errorMessages: Record<ErrorCode, string> = {
   [ErrorCode.ForbiddenPermission]: '접근 권한이 없습니다.',
   [ErrorCode.RoleCannotUpdateOrDelete]: '수정 또는 삭제가 불가능한 역할입니다.',
   [ErrorCode.RoleNotFound]: '역할을 찾을 수 없습니다.',
+  [ErrorCode.DuplicatedInvitation]: '이미 농장의 소속이 되어있는 이메일입니다.',
+  [ErrorCode.InvitationFarmNotFound]: '농장 정보를 찾을 수 없습니다.',
 };
 
 export function getErrorCodeMessage(e: unknown) {

@@ -73,7 +73,7 @@ export function AttendanceQrCodePage() {
     <div className="flex flex-col items-center justify-center min-h-[80vh] w-full">
       <div className="w-full bg-white rounded-3xl shadow-sm ring-1 ring-slate-100 p-8 flex flex-col items-center space-y-8">
         <div className="text-center space-y-2">
-          <h1 className="text-2xl font-bold tracking-tight text-slate-800">출석체크 QR</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-800">출퇴근 QR</h1>
           <p className="text-sm text-slate-500">앱 스캐너를 통해 아래 코드를 스캔하세요</p>
         </div>
 
