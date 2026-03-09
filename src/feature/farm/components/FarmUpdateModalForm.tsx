@@ -19,9 +19,10 @@ const farmUpdateSchema = z.object({
 type FarmUpdateFormData = z.infer<typeof farmUpdateSchema>;
 type FarmUpdateModalFormProps = {
   farm: Farm;
+  onClose: () => void;
 };
 
-export function FarmUpdateModalForm({ farm }: FarmUpdateModalFormProps) {
+export function FarmUpdateModalForm({ farm, onClose }: FarmUpdateModalFormProps) {
   const { fetchFarms } = useFarmStore();
   const [error, setError] = useState<string>('');
 
@@ -40,6 +41,7 @@ export function FarmUpdateModalForm({ farm }: FarmUpdateModalFormProps) {
     try {
       await farmApi.update(farm.id, { name });
       await fetchFarms();
+      onClose();
     } catch (e) {
       setError(getErrorCodeMessage(e));
     }

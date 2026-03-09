@@ -24,7 +24,7 @@ export function GlobalHeader({ title }: GlobalHeaderProps) {
       case ROUTES.attendance:
         return '출퇴근';
       case ROUTES.menu:
-        return '전체 메뉴';
+        return '메뉴';
       case ROUTES.farms:
         return '농장 목록';
       case ROUTES.attendanceQrCode:

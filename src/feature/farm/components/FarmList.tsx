@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ShieldCheck } from 'lucide-react';
 
 import { FarmListItem } from './FarmListItem';
@@ -11,7 +12,7 @@ export type FarmListProps = {
 };
 
 export function FarmList({ openUpdateModal, openDeleteModal }: FarmListProps) {
-  const { rows, loading } = useFarmStore();
+  const { rows, loading, fetchFarms } = useFarmStore();
 
   const renderComponent = () => {
     if (loading) {
@@ -36,7 +37,6 @@ export function FarmList({ openUpdateModal, openDeleteModal }: FarmListProps) {
         </div>
       );
     }
-
     return (
       <div className="grid grid-cols-1 gap-4">
         {rows.map((row) => (
@@ -45,6 +45,10 @@ export function FarmList({ openUpdateModal, openDeleteModal }: FarmListProps) {
       </div>
     );
   };
+
+  useEffect(() => {
+    fetchFarms();
+  }, []);
 
   return <section className="space-y-4 px-1">{renderComponent()}</section>;
 }

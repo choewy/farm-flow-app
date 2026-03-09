@@ -16,8 +16,11 @@ const farmCreateSchema = z.object({
 });
 
 type FarmCreateFormData = z.infer<typeof farmCreateSchema>;
+type FarmCreateModalFormProps = {
+  onClose: () => void;
+};
 
-export function FarmCreateModalForm() {
+export function FarmCreateModalForm({ onClose }: FarmCreateModalFormProps) {
   const { fetchFarms } = useFarmStore();
   const [error, setError] = useState<string>('');
 
@@ -36,6 +39,7 @@ export function FarmCreateModalForm() {
     try {
       await farmApi.create({ name });
       await fetchFarms();
+      onClose();
     } catch (e) {
       setError(getErrorCodeMessage(e));
     }
