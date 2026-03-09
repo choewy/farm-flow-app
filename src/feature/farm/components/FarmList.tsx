@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { ShieldCheck } from 'lucide-react';
 
 import { FarmListItem } from './FarmListItem';
@@ -12,11 +11,7 @@ export type FarmListProps = {
 };
 
 export function FarmList({ openUpdateModal, openDeleteModal }: FarmListProps) {
-  const { rows, loading, fetchFarms } = useFarmStore();
-
-  useEffect(() => {
-    fetchFarms();
-  }, []);
+  const { rows, loading } = useFarmStore();
 
   const renderComponent = () => {
     if (loading) {

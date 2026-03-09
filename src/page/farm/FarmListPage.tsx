@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { FarmCreateModal, FarmDeleteConfirmModal, FarmFooter, FarmHeader, FarmList, FarmUpdateModal } from '@app/feature/farm';
+import { FarmCreateModal, FarmDeleteModal, FarmFooter, FarmHeader, FarmList, FarmUpdateModal } from '@app/feature/farm';
 import { Farm } from '@app/shared/models';
 
 export function FarmListPage() {
@@ -28,18 +28,8 @@ export function FarmListPage() {
       <FarmCreateModal isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} />
       {selectedFarm && (
         <>
-          <FarmUpdateModal
-            isOpen={isUpdateModalOpen}
-            onClose={() => setIsUpdateModalOpen(false)}
-            farmId={selectedFarm.id}
-            currentName={selectedFarm.name}
-          />
-          <FarmDeleteConfirmModal
-            isOpen={isDeleteModalOpen}
-            onClose={() => setIsDeleteModalOpen(false)}
-            farmId={selectedFarm.id}
-            farmName={selectedFarm.name}
-          />
+          <FarmUpdateModal isOpen={isUpdateModalOpen} farm={selectedFarm} onClose={() => setIsUpdateModalOpen(false)} />
+          <FarmDeleteModal isOpen={isDeleteModalOpen} farm={selectedFarm} onClose={() => setIsDeleteModalOpen(false)} />
         </>
       )}
     </div>
