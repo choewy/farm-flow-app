@@ -1,4 +1,4 @@
-import { Bell, LayoutList, QrCode, Settings, UserPlus } from 'lucide-react';
+import { Bell, LayoutList, QrCode, Settings, TicketSlash, UserPlus } from 'lucide-react';
 
 import { MenuSectionProps } from '../types';
 
@@ -25,6 +25,14 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
           visible: permissionKeys.includes(PermissionKey.InvitationCreate),
           color: 'text-indigo-500',
           background: 'bg-indigo-50',
+        },
+        {
+          name: '초대코드 입력',
+          icon: TicketSlash,
+          path: ROUTES.invitationAccept,
+          visible: true,
+          color: 'text-slate-500',
+          background: 'bg-slate-50',
         },
         {
           name: '출퇴근 QR 생성',

@@ -7,7 +7,7 @@ export function InvitationPage() {
   const [success, setSuccess] = useState(false);
 
   return (
-    <div className="flex flex-col space-y-8 pb-10 w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="flex flex-col space-y-8 pb-10 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 justify-center min-h-[80vh]">
       {success ? (
         <InvitationSuccess email={email} setSuccess={setSuccess} />
       ) : (

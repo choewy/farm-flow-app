@@ -17,10 +17,6 @@ export function InvitationInput<T extends object>({ labelText, inputProps, regis
       <div className="relative">
         <input
           className="w-full px-8 py-5 bg-slate-50 border border-slate-100 rounded-3xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all text-slate-800 font-bold placeholder:text-slate-300 shadow-inner"
-          required
-          autoFocus
-          type="email"
-          placeholder="name@example.com"
           {...inputProps}
           {...registerProps}
         />
