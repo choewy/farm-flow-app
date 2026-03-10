@@ -1,14 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { ProtectedRoute, PublicOnlyRoute } from './routes';
+import { PermissionRoute, ProtectedRoute, PublicOnlyRoute } from './routes';
 
 import { AttendancePage, AttendanceQrCodePage } from '@app/page/attendance';
 import { FarmListPage } from '@app/page/farm';
 import { HomePage } from '@app/page/home';
 import { InvitationAcceptPage, InvitationPage } from '@app/page/invitation';
 import { LoginPage } from '@app/page/login';
+import { MemberPage } from '@app/page/member';
 import { MenuPage } from '@app/page/menu';
 import { RegisterPage } from '@app/page/register';
+import { RolePage } from '@app/page/role';
+import { PermissionKey } from '@app/shared/models';
 import { ROUTES } from '@app/shared/routes';
 import { GlobalLayout } from '@app/shared/ui/layout';
 
@@ -37,10 +40,27 @@ export const router = createBrowserRouter([
         children: [
           { path: ROUTES.home, element: <HomePage /> },
           { path: ROUTES.attendance, element: <AttendancePage /> },
-          { path: ROUTES.invitation, element: <InvitationPage /> },
           {
-            element: <ProtectedRoute requireAdmin={true} />,
-            children: [{ path: ROUTES.attendanceQrCode, element: <AttendanceQrCodePage /> }],
+            path: ROUTES.invitation,
+            element: <PermissionRoute permissionKeys={[PermissionKey.InvitationCreate]} />,
+            children: [{ index: true, element: <InvitationPage /> }],
+          },
+          {
+            path: ROUTES.attendanceQrCode,
+            element: <PermissionRoute permissionKeys={[PermissionKey.AttendanceQrCreate]} />,
+            children: [{ index: true, element: <AttendanceQrCodePage /> }],
+          },
+          {
+            path: ROUTES.members,
+            element: (
+              <PermissionRoute permissionKeys={[PermissionKey.MemberRead, PermissionKey.MemberRoleUpdate, PermissionKey.MemberRemove]} />
+            ),
+            children: [{ index: true, element: <MemberPage /> }],
+          },
+          {
+            path: ROUTES.roles,
+            element: <PermissionRoute permissionKeys={[PermissionKey.RoleManagement]} />,
+            children: [{ index: true, element: <RolePage /> }],
           },
         ],
       },

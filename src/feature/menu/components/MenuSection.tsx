@@ -24,14 +24,14 @@ export function MenuSection() {
 
   return (
     <div className="space-y-8 pb-10">
-      {menuSectionProps.map((props) => {
+      {menuSectionProps.map((props, i) => {
         const visibleItems = props.items.filter((item) => item.visible);
 
         if (visibleItems.length === 0) {
           return null;
         }
 
-        return <MenuSectionItem {...props} />;
+        return <MenuSectionItem key={`menu-section-${i}`} {...props} />;
       })}
 
       <button
