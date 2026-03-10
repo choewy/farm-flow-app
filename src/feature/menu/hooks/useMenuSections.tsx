@@ -45,7 +45,9 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
           name: '역할 관리',
           icon: ShieldPlus,
           path: ROUTES.roles,
-          visible: permissionKeys.includes(PermissionKey.RoleManagement),
+          visible: permissionKeys.some((permissionKey) =>
+            [PermissionKey.RoleRead, PermissionKey.RoleCreate, PermissionKey.RoleUpdate, PermissionKey.RoleRemove].includes(permissionKey),
+          ),
           color: 'text-indigo-500',
           background: 'bg-indigo-50',
         },
