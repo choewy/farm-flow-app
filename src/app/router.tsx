@@ -59,7 +59,11 @@ export const router = createBrowserRouter([
           },
           {
             path: ROUTES.roles,
-            element: <PermissionRoute permissionKeys={[PermissionKey.RoleManagement]} />,
+            element: (
+              <PermissionRoute
+                permissionKeys={[PermissionKey.RoleRead, PermissionKey.RoleCreate, PermissionKey.RoleUpdate, PermissionKey.RoleRemove]}
+              />
+            ),
             children: [{ index: true, element: <RolePage /> }],
           },
         ],
