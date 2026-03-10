@@ -7,6 +7,8 @@ export const ROUTES = {
   menu: '/menu',
   scan: '/scan',
   farms: '/farms',
+  members: '/members',
+  roles: '/roles',
   invitation: '/invitation',
   invitationAccept: '/invitation/accept',
 } as const;

@@ -4,4 +4,7 @@ export enum PermissionKey {
   Update = 'update',
   Delete = 'delete',
   RoleManagement = 'role.management',
+  MemberRead = 'member.read',
+  MemberRoleUpdate = 'member.role.update',
+  MemberRemove = 'member.remove',
 }

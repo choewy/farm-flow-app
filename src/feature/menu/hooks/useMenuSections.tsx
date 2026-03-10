@@ -1,4 +1,4 @@
-import { Bell, LayoutList, QrCode, Settings, TicketSlash, UserPlus } from 'lucide-react';
+import { Bell, LayoutList, QrCode, Settings, ShieldPlus, TicketSlash, UserPlus, UsersRound } from 'lucide-react';
 
 import { MenuSectionProps } from '../types';
 
@@ -11,20 +11,12 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
       title: 'Common Services',
       items: [
         {
-          name: '농장 목록',
+          name: '내 농장 목록',
           icon: LayoutList,
           path: ROUTES.farms,
           visible: true,
           color: 'text-blue-500',
           background: 'bg-blue-50',
-        },
-        {
-          name: '농장 초대',
-          icon: UserPlus,
-          path: ROUTES.invitation,
-          visible: permissionKeys.includes(PermissionKey.InvitationCreate),
-          color: 'text-indigo-500',
-          background: 'bg-indigo-50',
         },
         {
           name: '초대코드 입력',
@@ -33,6 +25,37 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
           visible: true,
           color: 'text-slate-500',
           background: 'bg-slate-50',
+        },
+      ],
+    },
+    {
+      title: 'Farm Services',
+      items: [
+        {
+          name: '멤버 관리',
+          icon: UsersRound,
+          path: ROUTES.members,
+          visible: permissionKeys.some((permissionKey) =>
+            [PermissionKey.MemberRead, PermissionKey.MemberRoleUpdate, PermissionKey.MemberRemove].includes(permissionKey),
+          ),
+          color: 'text-indigo-500',
+          background: 'bg-indigo-50',
+        },
+        {
+          name: '역할 관리',
+          icon: ShieldPlus,
+          path: ROUTES.roles,
+          visible: permissionKeys.includes(PermissionKey.RoleManagement),
+          color: 'text-indigo-500',
+          background: 'bg-indigo-50',
+        },
+        {
+          name: '농장 초대',
+          icon: UserPlus,
+          path: ROUTES.invitation,
+          visible: permissionKeys.includes(PermissionKey.InvitationCreate),
+          color: 'text-indigo-500',
+          background: 'bg-indigo-50',
         },
         {
           name: '출퇴근 QR 생성',

@@ -7,3 +7,4 @@ export type User = {
 
 export type AuthUser = Pick<User, 'id' | 'email' | 'name' | 'status'>;
 export type RoleUser = Pick<User, 'id' | 'name' | 'email'>;
+export type MemberUser = Pick<User, 'id' | 'name' | 'email'>;

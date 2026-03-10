@@ -14,10 +14,11 @@ const errorMessages: Record<ErrorCode, string> = {
   [ErrorCode.FarmNotFound]: '농장 정보를 찾을 수 없습니다.',
   [ErrorCode.InvalidInvitationCode]: '유효하지 않은 초대코드입니다.',
   [ErrorCode.ForbiddenPermission]: '접근 권한이 없습니다.',
-  [ErrorCode.RoleCannotUpdateOrDelete]: '수정 또는 삭제가 불가능한 역할입니다.',
+  [ErrorCode.RoleProtected]: '수정 또는 삭제가 불가능한 역할입니다.',
   [ErrorCode.RoleNotFound]: '역할을 찾을 수 없습니다.',
-  [ErrorCode.DuplicatedInvitation]: '이미 농장의 소속이 되어있는 이메일입니다.',
-  [ErrorCode.InvitationFarmNotFound]: '농장 정보를 찾을 수 없습니다.',
+  [ErrorCode.InvitationDuplicated]: '이미 농장의 소속이 되어있는 이메일입니다.',
+  [ErrorCode.MemberNotFound]: '멤버를 찾을 수 없습니다.',
+  [ErrorCode.MemberProtected]: '수정 또는 삭제가 불가능한 멤버입니다.',
 };
 
 export function getErrorCodeMessage(e: unknown) {

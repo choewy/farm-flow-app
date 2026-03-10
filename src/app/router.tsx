@@ -27,6 +27,7 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedRoute requireFarm={false} unauthenticatedRedirectTo={ROUTES.login} />,
         children: [
+          { path: ROUTES.menu, element: <MenuPage /> },
           { path: ROUTES.farms, element: <FarmListPage /> },
           { path: ROUTES.invitationAccept, element: <InvitationAcceptPage /> },
         ],
@@ -35,7 +36,6 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute requireFarm={true} />,
         children: [
           { path: ROUTES.home, element: <HomePage /> },
-          { path: ROUTES.menu, element: <MenuPage /> },
           { path: ROUTES.attendance, element: <AttendancePage /> },
           { path: ROUTES.invitation, element: <InvitationPage /> },
           {

@@ -3,12 +3,12 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { ROUTES } from '@app/shared/routes';
 import { useAuthStore } from '@app/shared/stores';
 
-export function ProtectedRoute({ 
-  requireFarm = false, 
+export function ProtectedRoute({
+  requireFarm = false,
   requireAdmin = false,
-  unauthenticatedRedirectTo = ROUTES.login
-}: { 
-  requireFarm?: boolean; 
+  unauthenticatedRedirectTo = ROUTES.login,
+}: {
+  requireFarm?: boolean;
   requireAdmin?: boolean;
   unauthenticatedRedirectTo?: string;
 }) {
@@ -24,7 +24,6 @@ export function ProtectedRoute({
   }
 
   if (requireAdmin && !role?.super) {
-    // If not an admin, don't allow access, fall back to home
     return <Navigate to={ROUTES.home} replace />;
   }
 
