@@ -5,6 +5,7 @@ import { memberApi, MemberResponse } from '../api';
 import { MemberUpdateModalRoleList } from './MeberUpdateModalRoleList';
 
 import { getErrorCodeMessage } from '@app/shared/api';
+import { Toast } from '@app/shared/toast';
 import { Modal } from '@app/shared/ui/modal';
 
 interface MemberEditModalProps {
@@ -24,7 +25,7 @@ export function MemberEditModal({ isOpen, row, fetchData, onClose }: MemberEditM
       await memberApi.update(row.user.id, selectedRoleId);
       await fetchData();
     } catch (e) {
-      alert(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     } finally {
       setLoading(false);
     }

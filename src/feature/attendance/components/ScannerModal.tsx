@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { AxiosError } from 'axios';
 import { X } from 'lucide-react';
 
 import { attendanceApi } from '../api';
 
+import { getErrorCodeMessage } from '@app/shared/api';
+import { Toast } from '@app/shared/toast';
 import { IDetectedBarcode, Scanner } from '@yudiel/react-qr-scanner';
 
 interface AttendanceScannerModalProps {
@@ -38,17 +39,16 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
     try {
       if (type === 'in') {
         await attendanceApi.checkIn(qrCode);
-        alert('출근 처리가 완료되었습니다.');
+
+        Toast.success('출근 처리가 완료되었습니다.');
       } else {
         await attendanceApi.checkOut(qrCode);
-        alert('퇴근 처리가 완료되었습니다.');
+        Toast.success('퇴근 처리가 완료되었습니다.');
       }
       onSuccess();
       onClose();
     } catch (e) {
-      const error = e as AxiosError;
-      console.error(e);
-      setError(JSON.stringify(error?.response?.data ?? '처리 중 오류가 발생했습니다.'));
+      Toast.error(getErrorCodeMessage(e));
       setIsProcessing(false);
     }
   };
@@ -94,9 +94,8 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
                 return '카메라 초기화 중 오류가 발생했습니다.';
               };
 
-              const message = getErrorMessage(e);
-              setError(message);
-              alert(message);
+              setError(getErrorMessage(e));
+              toast.error(getErrorMessage(e));
             }}
             constraints={{
               facingMode: { ideal: 'environment' },

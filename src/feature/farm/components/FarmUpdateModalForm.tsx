@@ -1,15 +1,14 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
 import { farmApi } from '../api';
 
-import { FarmErrorSection } from './FarmErrorSection';
 import { FarmInput } from './FarmInput';
 
 import { getErrorCodeMessage } from '@app/shared/api';
 import { Farm } from '@app/shared/models';
 import { useFarmStore } from '@app/shared/stores';
+import { Toast } from '@app/shared/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const farmUpdateSchema = z.object({
@@ -24,7 +23,6 @@ type FarmUpdateModalFormProps = {
 
 export function FarmUpdateModalForm({ farm, onClose }: FarmUpdateModalFormProps) {
   const { fetchFarms } = useFarmStore();
-  const [error, setError] = useState<string>('');
 
   const {
     register,
@@ -37,13 +35,13 @@ export function FarmUpdateModalForm({ farm, onClose }: FarmUpdateModalFormProps)
   });
 
   const onSubmit = async ({ name }: FarmUpdateFormData) => {
-    setError('');
     try {
       await farmApi.update(farm.id, { name });
       await fetchFarms();
       onClose();
+      Toast.success('저장되었습니다.');
     } catch (e) {
-      setError(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     }
   };
 
@@ -55,8 +53,6 @@ export function FarmUpdateModalForm({ farm, onClose }: FarmUpdateModalFormProps)
         registerProps={register('name')}
         errors={errors}
       />
-
-      <FarmErrorSection error={error} />
 
       <button
         type="submit"

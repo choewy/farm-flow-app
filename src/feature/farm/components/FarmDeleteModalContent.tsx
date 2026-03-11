@@ -2,11 +2,10 @@ import { useState } from 'react';
 
 import { farmApi } from '../api';
 
-import { FarmErrorSection } from './FarmErrorSection';
-
 import { getErrorCodeMessage } from '@app/shared/api';
 import { Farm } from '@app/shared/models';
 import { useFarmStore } from '@app/shared/stores';
+import { Toast } from '@app/shared/toast';
 
 type FarmDeleteModalContentProps = {
   farm: Farm;
@@ -17,7 +16,6 @@ export function FarmDeleteModalContent({ farm, onClose }: FarmDeleteModalContent
   const { fetchFarms } = useFarmStore();
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>('');
 
   const handleDelete = async () => {
     try {
@@ -25,8 +23,9 @@ export function FarmDeleteModalContent({ farm, onClose }: FarmDeleteModalContent
       await farmApi.remove(farm.id);
       await fetchFarms();
       onClose();
+      Toast.success(`"${farm.name}" 농장이 삭제되었습니다.`);
     } catch (e) {
-      setError(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     } finally {
       setLoading(false);
     }
@@ -41,8 +40,6 @@ export function FarmDeleteModalContent({ farm, onClose }: FarmDeleteModalContent
           관련 데이터가 모두 소실될 수 있습니다.
         </p>
       </div>
-
-      <FarmErrorSection error={error} />
 
       <div className="flex flex-col space-y-3">
         <button

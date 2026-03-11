@@ -4,6 +4,7 @@ import { roleApi } from '../api';
 
 import { getErrorCodeMessage } from '@app/shared/api';
 import { Role } from '@app/shared/models';
+import { Toast } from '@app/shared/toast';
 import { Modal } from '@app/shared/ui/modal';
 
 export type RoleDeleteModalProps = {
@@ -22,8 +23,9 @@ export function RoleDeleteModal({ isOpen, selectedRow, onClose, fetchRoles }: Ro
       await roleApi.remove(selectedRow.id);
       await fetchRoles();
       onClose();
+      Toast.success(`"${selectedRow.name}" 역할이 삭제되었습니다.`);
     } catch (e) {
-      alert(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     } finally {
       setLoading(false);
     }

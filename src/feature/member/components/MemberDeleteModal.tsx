@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { memberApi, MemberResponse } from '../api';
 
 import { getErrorCodeMessage } from '@app/shared/api';
+import { Toast } from '@app/shared/toast';
 import { Modal } from '@app/shared/ui/modal';
 
 export type MemberDeleteModalProps = {
@@ -21,8 +22,9 @@ export function MemberDeleteModal({ isOpen, row, fetchData, onClose }: MemberDel
       await memberApi.remove(row.user.id);
       await fetchData();
       onClose();
+      Toast.success(`"${row.user.name}이 삭제되었습니다."`);
     } catch (e) {
-      alert(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     } finally {
       setLoading(false);
     }

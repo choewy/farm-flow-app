@@ -6,6 +6,7 @@ import { useRolePermissionState } from '../hooks';
 import { RolePermissionList } from './RolePermissionList';
 
 import { getErrorCodeMessage } from '@app/shared/api';
+import { Toast } from '@app/shared/toast';
 import { Modal } from '@app/shared/ui/modal';
 
 export type RoleCreateModalProps = {
@@ -26,8 +27,9 @@ export function RoleCreateModal({ isOpen, onClose, fetchRoles }: RoleCreateModal
       await roleApi.create({ name, permissionKeys });
       await fetchRoles();
       onClose();
+      Toast.success(`"${name}"역할이 생성되었습니다.`);
     } catch (e) {
-      alert(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     } finally {
       setLoading(false);
     }

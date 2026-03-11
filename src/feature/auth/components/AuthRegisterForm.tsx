@@ -1,15 +1,15 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import z from 'zod';
 
 import { authApi } from '../api';
 
-import { AuthButton, AuthErrorSection, AuthInput } from './ui';
+import { AuthButton, AuthInput } from './ui';
 
 import { getErrorCodeMessage } from '@app/shared/api';
 import { ROUTES } from '@app/shared/routes';
 import { useAuthStore } from '@app/shared/stores';
+import { Toast } from '@app/shared/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const registerSchema = z
@@ -30,7 +30,6 @@ export function AuthRegisterForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const { setSession } = useAuthStore();
-  const [error, setError] = useState<string>('');
   const from = location.state?.from?.pathname ?? ROUTES.home;
 
   const {
@@ -49,14 +48,12 @@ export function AuthRegisterForm() {
   });
 
   const onSubmit = async ({ email, name, password, confirmPassword }: RegisterFormData) => {
-    setError('');
-
     try {
       const { data } = await authApi.register({ email, name, password, confirmPassword });
       setSession(data.user, data.farm, data.role);
       navigate(from, { replace: true });
     } catch (e) {
-      setError(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     }
   };
 
@@ -64,7 +61,7 @@ export function AuthRegisterForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <AuthInput
         labelText="이메일"
-        inputProps={{ type: 'email', autoComplete: 'email', placeholder: '이메일을 입력하세요' }}
+        inputProps={{ type: 'text', autoComplete: 'email', placeholder: '이메일을 입력하세요' }}
         registerProps={register('email')}
         errors={errors}
       />
@@ -91,7 +88,6 @@ export function AuthRegisterForm() {
       />
 
       <AuthButton text="회원가입" disabled={isSubmitting} />
-      <AuthErrorSection error={error} />
     </form>
   );
 }

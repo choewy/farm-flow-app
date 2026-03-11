@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { Check, ChevronDown, ShieldCheck, User as UserIcon } from 'lucide-react';
 
 import { authApi } from '@app/feature/auth';
+import { getErrorCodeMessage } from '@app/shared/api';
 import { useAuthStore, useFarmStore } from '@app/shared/stores';
+import { Toast } from '@app/shared/toast';
 
 export function FarmSwitcher() {
   const { farm: currentFarm, user, role, setSession } = useAuthStore();
@@ -34,9 +36,9 @@ export function FarmSwitcher() {
       const { data } = await authApi.checkIn(farmId);
       setSession(user, data.farm, data.role || role);
       setIsOpen(false);
-    } catch (error) {
-      console.error('Farm switch failed', error);
-      alert('농장 전환에 실패했습니다.');
+      Toast.info(`"${data.farm?.name}" 농장으로 전환되었습니다.`);
+    } catch (e) {
+      Toast.error(getErrorCodeMessage(e));
     }
   };
 

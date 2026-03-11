@@ -78,3 +78,24 @@ body {
 button {
   cursor: pointer;
 }
+
+.Toastify__toast {
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: min(520px, calc(100vw - 32px));
+  margin: 0 auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.Toastify__toast-body {
+  padding: 0;
+}
+
+.Toastify__toast-container--bottom-center {
+  bottom: calc(40px + env(safe-area-inset-bottom)) !important;
+  padding-left: 16px;
+  padding-right: 16px;
+}

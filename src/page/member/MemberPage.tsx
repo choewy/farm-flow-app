@@ -11,6 +11,7 @@ import {
   MemberResponse,
 } from '@app/feature/member';
 import { getErrorCodeMessage } from '@app/shared/api';
+import { Toast } from '@app/shared/toast';
 
 export function MemberPage() {
   const [loading, setIsLoading] = useState(true);
@@ -29,7 +30,7 @@ export function MemberPage() {
       const { data } = await memberApi.list();
       setResponse(data);
     } catch (e) {
-      alert(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     } finally {
       setIsLoading(false);
     }

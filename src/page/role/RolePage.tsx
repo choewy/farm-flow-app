@@ -12,6 +12,7 @@ import {
 } from '@app/feature/role';
 import { getErrorCodeMessage } from '@app/shared/api';
 import { Role } from '@app/shared/models';
+import { Toast } from '@app/shared/toast';
 
 export function RolePage() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -31,7 +32,7 @@ export function RolePage() {
       const { data } = await roleApi.list();
       setResponse(data);
     } catch (e) {
-      alert(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     } finally {
       setLoading(false);
     }

@@ -7,6 +7,7 @@ import { RolePermissionList } from './RolePermissionList';
 
 import { getErrorCodeMessage } from '@app/shared/api';
 import { Role } from '@app/shared/models';
+import { Toast } from '@app/shared/toast';
 import { Modal } from '@app/shared/ui/modal';
 
 export type RoleUpdateModalProps = {
@@ -28,8 +29,9 @@ export function RoleUpdateModal({ isOpen, selectedRow, onClose, fetchRoles }: Ro
       await roleApi.update(selectedRow.id, { name, permissionKeys });
       await fetchRoles();
       onClose();
+      Toast.success('저장되었습니다.');
     } catch (e) {
-      alert(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     } finally {
       setLoading(false);
     }

@@ -1,14 +1,14 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import { Send, UserPlus } from 'lucide-react';
 import z from 'zod';
 
 import { invitationApi } from '../api/invitation.api';
 
-import { InvitationErrorSection } from './InvitationErrorSection';
 import { InvitationInput } from './InvitationInput';
 
 import { getErrorCodeMessage } from '@app/shared/api';
+import { Toast } from '@app/shared/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const invitationSchema = z.object({
@@ -23,8 +23,6 @@ type InvitationFormProps = {
 };
 
 export function InvitationForm({ setEmail, setSuccess }: InvitationFormProps) {
-  const [error, setError] = useState<string>('');
-
   const {
     register,
     handleSubmit,
@@ -36,8 +34,6 @@ export function InvitationForm({ setEmail, setSuccess }: InvitationFormProps) {
   });
 
   const onSubmit = async ({ email }: InvitationFormData) => {
-    setError('');
-
     try {
       const invitationUrl = `${window.location.origin}/invitation/accept`;
       await invitationApi.create({
@@ -46,8 +42,9 @@ export function InvitationForm({ setEmail, setSuccess }: InvitationFormProps) {
       });
       setEmail(email);
       setSuccess(true);
+      Toast.success('초대장이 전송되었습니다.');
     } catch (e) {
-      setError(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     }
   };
 
@@ -80,8 +77,6 @@ export function InvitationForm({ setEmail, setSuccess }: InvitationFormProps) {
             registerProps={register('email')}
             errors={errors}
           />
-
-          <InvitationErrorSection error={error} />
 
           <button
             type="submit"

@@ -1,14 +1,13 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
 import { farmApi } from '../api';
 
-import { FarmErrorSection } from './FarmErrorSection';
 import { FarmInput } from './FarmInput';
 
 import { getErrorCodeMessage } from '@app/shared/api';
 import { useFarmStore } from '@app/shared/stores';
+import { Toast } from '@app/shared/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const farmCreateSchema = z.object({
@@ -22,7 +21,6 @@ type FarmCreateModalFormProps = {
 
 export function FarmCreateModalForm({ onClose }: FarmCreateModalFormProps) {
   const { fetchFarms } = useFarmStore();
-  const [error, setError] = useState<string>('');
 
   const {
     register,
@@ -35,13 +33,13 @@ export function FarmCreateModalForm({ onClose }: FarmCreateModalFormProps) {
   });
 
   const onSubmit = async ({ name }: FarmCreateFormData) => {
-    setError('');
     try {
       await farmApi.create({ name });
       await fetchFarms();
+      Toast.success(`"${name}" 농장이 생성되었습니다.`);
       onClose();
     } catch (e) {
-      setError(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     }
   };
 
@@ -53,7 +51,6 @@ export function FarmCreateModalForm({ onClose }: FarmCreateModalFormProps) {
         registerProps={register('name')}
         errors={errors}
       />
-      <FarmErrorSection error={error} />
 
       <button
         type="submit"

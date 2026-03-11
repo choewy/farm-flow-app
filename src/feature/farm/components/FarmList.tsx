@@ -15,6 +15,7 @@ export function FarmList({ openUpdateModal, openDeleteModal }: FarmListProps) {
   const { rows, loading, fetchFarms } = useFarmStore();
 
   const renderComponent = () => {
+    // TODO 스켈레톤
     if (loading) {
       return (
         <div className="flex flex-col items-center justify-center py-24 space-y-4">

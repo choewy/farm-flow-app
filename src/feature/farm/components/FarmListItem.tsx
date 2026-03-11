@@ -8,6 +8,7 @@ import { getErrorCodeMessage } from '@app/shared/api';
 import { Farm, PermissionKey } from '@app/shared/models';
 import { ROUTES } from '@app/shared/routes';
 import { useAuthStore } from '@app/shared/stores';
+import { Toast } from '@app/shared/toast';
 
 export type FarmListItemProps = {
   row: FarmListRow;
@@ -28,7 +29,7 @@ export function FarmListItem({ row, openUpdateModal, openDeleteModal }: FarmList
       setSession(data.user, data.farm, data.role);
       navigate(ROUTES.home);
     } catch (e) {
-      alert(getErrorCodeMessage(e));
+      Toast.error(getErrorCodeMessage(e));
     }
   };
 

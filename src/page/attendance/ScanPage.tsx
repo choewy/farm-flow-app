@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 
 import { attendanceApi } from '@app/feature/attendance';
 import { ROUTES } from '@app/shared/routes';
+import { Toast } from '@app/shared/toast';
 import { IDetectedBarcode, Scanner } from '@yudiel/react-qr-scanner';
 
 export function ScanPage() {
@@ -25,10 +26,10 @@ export function ScanPage() {
       const action = window.confirm('확인을 누르면 출근, 취소를 누르면 퇴근 처리됩니다.');
       if (action) {
         await attendanceApi.checkIn(qrCode);
-        alert('출근 처리가 완료되었습니다.');
+        Toast.success('출근 처리가 완료되었습니다.');
       } else {
         await attendanceApi.checkOut(qrCode);
-        alert('퇴근 처리가 완료되었습니다.');
+        Toast.success('퇴근 처리가 완료되었습니다.');
       }
       navigate(ROUTES.home);
     } catch (e) {
