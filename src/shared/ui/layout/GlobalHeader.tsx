@@ -26,11 +26,19 @@ export function GlobalHeader({ title }: GlobalHeaderProps) {
       case ROUTES.menu:
         return '메뉴';
       case ROUTES.farms:
-        return '농장 목록';
+        return '내 농장 목록';
       case ROUTES.attendanceQrCode:
-        return '출석 QR 생성';
+        return '출퇴근 QR 생성';
       case ROUTES.scan:
         return 'QR 스캐너';
+      case ROUTES.members:
+        return '멤버 관리';
+      case ROUTES.roles:
+        return '역할 관리';
+      case ROUTES.invitation:
+        return '멤버 초대';
+      case ROUTES.invitationAccept:
+        return '초대코드 입력';
       default:
         return 'Farm Flow';
     }

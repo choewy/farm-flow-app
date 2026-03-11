@@ -32,16 +32,6 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
       title: 'Farm Services',
       items: [
         {
-          name: '멤버 관리',
-          icon: UsersRound,
-          path: ROUTES.members,
-          visible: permissionKeys.some((permissionKey) =>
-            [PermissionKey.MemberRead, PermissionKey.MemberRoleUpdate, PermissionKey.MemberRemove].includes(permissionKey),
-          ),
-          color: 'text-indigo-500',
-          background: 'bg-indigo-50',
-        },
-        {
           name: '역할 관리',
           icon: ShieldPlus,
           path: ROUTES.roles,
@@ -52,7 +42,17 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
           background: 'bg-indigo-50',
         },
         {
-          name: '농장 초대',
+          name: '멤버 관리',
+          icon: UsersRound,
+          path: ROUTES.members,
+          visible: permissionKeys.some((permissionKey) =>
+            [PermissionKey.MemberRead, PermissionKey.MemberRoleUpdate, PermissionKey.MemberRemove].includes(permissionKey),
+          ),
+          color: 'text-indigo-500',
+          background: 'bg-indigo-50',
+        },
+        {
+          name: '멤버 초대',
           icon: UserPlus,
           path: ROUTES.invitation,
           visible: permissionKeys.includes(PermissionKey.InvitationCreate),
