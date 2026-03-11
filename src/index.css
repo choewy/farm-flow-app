@@ -13,7 +13,6 @@
   --color-slate-400: #94a3b8;
   --color-slate-500: #64748b;
   --color-slate-800: #1e293b;
-
   --shadow-premium: 0 4px 20px -1px rgba(0, 0, 0, 0.05), 0 2px 10px -1px rgba(0, 0, 0, 0.03);
   --shadow-premium-lg: 0 10px 30px -3px rgba(0, 0, 0, 0.04), 0 4px 15px -2px rgba(0, 0, 0, 0.02);
 }
@@ -28,6 +27,34 @@
   background-color: rgba(30, 41, 59, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.5);
+    border-radius: 9999px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 
 :root {

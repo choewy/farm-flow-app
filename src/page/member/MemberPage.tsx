@@ -13,12 +13,12 @@ import {
 import { getErrorCodeMessage } from '@app/shared/api';
 
 export function MemberPage() {
+  const [loading, setIsLoading] = useState(true);
   const [response, setResponse] = useState<MemberListResponse>({
     total: 0,
     rows: [],
   });
 
-  const [loading, setIsLoading] = useState(true);
   const [selectedRow, setSelectedRow] = useState<MemberResponse | null>(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -56,13 +56,13 @@ export function MemberPage() {
     <div className="flex flex-col space-y-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
       <MemberHeader total={response.total} />
       <MemberList loading={loading} rows={response.rows} openUpdateModal={openUpdateModal} openDeleteModal={openDeleteModal} />
+      <MemberFooter />
       {selectedRow && (
         <>
           <MemberEditModal isOpen={isUpdateModalOpen} row={selectedRow} fetchData={fetchData} onClose={closeUpdateModal} />
           <MemberDeleteModal isOpen={isDeleteModalOpen} row={selectedRow} fetchData={fetchData} onClose={closeDeleteModal} />
         </>
       )}
-      <MemberFooter />
     </div>
   );
 }

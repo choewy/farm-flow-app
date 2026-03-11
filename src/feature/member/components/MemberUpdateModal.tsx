@@ -15,14 +15,18 @@ interface MemberEditModalProps {
 }
 
 export function MemberEditModal({ isOpen, row, fetchData, onClose }: MemberEditModalProps) {
+  const [loading, setLoading] = useState<boolean>(false);
   const [selectedRoleId, setSelectedRoleId] = useState(row.role.id);
 
   const handleUpdateRole = async () => {
     try {
+      setLoading(true);
       await memberApi.update(row.user.id, selectedRoleId);
       await fetchData();
     } catch (e) {
       alert(getErrorCodeMessage(e));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,9 +41,9 @@ export function MemberEditModal({ isOpen, row, fetchData, onClose }: MemberEditM
 
         <div className="pt-6">
           <button
-            onClick={handleUpdateRole}
-            disabled={selectedRoleId === row.role.id}
             className="w-full py-4 bg-primary text-white rounded-3xl font-bold shadow-premium transition-all active:scale-[0.98] disabled:opacity-50 disabled:grayscale"
+            onClick={handleUpdateRole}
+            disabled={selectedRoleId === row.role.id || loading}
           >
             저장
           </button>

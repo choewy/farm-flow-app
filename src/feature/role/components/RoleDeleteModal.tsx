@@ -1,25 +1,26 @@
 import { useState } from 'react';
 
-import { memberApi, MemberResponse } from '../api';
+import { roleApi } from '../api';
 
 import { getErrorCodeMessage } from '@app/shared/api';
+import { Role } from '@app/shared/models';
 import { Modal } from '@app/shared/ui/modal';
 
-export type MemberDeleteModalProps = {
+export type RoleDeleteModalProps = {
   isOpen: boolean;
-  row: MemberResponse;
-  fetchData: () => Promise<void>;
+  selectedRow: Role;
   onClose: () => void;
+  fetchRoles: () => Promise<void>;
 };
 
-export function MemberDeleteModal({ isOpen, row, fetchData, onClose }: MemberDeleteModalProps) {
+export function RoleDeleteModal({ isOpen, selectedRow, onClose, fetchRoles }: RoleDeleteModalProps) {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleDeleteMember = async () => {
+  const handleDelete = async () => {
     try {
       setLoading(true);
-      await memberApi.remove(row.user.id);
-      await fetchData();
+      await roleApi.remove(selectedRow.id);
+      await fetchRoles();
       onClose();
     } catch (e) {
       alert(getErrorCodeMessage(e));
@@ -34,15 +35,15 @@ export function MemberDeleteModal({ isOpen, row, fetchData, onClose }: MemberDel
 
   return (
     <Modal
-      title="멤버 삭제"
-      description={`"${row.user.name}"님을 농장에서 삭제하시겠습니까? 삭제 후에는 되돌릴 수 없습니다.`}
+      title="역할 삭제"
+      description={`"${selectedRow.name}" 역할을 삭제하시겠습니까? 해당 역할을 가진 멤버들의 역할은 "기본"으로 변경됩니다.`}
       onClose={onClose}
     >
       <div className="pt-6">
         <button
           className="w-full py-4 bg-red-500 text-white rounded-3xl font-bold shadow-premium transition-all active:scale-[0.98] disabled:opacity-50 disabled:grayscale"
-          onClick={handleDeleteMember}
           disabled={loading}
+          onClick={handleDelete}
         >
           삭제
         </button>
