@@ -1,5 +1,14 @@
 #!/bin/bash
+set -e
 
-docker buildx build --output type=local,dest=./dist .
+timestamp=$(date +%s)
+dist="dist_$timestamp"
 
-chmod -R 755 ./dist
+docker buildx build --output type=local,dest=./$dist .
+
+rsync -av --delete ./$dist/ ./dist
+
+find ./dist -type d -exec chmod 755 {} \;
+find ./dist -type f -exec chmod 644 {} \;
+
+rm -rf ./$dist
