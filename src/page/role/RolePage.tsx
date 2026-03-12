@@ -4,6 +4,7 @@ import {
   roleApi,
   RoleCreateModal,
   RoleDeleteModal,
+  RoleDetailModal,
   RoleFooter,
   RoleHeader,
   RoleList,
@@ -23,6 +24,7 @@ export function RolePage() {
 
   const [selectedRow, setSelectedRow] = useState<Role | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -42,6 +44,11 @@ export function RolePage() {
     fetchRoles();
   }, [fetchRoles]);
 
+  const openDetailModal = (row: Role) => {
+    setSelectedRow(row);
+    setIsDetailModalOpen(true);
+  };
+
   const openUpdateModal = (row: Role) => {
     setSelectedRow(row);
     setIsUpdateModalOpen(true);
@@ -55,11 +62,18 @@ export function RolePage() {
   return (
     <div className="flex flex-col space-y-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
       <RoleHeader total={response.total} openCreateModal={() => setIsCreateModalOpen(true)} />
-      <RoleList loading={loading} rows={response.rows} openUpdateModal={openUpdateModal} openDeleteModal={openDeleteModal} />
+      <RoleList
+        loading={loading}
+        rows={response.rows}
+        openDetailModal={openDetailModal}
+        openUpdateModal={openUpdateModal}
+        openDeleteModal={openDeleteModal}
+      />
       <RoleCreateModal isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} fetchRoles={fetchRoles} />
       <RoleFooter />
       {selectedRow && (
         <>
+          <RoleDetailModal isOpen={isDetailModalOpen} selectedRow={selectedRow} onClose={() => setIsDetailModalOpen(false)} />
           <RoleUpdateModal
             isOpen={isUpdateModalOpen}
             selectedRow={selectedRow}

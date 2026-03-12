@@ -5,3 +5,4 @@ export * from './RoleFooter';
 export * from './RoleCreateModal';
 export * from './RoleUpdateModal';
 export * from './RoleDeleteModal';
+export * from './RoleDetailModal';

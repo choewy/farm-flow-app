@@ -5,11 +5,12 @@ import { Role } from '@app/shared/models';
 export type RoleListProps = {
   loading: boolean;
   rows: Role[];
+  openDetailModal(row: Role): void;
   openUpdateModal(row: Role): void;
   openDeleteModal(row: Role): void;
 };
 
-export function RoleList({ loading, rows, openUpdateModal, openDeleteModal }: RoleListProps) {
+export function RoleList({ loading, rows, openDetailModal, openUpdateModal, openDeleteModal }: RoleListProps) {
   const renderComponent = () => {
     if (loading) {
       return (
@@ -31,7 +32,13 @@ export function RoleList({ loading, rows, openUpdateModal, openDeleteModal }: Ro
     return (
       <>
         {rows.map((row) => (
-          <RoleListItem key={row.id} row={row} openUpdateModal={openUpdateModal} openDeleteModal={openDeleteModal} />
+          <RoleListItem
+            key={row.id}
+            row={row}
+            openDetailModal={openDetailModal}
+            openUpdateModal={openUpdateModal}
+            openDeleteModal={openDeleteModal}
+          />
         ))}
       </>
     );
