@@ -67,7 +67,7 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
           <p className="text-slate-500">관리자 화면의 QR 코드를 스캔하세요</p>
         </div>
 
-        <div className="w-full max-w-sm aspect-square rounded-3xl overflow-hidden relative bg-slate-50 border-2 border-[#8fcf72]/50">
+        <div className="w-full max-w-sm aspect-square rounded-3xl overflow-hidden relative bg-slate-50 border-2 border-primary/50">
           <Scanner
             onScan={handleScan}
             onError={(e) => {
@@ -95,7 +95,7 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
               };
 
               setError(getErrorMessage(e));
-              toast.error(getErrorMessage(e));
+              Toast.error(getErrorMessage(e));
             }}
             constraints={{
               facingMode: { ideal: 'environment' },

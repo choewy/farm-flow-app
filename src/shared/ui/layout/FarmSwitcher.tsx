@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Check, ChevronDown, ShieldCheck, User as UserIcon } from 'lucide-react';
+import { Check, ChevronDown, ShieldCheck } from 'lucide-react';
 
 import { authApi } from '@app/feature/auth';
 import { getErrorCodeMessage } from '@app/shared/api';
@@ -63,7 +63,6 @@ export function FarmSwitcher() {
             </div>
 
             {farms.map(({ farm, role: farmRole }) => {
-              const isAdmin = farmRole?.super || farmRole?.permissionKeys?.includes('admin');
               const isActive = farm.id === currentFarm?.id;
 
               return (
@@ -76,11 +75,7 @@ export function FarmSwitcher() {
                 >
                   <div className="flex items-center space-x-3 text-left">
                     <div className={`p-2 rounded-xl ${isActive ? 'bg-white shadow-sm' : 'bg-slate-50'}`}>
-                      {isAdmin ? (
-                        <ShieldCheck size={16} className={isActive ? 'text-primary' : 'text-slate-400'} />
-                      ) : (
-                        <UserIcon size={16} className={isActive ? 'text-primary' : 'text-slate-400'} />
-                      )}
+                      <ShieldCheck size={16} className={isActive ? 'text-primary' : 'text-slate-400'} />
                     </div>
                     <div>
                       <p className={`text-sm font-bold truncate max-w-30 ${isActive ? 'text-primary' : 'text-slate-800'}`}>{farm.name}</p>

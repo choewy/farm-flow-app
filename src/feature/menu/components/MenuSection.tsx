@@ -6,7 +6,7 @@ import { MenuSectionItem } from './MenuSectionItem';
 
 import { useAuthStore } from '@app/shared/stores';
 
-export type MenuSectionProps = {
+type MenuSectionProps = {
   openLogoutModal: () => void;
 };
 
