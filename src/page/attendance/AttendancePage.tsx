@@ -35,9 +35,21 @@ export function AttendancePage() {
         {attendance?.id ? (
           <div className="flex items-center space-x-3 text-primary">
             <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span className="font-bold">
-              근무 중 (출근 시간: {new Date(attendance.checkedInAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})
-            </span>
+            {attendance.status === 'in' ? (
+              <span className="font-bold">
+                근무 중(출근 시간: {new Date(attendance.checkedInAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})
+              </span>
+            ) : (
+              <>
+                <span className="font-bold">
+                  퇴근
+                  <br />
+                  출근 시간: {new Date(attendance.checkedInAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  <br />
+                  퇴근 시간: {new Date(attendance.checkedOutAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </>
+            )}
           </div>
         ) : (
           <div className="flex items-center space-x-3 text-slate-400">
