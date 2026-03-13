@@ -88,9 +88,9 @@ export function AttendancePage() {
       </div>
 
       <AttendanceScannerModal
+        type={scannerType}
         isOpen={isScannerOpen}
         onClose={() => setIsScannerOpen(false)}
-        type={scannerType}
         onSuccess={fetchAttendance}
       />
     </div>

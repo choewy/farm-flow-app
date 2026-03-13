@@ -39,7 +39,6 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
     try {
       if (type === 'in') {
         await attendanceApi.checkIn(qrCode);
-
         Toast.success('출근 처리가 완료되었습니다.');
       } else {
         await attendanceApi.checkOut(qrCode);
@@ -49,6 +48,7 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
       onClose();
     } catch (e) {
       Toast.error(getErrorCodeMessage(e));
+    } finally {
       setIsProcessing(false);
     }
   };
