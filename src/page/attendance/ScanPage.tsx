@@ -13,10 +13,15 @@ export function ScanPage() {
   const [error, setError] = useState<string | null>(null);
 
   const handleScan = async (detectedCodes: IDetectedBarcode[]) => {
-    if (isScanning || detectedCodes.length === 0) return;
+    if (isScanning || detectedCodes.length === 0) {
+      return;
+    }
 
     const qrCode = detectedCodes[0].rawValue;
-    if (!qrCode) return;
+
+    if (!qrCode) {
+      return;
+    }
 
     setIsScanning(true);
 
@@ -37,9 +42,10 @@ export function ScanPage() {
       console.error(error);
       setError(JSON.stringify(error?.response?.data ?? '처리 중 오류가 발생했습니다.'));
       setTimeout(() => {
-        setIsScanning(false);
         setError(null);
       }, 3000);
+    } finally {
+      setIsScanning(false);
     }
   };
 
