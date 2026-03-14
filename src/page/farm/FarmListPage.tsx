@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FarmCreateModal, FarmDeleteModal, FarmFooter, FarmHeader, FarmList, FarmUpdateModal } from '@app/feature/farm';
 import { Farm } from '@app/shared/models';
 
-export function FarmListPage() {
+export default function FarmListPage() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);

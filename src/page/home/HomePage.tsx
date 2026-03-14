@@ -1,6 +1,6 @@
 import { useAuthStore } from '@app/shared/stores';
 
-export function HomePage() {
+export default function HomePage() {
   const { user, role } = useAuthStore();
 
   return (

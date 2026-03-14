@@ -3,7 +3,7 @@ import { LogIn, LogOut as LogOutIcon } from 'lucide-react';
 
 import { attendanceApi, AttendanceScannerModal, AttendanceTodayResponse } from '@app/feature/attendance';
 
-export function AttendancePage() {
+export default function AttendancePage() {
   const [attendance, setAttendance] = useState<AttendanceTodayResponse | null>(null);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
   const [scannerType, setScannerType] = useState<'in' | 'out'>('in');

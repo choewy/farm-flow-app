@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { InvitationFooter, InvitationForm, InvitationSuccess } from '@app/feature/invitation';
 
-export function InvitationPage() {
+export default function InvitationPage() {
   const [email, setEmail] = useState<string>('');
   const [success, setSuccess] = useState(false);
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { LogoutModal, MenuFooter, MenuSection, MenuUserProfile } from '@app/feature/menu';
 
-export function MenuPage() {
+export default function MenuPage() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
 
   const openLogoutModal = () => setIsLogoutModalOpen(true);

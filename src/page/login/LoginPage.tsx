@@ -1,7 +1,7 @@
 import { AuthAnchor, AuthLoginForm, AuthTitle } from '@app/feature/auth';
 import { ROUTES } from '@app/shared/routes';
 
-export function LoginPage() {
+export default function LoginPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] w-full">
       <div className="w-full bg-white rounded-3xl shadow-sm ring-1 ring-slate-100 p-8 space-y-8">

@@ -1,6 +1,6 @@
 import { InvitationAcceptForm, InvitationAcceptHeader, InvitationAcceptHelp } from '@app/feature/invitation';
 
-export function InvitationAcceptPage() {
+export default function InvitationAcceptPage() {
   return (
     <div className="flex flex-col space-y-8 pb-10 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 justify-center min-h-[80vh]">
       <div className="bg-white rounded-[2.5rem] p-8 shadow-premium ring-1 ring-slate-100 overflow-hidden relative">

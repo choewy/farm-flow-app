@@ -6,7 +6,7 @@ import { attendanceQrApi } from '@app/feature/attendance-qr';
 import { useSse } from '@app/shared/api';
 import { useAuthStore } from '@app/shared/stores';
 
-export function AttendanceQrCodePage() {
+export default function AttendanceQrCodePage() {
   const { deviceId } = useAuthStore();
   const [seconds, setSeconds] = useState<number>(60);
   const data = useSse<{ id: string }>(`${API_BASE_URL}/attendances/qr/${deviceId}`);

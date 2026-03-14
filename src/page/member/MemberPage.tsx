@@ -13,7 +13,7 @@ import {
 import { getErrorCodeMessage } from '@app/shared/api';
 import { Toast } from '@app/shared/toast';
 
-export function MemberPage() {
+export default function MemberPage() {
   const [loading, setIsLoading] = useState(true);
   const [response, setResponse] = useState<MemberListResponse>({
     total: 0,

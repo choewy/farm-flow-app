@@ -15,7 +15,7 @@ import { getErrorCodeMessage } from '@app/shared/api';
 import { Role } from '@app/shared/models';
 import { Toast } from '@app/shared/toast';
 
-export function RolePage() {
+export default function RolePage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<RoleListResponse>({
     total: 0,
