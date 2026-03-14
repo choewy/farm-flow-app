@@ -7,12 +7,12 @@ import { getErrorCodeMessage } from '@app/shared/api';
 import { Toast } from '@app/shared/toast';
 import { IDetectedBarcode, Scanner } from '@yudiel/react-qr-scanner';
 
-interface AttendanceScannerModalProps {
+type AttendanceScannerModalProps = {
   isOpen: boolean;
   onClose: () => void;
   type: 'in' | 'out';
   onSuccess: () => void;
-}
+};
 
 export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: AttendanceScannerModalProps) {
   const [isProcessing, setIsProcessing] = useState(false);

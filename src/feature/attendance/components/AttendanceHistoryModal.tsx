@@ -1,39 +1,43 @@
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import { Calendar, LogIn, LogOut as LogOutIcon, X } from 'lucide-react';
 
 import { attendanceApi, AttendanceListRequestParam } from '../api';
 
+import { getErrorCodeMessage } from '@app/shared/api';
 import { DateTime } from '@app/shared/helpers';
 import { Attendance } from '@app/shared/models';
+import { Toast } from '@app/shared/toast';
 
-interface AttendanceHistoryModalProps {
+type AttendanceHistoryModalProps = {
   isOpen: boolean;
   onClose: () => void;
-}
+};
 
 export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryModalProps) {
-  const [attendanceList, setAttendanceList] = useState<Attendance[]>([]);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-
-  const fetchList = async () => {
-    try {
-      const params: AttendanceListRequestParam = {};
-      if (startDate) params.startDate = new Date(startDate);
-      if (endDate) params.endDate = new Date(endDate);
-      const { data } = await attendanceApi.list(params);
-      setAttendanceList(data.rows);
-    } catch (error) {
-      console.error('Failed to fetch attendance list', error);
-    }
-  };
+  const [startDate, setStartDate] = useState<string>(dayjs().subtract(6, 'day').format('YYYY-MM-DD'));
+  const [endDate, setEndDate] = useState<string>(dayjs().format('YYYY-MM-DD'));
+  const [rows, setRows] = useState<Attendance[]>([]);
 
   useEffect(() => {
-    if (isOpen) {
-      // Fetch initial data when modal opens
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      fetchList();
+    if (!isOpen) {
+      return;
     }
+
+    const params: AttendanceListRequestParam = {};
+
+    if (startDate) {
+      params.startDate = new Date(startDate);
+    }
+
+    if (endDate) {
+      params.endDate = new Date(endDate);
+    }
+
+    attendanceApi
+      .list(params)
+      .then(({ data }) => setRows(data.rows))
+      .catch((e) => Toast.error(getErrorCodeMessage(e)));
   }, [isOpen, startDate, endDate]);
 
   if (!isOpen) {
@@ -47,14 +51,13 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
           <header className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-slate-800">출퇴근 이력 조회</h2>
             <button
-              onClick={onClose}
               className="p-2 -mr-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors"
+              onClick={onClose}
             >
               <X className="w-6 h-6" />
             </button>
           </header>
 
-          {/* Date Filter */}
           <div className="flex flex-col space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col space-y-2">
@@ -84,44 +87,40 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
         </div>
       </div>
 
-      {/* History List Header */}
       <div className="flex items-center justify-between px-5 pt-5 pb-2 flex-none">
         <h3 className="text-sm font-black text-slate-400 uppercase tracking-[0.2em]">조회 결과</h3>
-        <span className="text-xs font-bold text-slate-500 bg-slate-200/50 px-2.5 py-1 rounded-full">{attendanceList.length}건</span>
+        <span className="text-xs font-bold text-slate-500 bg-slate-200/50 px-2.5 py-1 rounded-full">{rows.length}건</span>
       </div>
 
-      {/* History List */}
       <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-8 space-y-3">
-        {attendanceList.length > 0 ? (
-          attendanceList.map((record) => (
+        {rows.length > 0 ? (
+          rows.map((row) => (
             <div
-              key={record.id}
+              key={row.id}
               className="bg-white rounded-3xl p-5 shadow-sm ring-1 ring-slate-100 flex items-center justify-between transition-all hover:shadow-md"
             >
               <div>
                 <div className="text-sm font-bold text-slate-800 mb-2">
-                  {record.workDate}({DateTime.formatDay(record.workDate)})
+                  {row.workDate}({DateTime.formatDay(row.workDate)})
                 </div>
                 <div className="flex items-center space-x-3 text-xs text-slate-500 font-medium">
                   <span className="flex items-center text-primary">
                     <LogIn size={13} className="mr-1.5" />
-                    {record.checkedInAt ? new Date(record.checkedInAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '-'}
+                    {row.checkedInAt ? new Date(row.checkedInAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '-'}
                   </span>
                   <span className="text-slate-300">|</span>
                   <span className="flex items-center">
                     <LogOutIcon size={13} className="mr-1.5" />
-                    {record.checkedOutAt
-                      ? new Date(record.checkedOutAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                      : '-'}
+                    {row.checkedOutAt ? new Date(row.checkedOutAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '-'}
                   </span>
                 </div>
               </div>
               <div>
-                {record.status === 'in' ? (
+                {row.status === 'in' ? (
                   <span className="px-3 py-1.5 rounded-full bg-primary/10 text-primary text-[11px] font-bold">근무 중</span>
                 ) : (
                   <span className="px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 text-[11px] font-bold">
-                    {DateTime.formatTime(record.seconds)}
+                    {DateTime.formatTime(row.seconds)}
                   </span>
                 )}
               </div>

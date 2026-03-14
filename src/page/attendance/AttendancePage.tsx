@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { List as ListIcon, LogIn, LogOut as LogOutIcon } from 'lucide-react';
 
 import { attendanceApi, AttendanceHistoryModal, AttendanceScannerModal, AttendanceTodayResponse } from '@app/feature/attendance';
+import { getErrorCodeMessage } from '@app/shared/api';
+import { Toast } from '@app/shared/toast';
 
 export default function AttendancePage() {
   const [attendance, setAttendance] = useState<AttendanceTodayResponse | null>(null);
@@ -11,22 +13,18 @@ export default function AttendancePage() {
 
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
-  const fetchToday = async () => {
-    try {
-      const { data } = await attendanceApi.today();
-      setAttendance(data);
-    } catch (error) {
-      console.error('Failed to fetch attendance today', error);
-    }
-  };
-
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchToday();
+    attendanceApi
+      .today()
+      .then(({ data }) => setAttendance(data))
+      .catch((e) => Toast.error(getErrorCodeMessage(e)));
   }, []);
 
   const onScannerSuccess = () => {
-    fetchToday();
+    attendanceApi
+      .today()
+      .then(({ data }) => setAttendance(data))
+      .catch((e) => Toast.error(getErrorCodeMessage(e)));
   };
 
   const openScanner = (type: 'in' | 'out') => {
@@ -37,8 +35,8 @@ export default function AttendancePage() {
   return (
     <div className="flex flex-col space-y-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
       <button
-        onClick={() => setIsHistoryOpen(true)}
         className="group relative flex items-center space-x-5 rounded-[2.5rem] bg-slate-800 p-6 shadow-premium ring-1 ring-slate-700 transition-all duration-300 active:scale-[0.98]"
+        onClick={() => setIsHistoryOpen(true)}
       >
         <div className="flex h-16 w-16 items-center justify-center rounded-4xl bg-white/10 text-white transition-transform group-hover:scale-110">
           <ListIcon size={32} />
@@ -50,9 +48,9 @@ export default function AttendancePage() {
       </button>
 
       <button
-        disabled={!!attendance?.id}
-        onClick={() => openScanner('in')}
         className="group relative flex items-center space-x-5 rounded-[2.5rem] bg-white p-6 shadow-premium ring-1 ring-slate-100 transition-all duration-300 active:scale-[0.98] disabled:opacity-50 disabled:grayscale"
+        onClick={() => openScanner('in')}
+        disabled={!!attendance?.id}
       >
         <div className="flex h-16 w-16 items-center justify-center rounded-4xl bg-primary/10 text-primary transition-transform group-hover:scale-110">
           <LogIn size={32} />
