@@ -23,7 +23,7 @@ export function GlobalLayout() {
       <div className="mx-auto flex w-full max-w-md flex-col bg-slate-50 relative overflow-hidden">
         {shouldShowNav && <GlobalHeader />}
 
-        <main className={`flex-1 w-full overflow-y-auto ${shouldShowNav ? 'pt-16 pb-24' : ''}`}>
+        <main className={`flex-1 w-full overflow-hidden ${shouldShowNav ? 'pt-16 pb-16' : ''}`}>
           <div className="p-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
             <Outlet />
           </div>
