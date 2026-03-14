@@ -23,15 +23,16 @@ export function GlobalLayout() {
       <div className="mx-auto flex w-full max-w-md flex-col bg-slate-50 relative overflow-hidden">
         {shouldShowNav && <GlobalHeader />}
 
-        <main className={`flex-1 w-full overflow-hidden ${shouldShowNav ? 'pt-16 pb-16' : ''}`}>
-          <div className="p-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+        <main className={`flex-1 w-full overflow-hidden ${shouldShowNav ? 'pt-16 pb-20' : ''}`}>
+          <div className="p-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <Outlet />
           </div>
         </main>
 
         {shouldShowNav && (
-          <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-[calc(100%)] max-w-104 glass border border-white/40 shadow-premium-lg rounded-4xl p-2 z-50">
-            <div className="grid grid-cols-3 gap-1">
+          <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-slate-200 z-50">
+            {/* Safe area padding for iOS */}
+            <div className="grid grid-cols-3 gap-1 px-4 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
               {NAV_ITEMS.map((navItem) => {
                 const isActive = location.pathname === navItem.path;
                 const Icon = isActive ? navItem.activeIcon : navItem.icon;
@@ -39,13 +40,12 @@ export function GlobalLayout() {
                   <button
                     key={navItem.name}
                     onClick={() => navigate(navItem.path)}
-                    className={`relative flex flex-col items-center justify-center rounded-2xl py-3 transition-all duration-300 active:scale-90 ${
+                    className={`relative flex flex-col items-center justify-center rounded-xl py-2 transition-all duration-200 active:bg-slate-50 ${
                       isActive ? 'text-primary' : 'text-slate-400 hover:text-slate-600'
                     }`}
                   >
-                    {isActive && <div className="absolute inset-0 bg-primary/10 rounded-2xl animate-in zoom-in-95 duration-300" />}
-                    <Icon className={`w-6 h-6 mb-1 z-10 ${isActive ? 'stroke-[2.5px]' : 'stroke-2'}`} />
-                    <span className={`text-[10px] font-bold z-10 tracking-tight`}>{navItem.name}</span>
+                    <Icon className={`w-6 h-6 mb-1 z-10 ${isActive ? 'stroke-[2px]' : 'stroke-[1.5px]'}`} />
+                    <span className="text-[10px] font-semibold z-10 tracking-wide">{navItem.name}</span>
                   </button>
                 );
               })}

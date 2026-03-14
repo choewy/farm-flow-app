@@ -24,7 +24,7 @@ export function FarmList({ openUpdateModal, openDeleteModal }: FarmListProps) {
       return (
         <ListEmpty
           message="상단의 버튼을 눌러 관리하실 첫 번째 농장을 만들어 보세요."
-          icon={<ShieldCheck size={40} />}
+          icon={ShieldCheck}
         />
       );
     }

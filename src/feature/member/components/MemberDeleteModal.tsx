@@ -44,7 +44,7 @@ export function MemberDeleteModal({ isOpen, row, fetchData, onClose }: MemberDel
         confirmText="삭제"
         cancelText="취소"
         confirmVariant="danger"
-        loading={loading}
+        isConfirmLoading={loading}
         onConfirm={handleDeleteMember}
         onCancel={onClose}
       />

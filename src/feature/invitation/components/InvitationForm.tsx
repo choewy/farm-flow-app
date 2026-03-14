@@ -5,6 +5,7 @@ import z from 'zod';
 
 import { invitationApi } from '../api/invitation.api';
 
+import { InvitationFooter } from './InvitationFooter';
 import { InvitationInput } from './InvitationInput';
 
 import { getErrorCodeMessage } from '@app/shared/api';
@@ -49,23 +50,21 @@ export function InvitationForm({ setEmail, setSuccess }: InvitationFormProps) {
   };
 
   return (
-    <div className="bg-white rounded-[2.5rem] p-8 shadow-premium ring-1 ring-slate-100 overflow-hidden relative">
-      <div className="absolute top-0 right-0 -mr-6 -mt-6 w-32 h-32 bg-primary/5 rounded-full blur-2xl" />
-
+    <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm overflow-hidden relative">
       <div className="relative">
-        <div className="h-16 w-16 rounded-3xl bg-primary/10 flex items-center justify-center text-primary mb-8">
-          <UserPlus size={32} className="stroke-[1.5px]" />
+        <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+          <UserPlus size={24} className="stroke-[1.5px]" />
         </div>
 
-        <div className="mb-8">
-          <h2 className="text-2xl font-black text-slate-800 tracking-tight">농장 초대장을 발송하세요</h2>
-          <p className="text-sm text-slate-400 mt-2 font-medium leading-relaxed">
+        <div className="mb-3">
+          <h2 className="text-xl font-bold text-slate-800 tracking-tight">농장 초대장을 발송하세요</h2>
+          <p className="text-sm text-slate-500 mt-2 font-medium leading-relaxed">
             이메일 주소를 입력하면 해당 사용자에게 <br />
             현재 농장으로의 초대 링크가 발송됩니다.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
           <InvitationInput
             labelText="Email Address"
             inputProps={{
@@ -81,12 +80,16 @@ export function InvitationForm({ setEmail, setSuccess }: InvitationFormProps) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-5 bg-primary text-white rounded-3xl font-black text-lg shadow-premium hover:opacity-95 active:scale-95 transition-all disabled:opacity-50 disabled:grayscale flex items-center justify-center space-x-2"
+            className="w-full py-3 bg-primary text-white rounded-xl font-bold text-base shadow-sm hover:opacity-95 active:scale-[0.98] transition-all disabled:opacity-50 disabled:grayscale flex items-center justify-center space-x-2"
           >
-            <Send size={20} className="stroke-[2.5px]" />
+            <Send size={18} className="stroke-[2px]" />
             <span>보내기</span>
           </button>
         </form>
+
+        <div className="mt-5">
+          <InvitationFooter />
+        </div>
       </div>
     </div>
   );

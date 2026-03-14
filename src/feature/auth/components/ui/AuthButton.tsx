@@ -6,9 +6,5 @@ export type AuthButtonProps = {
 };
 
 export function AuthButton({ disabled, text }: AuthButtonProps) {
-  return (
-    <PrimaryButton type="submit" disabled={disabled} size="md" className="mt-4">
-      {text}
-    </PrimaryButton>
-  );
+  return <PrimaryButton type="submit" disabled={disabled} text={text} />;
 }

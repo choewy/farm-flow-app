@@ -1,19 +1,15 @@
-import { ReactNode } from 'react';
+import { LucideIcon } from 'lucide-react';
 
-type ListEmptyProps = {
+export type ListEmptyProps = {
+  icon?: LucideIcon;
   message: string;
-  icon?: ReactNode;
 };
 
-export function ListEmpty({ message, icon }: ListEmptyProps) {
+export function ListEmpty({ icon: Icon, message }: ListEmptyProps) {
   return (
-    <div className="flex flex-col items-center justify-center py-20 px-10 rounded-[2.5rem] bg-white ring-1 ring-slate-100 shadow-premium text-center space-y-4">
-      {icon && (
-        <div className="h-16 w-16 rounded-3xl bg-slate-50 flex items-center justify-center text-slate-300">
-          {icon}
-        </div>
-      )}
-      <p className="text-slate-400 font-bold text-sm">{message}</p>
+    <div className="flex flex-col items-center justify-center p-12 bg-white rounded-2xl border border-slate-100 shadow-sm mt-4">
+      {Icon && <Icon size={40} className="text-slate-300 mb-4 stroke-1" />}
+      <p className="text-sm font-semibold text-slate-400">{message}</p>
     </div>
   );
 }

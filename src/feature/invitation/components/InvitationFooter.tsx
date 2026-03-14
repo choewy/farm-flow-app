@@ -5,10 +5,7 @@ export function InvitationFooter() {
         <div className="h-1.5 w-1.5 rounded-full bg-slate-300" />
         <span>Notice</span>
       </h4>
-      <p className="text-[11px] text-slate-400 font-medium leading-relaxed">
-        * 이메일의 링크를 클릭하여 농장 입장이 가능합니다.
-        <br />* 초대장은 발송 후 24시간 동안 유효합니다.
-      </p>
+      <p className="text-[11px] text-slate-400 font-medium leading-relaxed">* 초대장은 발송 후 24시간 동안 유효합니다.</p>
     </div>
   );
 }

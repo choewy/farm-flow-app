@@ -8,18 +8,20 @@ export type FormInputProps<T extends object> = {
   errors: FieldErrors<T>;
 };
 
-export function FormInput<T extends object>({ labelText, errors, inputProps, registerProps }: FormInputProps<T>) {
+export function FormInput<T extends object>({ labelText, inputProps, registerProps, errors }: FormInputProps<T>) {
   const error = get(errors, registerProps.name);
 
   return (
-    <div className="space-y-2">
-      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">{labelText}</label>
+    <div className="flex flex-col space-y-2">
+      <label className="text-sm font-bold text-slate-700 ml-1">{labelText}</label>
       <input
-        className="block w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 transition-all text-slate-800 font-bold placeholder:text-slate-300 shadow-inner"
         {...inputProps}
         {...registerProps}
+        className={`w-full py-3.5 px-4 bg-slate-50 border rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all ${
+          error ? 'border-danger focus:border-danger' : 'border-slate-200 focus:border-primary'
+        }`}
       />
-      {error && <p className="mt-1.5 ml-2 text-sm text-danger font-medium">{error.message}</p>}
+      {error && <p className="text-xs font-bold text-danger animate-in slide-in-from-top-1 ml-1 mt-1">{error}</p>}
     </div>
   );
 }

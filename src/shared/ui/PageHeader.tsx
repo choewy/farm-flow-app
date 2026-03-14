@@ -1,27 +1,42 @@
-import { ComponentType, ReactNode } from 'react';
-import { LucideProps } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
-type PageHeaderProps = {
-  icon: ComponentType<LucideProps>;
-  iconClassName?: string;
+export type PageHeaderProps = {
+  icon: LucideIcon;
   label: string;
   title: string;
-  action?: ReactNode;
+  count?: number;
+  actionButton?: {
+    icon: LucideIcon;
+    label: string;
+    onClick: () => void;
+  };
+  colorToken?: 'primary' | 'accent' | 'warning' | 'danger';
 };
 
-export function PageHeader({ icon: Icon, iconClassName = 'bg-primary/10 text-primary', label, title, action }: PageHeaderProps) {
+export function PageHeader({ icon: Icon, label, title, count, actionButton, colorToken = 'primary' }: PageHeaderProps) {
   return (
-    <div className="bg-white rounded-4xl p-6 shadow-premium ring-1 ring-slate-100 flex items-center justify-between">
+    <div className="flex items-center justify-between bg-white rounded-2xl p-5 border border-slate-200 shadow-sm overflow-hidden mb-6">
       <div className="flex items-center space-x-4">
-        <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${iconClassName}`}>
+        <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-${colorToken}/10 text-${colorToken}`}>
           <Icon size={24} />
         </div>
         <div>
-          <h2 className="text-sm font-black text-slate-400 uppercase tracking-[0.2em]">{label}</h2>
-          <p className="text-lg font-bold text-slate-800">{title}</p>
+          <span className={`text-[10px] font-bold tracking-wider text-${colorToken} uppercase`}>{label}</span>
+          <div className="flex items-center space-x-2 mt-0.5">
+            <h2 className="text-xl font-bold text-slate-800 tracking-tight">{title}</h2>
+            {count !== undefined && <span className="text-sm font-semibold text-slate-400">{count}명</span>}
+          </div>
         </div>
       </div>
-      {action && <div>{action}</div>}
+      {actionButton && (
+        <button
+          onClick={actionButton.onClick}
+          className="p-3 rounded-xl bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-all active:scale-95"
+          title={actionButton.label}
+        >
+          <actionButton.icon size={20} />
+        </button>
+      )}
     </div>
   );
 }

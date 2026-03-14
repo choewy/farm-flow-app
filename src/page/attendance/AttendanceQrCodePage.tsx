@@ -70,26 +70,26 @@ export default function AttendanceQrCodePage() {
   }, [seconds, deviceId, data?.id]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] w-full">
-      <div className="w-full bg-white rounded-3xl shadow-sm ring-1 ring-slate-100 p-8 flex flex-col items-center space-y-8">
-        <div className="text-center space-y-2">
-          <h1 className="text-2xl font-bold tracking-tight text-slate-800">출퇴근 QR</h1>
+    <div className="flex flex-col items-center justify-center min-h-[70vh] w-full">
+      <div className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col items-center space-y-6">
+        <div className="text-center space-y-1.5">
+          <h1 className="text-xl font-bold tracking-tight text-slate-800">출퇴근 QR</h1>
           <p className="text-sm text-slate-500">앱 스캐너를 통해 아래 코드를 스캔하세요</p>
         </div>
 
-        <div className="bg-white p-4 rounded-2xl shadow-inner border border-slate-100">
+        <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
           {data?.id ? (
-            <QRCodeCanvas value={data.id} size={220} level="H" includeMargin={true} className="rounded-2xl" />
+            <QRCodeCanvas value={data.id} size={220} level="H" marginSize={3} className="rounded-xl" />
           ) : (
-            <div className="w-55 h-55 flex items-center justify-center bg-slate-50 rounded-2xl text-slate-400 animate-pulse text-sm">
+            <div className="w-55 h-55 flex items-center justify-center bg-white rounded-xl text-slate-400 animate-pulse text-sm border border-slate-200">
               QR 로딩 중...
             </div>
           )}
         </div>
 
         <div className="w-full text-center">
-          <div className="inline-flex items-center space-x-2 bg-primary-light text-primary-dark px-5 py-2.5 rounded-full font-semibold text-sm shadow-sm">
-            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+          <div className="inline-flex items-center space-x-2 bg-slate-50 border border-slate-200 text-slate-600 px-4 py-2 rounded-xl font-bold text-sm">
+            <svg className="w-4 h-4 animate-spin text-primary" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path
                 className="opacity-75"
@@ -100,8 +100,6 @@ export default function AttendanceQrCodePage() {
             <span>{seconds}초 후 갱신됨</span>
           </div>
         </div>
-
-        <div className="text-xs font-mono text-slate-400 truncate w-full text-center">ID: {data?.id ?? '대기 중...'}</div>
       </div>
     </div>
   );

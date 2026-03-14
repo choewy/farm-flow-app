@@ -45,7 +45,7 @@ export function FarmDeleteModalContent({ farm, onClose }: FarmDeleteModalContent
         confirmText="삭제"
         cancelText="취소"
         confirmVariant="danger"
-        loading={loading}
+        isConfirmLoading={loading}
         onConfirm={handleDelete}
         onCancel={onClose}
       />

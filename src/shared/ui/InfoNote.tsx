@@ -1,13 +1,13 @@
 import { ReactNode } from 'react';
 
-type InfoNoteProps = {
+export type InfoNoteProps = {
   children: ReactNode;
 };
 
 export function InfoNote({ children }: InfoNoteProps) {
   return (
-    <div className="p-4 bg-slate-100/50 rounded-3xl">
-      <p className="text-[11px] text-slate-400 leading-relaxed">{children}</p>
+    <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl mt-auto">
+      <p className="text-xs text-slate-500 leading-relaxed font-medium">{children}</p>
     </div>
   );
 }

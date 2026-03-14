@@ -8,7 +8,7 @@ export default function MenuPage() {
   const openLogoutModal = () => setIsLogoutModalOpen(true);
 
   return (
-    <div className="flex flex-col space-y-8 p-1">
+    <div className="flex flex-col space-y-6">
       <MenuUserProfile />
       <MenuSection openLogoutModal={openLogoutModal} />
       <MenuFooter />

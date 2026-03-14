@@ -54,7 +54,7 @@ export default function MemberPage() {
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
 
   return (
-    <div className="flex flex-col space-y-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="flex flex-col space-y-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
       <MemberHeader total={response.total} />
       <MemberList loading={loading} rows={response.rows} openUpdateModal={openUpdateModal} openDeleteModal={openDeleteModal} />
       <MemberFooter />

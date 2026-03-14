@@ -33,61 +33,61 @@ export default function AttendancePage() {
   };
 
   return (
-    <div className="flex flex-col space-y-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
+    <div className="flex flex-col space-y-4 w-full animate-in fade-in slide-in-from-bottom-4 duration-300 relative">
       <button
-        className="group relative flex items-center space-x-5 rounded-[2.5rem] bg-slate-800 p-6 shadow-premium ring-1 ring-slate-700 transition-all duration-300 active:scale-[0.98]"
+        className="group relative flex items-center space-x-4 rounded-2xl bg-white p-5 border border-slate-200 shadow-sm transition-all duration-200 active:bg-slate-50"
         onClick={() => setIsHistoryOpen(true)}
       >
-        <div className="flex h-16 w-16 items-center justify-center rounded-4xl bg-white/10 text-white transition-transform group-hover:scale-110">
-          <ListIcon size={32} />
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-600 group-hover:bg-slate-200 transition-colors">
+          <ListIcon size={24} />
         </div>
         <div className="text-left flex-1">
-          <span className="text-lg font-bold text-white block">이력 조회</span>
-          <span className="text-xs text-slate-400 font-bold mt-1 block">출퇴근 전체 이력을 확인합니다</span>
+          <span className="text-base font-bold text-slate-800 block">이력 조회</span>
+          <span className="text-xs text-slate-500 font-medium mt-0.5 block">출퇴근 전체 이력을 확인합니다</span>
         </div>
       </button>
 
       <button
-        className="group relative flex items-center space-x-5 rounded-[2.5rem] bg-white p-6 shadow-premium ring-1 ring-slate-100 transition-all duration-300 active:scale-[0.98] disabled:opacity-50 disabled:grayscale"
+        className="group relative flex items-center space-x-4 rounded-2xl bg-white p-5 border border-slate-200 shadow-sm transition-all duration-200 active:bg-slate-50 disabled:opacity-50 disabled:bg-slate-50"
         onClick={() => openScanner('in')}
         disabled={!!attendance?.id}
       >
-        <div className="flex h-16 w-16 items-center justify-center rounded-4xl bg-primary/10 text-primary transition-transform group-hover:scale-110">
-          <LogIn size={32} />
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors">
+          <LogIn size={24} />
         </div>
         <div className="text-left flex-1">
-          <span className="text-lg font-bold text-slate-800 block">출근</span>
+          <span className="text-base font-bold text-slate-800 block">출근하기</span>
           {attendance?.checkedInAt && (
-            <span className="text-xs text-primary font-bold mt-1 block">
-              출근 시간: {new Date(attendance.checkedInAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            <span className="text-xs text-primary font-bold mt-0.5 block">
+              출근 완료: {new Date(attendance.checkedInAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </span>
           )}
         </div>
         {attendance?.id && attendance.status === 'in' && (
-          <div className="absolute top-6 right-8 h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(143,207,114,0.6)] animate-pulse" />
+          <div className="absolute top-5 right-6 h-2 w-2 rounded-full bg-primary shadow-sm animate-pulse" />
         )}
       </button>
 
       <button
         disabled={attendance?.status === 'out'}
         onClick={() => openScanner('out')}
-        className="group relative flex items-center space-x-5 rounded-[2.5rem] bg-white p-6 shadow-premium ring-1 ring-slate-100 transition-all duration-300 active:scale-[0.98] disabled:opacity-50 disabled:grayscale"
+        className="group relative flex items-center space-x-4 rounded-2xl bg-white p-5 border border-slate-200 shadow-sm transition-all duration-200 active:bg-slate-50 disabled:opacity-50 disabled:bg-slate-50"
       >
-        <div className="flex h-16 w-16 items-center justify-center rounded-4xl bg-orange-50 text-orange-400 transition-transform group-hover:scale-110">
-          <LogOutIcon size={32} />
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-warning/10 text-warning transition-colors">
+          <LogOutIcon size={24} />
         </div>
         <div className="text-left flex-1">
-          <span className="text-lg font-bold text-slate-800 block">퇴근</span>
+          <span className="text-base font-bold text-slate-800 block">퇴근하기</span>
           {attendance?.checkedOutAt && (
-            <span className="text-xs text-orange-500 font-bold mt-1 block">
-              퇴근 시간: {new Date(attendance.checkedOutAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            <span className="text-xs text-warning font-bold mt-0.5 block">
+              퇴근 완료: {new Date(attendance.checkedOutAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </span>
           )}
         </div>
       </button>
 
-      <div className="p-4 bg-slate-100/50 rounded-3xl mt-auto">
-        <p className="text-[11px] text-slate-400 leading-relaxed">
+      <div className="p-4 bg-slate-50/80 border border-slate-100 rounded-xl mt-auto">
+        <p className="text-xs text-slate-500 font-medium leading-relaxed">
           * 출퇴근 시 QR 코드를 스캔해야 합니다. <br />* 문제 발생 시 관리자에게 문의해 주세요.
         </p>
       </div>

@@ -1,45 +1,38 @@
-import { ReactNode } from 'react';
-
-type PrimaryButtonProps = {
-  children: ReactNode;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
+export type PrimaryButtonProps = {
+  text: string;
   onClick?: () => void;
+  disabled?: boolean;
+  isLoading?: boolean;
+  type?: 'button' | 'submit' | 'reset';
   variant?: 'primary' | 'danger';
-  size?: 'md' | 'lg';
-  className?: string;
 };
 
 export function PrimaryButton({
-  children,
-  type = 'button',
-  disabled,
+  text,
   onClick,
+  disabled = false,
+  isLoading = false,
+  type = 'submit',
   variant = 'primary',
-  size = 'lg',
-  className = '',
 }: PrimaryButtonProps) {
-  const base =
-    'w-full font-black rounded-3xl shadow-premium transition-all active:scale-[0.98] disabled:opacity-50 disabled:grayscale flex items-center justify-center space-x-2';
+  const baseClasses =
+    'w-full py-3.5 font-bold rounded-xl transition-all flex justify-center items-center active:scale-[0.98] shadow-sm tracking-wide';
 
-  const variants = {
-    primary: 'bg-primary text-white hover:opacity-95',
-    danger: 'bg-danger text-white hover:bg-danger/90',
+  const variantClasses = {
+    primary: 'bg-primary hover:bg-primary-dark text-white',
+    danger: 'bg-danger hover:bg-red-600 text-white',
   };
 
-  const sizes = {
-    md: 'py-4 text-base',
-    lg: 'py-5 text-lg',
-  };
+  const disabledClasses = disabled || isLoading ? 'opacity-50 cursor-not-allowed active:scale-100' : '';
 
   return (
     <button
       type={type}
-      disabled={disabled}
       onClick={onClick}
-      className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
+      disabled={disabled || isLoading}
+      className={`${baseClasses} ${variantClasses[variant]} ${disabledClasses}`}
     >
-      {children}
+      {isLoading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <span>{text}</span>}
     </button>
   );
 }

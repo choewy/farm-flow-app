@@ -54,20 +54,20 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
   };
 
   return (
-    <div className="fixed inset-0 z-100 flex flex-col bg-white">
-      <header className="flex items-center justify-between p-4 border-b">
-        <h2 className="text-lg font-bold">QR {type === 'in' ? '출근' : '퇴근'} 스캔</h2>
-        <button onClick={onClose} className="p-2 text-slate-500 hover:bg-slate-100 rounded-full">
+    <div className="fixed inset-0 z-100 flex flex-col bg-slate-50">
+      <header className="flex items-center justify-between p-4 bg-white border-b border-slate-100">
+        <h2 className="text-lg font-bold text-slate-800">QR {type === 'in' ? '출근' : '퇴근'} 스캔</h2>
+        <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
           <X className="w-6 h-6" />
         </button>
       </header>
 
       <div className="flex-1 flex flex-col items-center justify-center p-6 space-y-6">
         <div className="text-center">
-          <p className="text-slate-500">관리자 화면의 QR 코드를 스캔하세요</p>
+          <p className="text-sm font-semibold text-slate-500">지정된 QR 코드를 카메라 화면에 맞춰주세요</p>
         </div>
 
-        <div className="w-full max-w-sm aspect-square rounded-3xl overflow-hidden relative bg-slate-50 border-2 border-primary/50">
+        <div className="w-full max-w-sm aspect-square rounded-2xl overflow-hidden relative bg-slate-100 border border-slate-200 shadow-sm">
           <Scanner
             onScan={handleScan}
             onError={(e) => {

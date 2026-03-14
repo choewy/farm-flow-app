@@ -33,26 +33,26 @@ export function FarmListItem({ row, openUpdateModal, openDeleteModal }: FarmList
   };
 
   return (
-    <div className="group relative bg-white rounded-[2.5rem] p-6 shadow-premium ring-1 ring-slate-100 transition-all hover:ring-primary/20 hover:shadow-premium-lg">
-      <div className="flex justify-between items-start mb-6">
+    <div className="group relative bg-white rounded-3xl p-5 border border-slate-200 shadow-sm transition-all hover:shadow-md">
+      <div className="flex justify-between items-start mb-5">
         <div className="flex items-center space-x-4">
-          <div className="h-16 w-16 rounded-3xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-primary/5 group-hover:text-primary transition-colors">
-            <UserIcon size={32} />
+          <div className="h-14 w-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-primary/5 group-hover:text-primary group-hover:border-primary/20 transition-colors">
+            <UserIcon size={28} />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-black text-slate-800 tracking-tight truncate">{row.farm.name}</h3>
+            <h3 className="text-base font-bold text-slate-800 tracking-tight truncate">{row.farm.name}</h3>
             <div className="flex items-center space-x-2 mt-1">
-              <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-blue-100 text-blue-600`}>
+              <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-lg bg-blue-50 text-blue-600 border border-blue-100">
                 {row.role.name}
               </span>
             </div>
           </div>
         </div>
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center">
           {row.role.super && (
             <button
               onClick={() => openUpdateModal(row.farm)}
-              className="p-2.5 rounded-xl hover:bg-slate-50 text-slate-400 hover:text-primary transition-all active:scale-95"
+              className="p-2 rounded-xl text-slate-400 hover:text-primary hover:bg-slate-50 transition-colors"
               title="농장 이름 수정"
             >
               <Edit3 size={18} />
@@ -61,7 +61,7 @@ export function FarmListItem({ row, openUpdateModal, openDeleteModal }: FarmList
           {row.role.super && (
             <button
               onClick={() => openDeleteModal(row.farm)}
-              className="p-2.5 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-500 transition-all active:scale-95"
+              className="p-2 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-colors"
               title="농장 삭제"
             >
               <Trash2 size={18} />
@@ -73,10 +73,10 @@ export function FarmListItem({ row, openUpdateModal, openDeleteModal }: FarmList
       <button
         disabled={isCurrentFarm}
         onClick={() => handleCheckInFarm(row.farm.id)}
-        className="w-full py-4 bg-slate-50 hover:bg-primary hover:text-white text-slate-600 font-black rounded-3xl transition-all flex items-center justify-center space-x-2 group-active:scale-[0.98]"
+        className="w-full py-3.5 bg-slate-50 border border-slate-100 hover:bg-primary hover:border-primary hover:text-white text-slate-600 font-bold rounded-2xl transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:hover:bg-slate-50 disabled:hover:text-slate-600 disabled:hover:border-slate-100"
       >
         <LogIn size={18} />
-        <span>{isCurrentFarm ? '현재 접속된 농장' : '이 농장으로 접속하기'}</span>
+        <span className="text-sm">{isCurrentFarm ? '현재 접속된 농장' : '이 농장으로 접속하기'}</span>
       </button>
     </div>
   );

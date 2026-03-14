@@ -97,29 +97,29 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
           rows.map((row) => (
             <div
               key={row.id}
-              className="bg-white rounded-3xl p-5 shadow-sm ring-1 ring-slate-100 flex items-center justify-between transition-all hover:shadow-md"
+              className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex items-center justify-between"
             >
               <div>
-                <div className="text-sm font-bold text-slate-800 mb-2">
+                <div className="text-sm font-bold text-slate-800 mb-1.5">
                   {row.workDate}({DateTime.formatDay(row.workDate)})
                 </div>
-                <div className="flex items-center space-x-3 text-xs text-slate-500 font-medium">
+                <div className="flex items-center space-x-2.5 text-xs text-slate-500 font-medium">
                   <span className="flex items-center text-primary">
-                    <LogIn size={13} className="mr-1.5" />
+                    <LogIn size={13} className="mr-1" />
                     {row.checkedInAt ? new Date(row.checkedInAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '-'}
                   </span>
-                  <span className="text-slate-300">|</span>
-                  <span className="flex items-center">
-                    <LogOutIcon size={13} className="mr-1.5" />
+                  <span className="text-slate-200">|</span>
+                  <span className="flex items-center text-warning">
+                    <LogOutIcon size={13} className="mr-1" />
                     {row.checkedOutAt ? new Date(row.checkedOutAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '-'}
                   </span>
                 </div>
               </div>
               <div>
                 {row.status === 'in' ? (
-                  <span className="px-3 py-1.5 rounded-full bg-primary/10 text-primary text-[11px] font-bold">근무 중</span>
+                  <span className="px-2.5 py-1 rounded-lg bg-primary/10 text-primary text-[11px] font-bold tracking-wide">근무 중</span>
                 ) : (
-                  <span className="px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 text-[11px] font-bold">
+                  <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-500 text-[11px] font-bold tracking-wide">
                     {DateTime.formatTime(row.seconds)}
                   </span>
                 )}
@@ -128,10 +128,10 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
           ))
         ) : (
           <div className="py-20 flex flex-col items-center justify-center text-center">
-            <div className="h-16 w-16 rounded-full bg-white shadow-sm ring-1 ring-slate-100 flex items-center justify-center mb-4">
-              <Calendar size={24} className="text-slate-300" />
+            <div className="h-16 w-16 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center justify-center mb-4">
+              <Calendar size={24} className="text-slate-300 stroke-1" />
             </div>
-            <span className="text-sm font-bold text-slate-500">지정된 기간의 출근 기록이 없습니다</span>
+            <span className="text-sm font-semibold text-slate-400">지정된 기간의 출근 기록이 없습니다</span>
           </div>
         )}
       </div>
