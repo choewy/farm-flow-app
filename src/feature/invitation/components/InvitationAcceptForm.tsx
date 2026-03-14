@@ -88,29 +88,32 @@ export function InvitationAcceptForm() {
 
   return (
     <div className="relative flex flex-col items-center">
-      <div className="flex justify-center space-x-2.5">
+      <div className="mt-5 flex w-full justify-center gap-2 sm:gap-2.5">
         {code.map((digit, idx) => (
           <input
             key={idx}
             ref={(el) => {
               inputRefs.current[idx] = el;
             }}
-            type="text"
+            name={`invitation-accept-digit-${idx}`}
+            inputMode="numeric"
+            pattern="[0-9]*"
+            className={`h-15 w-10 rounded-[1.15rem] border-2 bg-slate-50 text-center text-xl font-black transition-all outline-none focus:ring-4 focus:ring-primary/10 sm:h-16 sm:w-11 sm:text-2xl ${
+              error ? 'border-red-200 text-red-500' : digit ? 'border-primary/30 text-primary' : 'border-slate-100 text-slate-800'
+            }`}
             maxLength={1}
             value={digit}
             disabled={loading}
             onChange={(e) => handleChange(idx, e.target.value)}
             onKeyDown={(e) => handleKeyDown(idx, e)}
             onPaste={handlePaste}
-            className={`w-11 h-16 bg-slate-50 border-2 rounded-2xl text-center text-2xl font-black transition-all outline-none focus:ring-4 focus:ring-primary/10 ${
-              error ? 'border-red-200 text-red-500' : digit ? 'border-primary/30 text-primary' : 'border-slate-100 text-slate-800'
-            }`}
+            autoComplete="off"
           />
         ))}
       </div>
 
       {error && (
-        <div className="mt-5 px-4 py-2 bg-red-50 rounded-full border border-red-100">
+        <div className="mt-4 rounded-full border border-red-100 bg-red-50 px-4 py-2">
           <span className="text-xs font-bold text-red-500">{error}</span>
         </div>
       )}

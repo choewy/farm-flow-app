@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 import { attendanceApi } from '../api';
@@ -17,6 +18,36 @@ type AttendanceScannerModalProps = {
 export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: AttendanceScannerModalProps) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const scrollY = window.scrollY;
+    const originalBodyStyle = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      width: document.body.style.width,
+      overflow: document.body.style.overflow,
+    };
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.body.style.position = originalBodyStyle.position;
+      document.body.style.top = originalBodyStyle.top;
+      document.body.style.width = originalBodyStyle.width;
+      document.body.style.overflow = originalBodyStyle.overflow;
+      window.scrollTo(0, scrollY);
+    };
+  }, [isOpen]);
 
   if (!isOpen) {
     return null;
@@ -53,8 +84,8 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-100 flex flex-col bg-slate-50">
+  return createPortal(
+    <div className="fixed inset-0 z-[220] flex flex-col bg-slate-50">
       <header className="flex items-center justify-between p-4 bg-white border-b border-slate-100">
         <h2 className="text-lg font-bold text-slate-800">QR {type === 'in' ? '출근' : '퇴근'} 스캔</h2>
         <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
@@ -125,6 +156,7 @@ export function AttendanceScannerModal({ isOpen, onClose, type, onSuccess }: Att
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

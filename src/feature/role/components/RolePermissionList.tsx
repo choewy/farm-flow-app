@@ -10,10 +10,11 @@ export type RolePermissionListProps = {
 
 export function RolePermissionList({ permissionKeys, onClickHandler, readOnly }: RolePermissionListProps) {
   return (
-    <div className="grid grid-cols-1 gap-2 max-h-60 overflow-y-auto pr-2 scrollbar-hide">
+    <div className="grid grid-cols-1 gap-2">
       {PERMISSION_LABEL_ENTRIES.map(([key, label]) => (
         <button
           key={key}
+          type="button"
           onClick={() => onClickHandler(key)}
           disabled={readOnly}
           className={`flex items-center justify-between px-4 py-2 rounded-2xl border-2 transition-all duration-200 ${

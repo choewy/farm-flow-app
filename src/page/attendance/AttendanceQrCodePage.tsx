@@ -81,7 +81,6 @@ export default function AttendanceQrCodePage() {
               <QrCode size={26} />
             </div>
             <h1 className="mt-4 text-[1.45rem] font-black tracking-[-0.04em] text-slate-800">출퇴근 QR</h1>
-            <p className="mt-2 text-sm font-medium text-slate-500">모바일 스캐너로 아래 코드를 읽으면 바로 출퇴근 처리됩니다.</p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-2">

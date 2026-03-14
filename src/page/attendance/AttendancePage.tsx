@@ -40,21 +40,14 @@ export default function AttendancePage() {
             <p className="app-kicker text-primary/70">Attendance Flow</p>
             <h2 className="mt-2 text-[1.45rem] font-black tracking-[-0.04em] text-slate-800">오늘의 출퇴근 상태를 빠르게 처리하세요</h2>
             <p className="mt-2 text-sm font-medium leading-relaxed text-slate-500">
-              QR 스캔으로 출근과 퇴근을 기록하고, 이력 카드에서 전체 기록을 확인할 수 있습니다.
+              QR 스캔으로 출퇴근을 기록하고
+              <br />
+              전체 기록을 확인할 수 있습니다.
             </p>
           </div>
           <div className="rounded-[1.45rem] bg-primary/10 p-3 text-primary">
             <QrCode size={24} />
           </div>
-        </div>
-
-        <div className="relative z-10 mt-4 flex flex-wrap gap-2">
-          <span className={`app-chip ${attendance?.checkedInAt ? 'app-chip-primary' : ''}`}>
-            출근 {attendance?.checkedInAt ? '완료' : '대기'}
-          </span>
-          <span className={`app-chip ${attendance?.checkedOutAt ? 'app-chip-warning' : ''}`}>
-            퇴근 {attendance?.checkedOutAt ? '완료' : '대기'}
-          </span>
         </div>
       </section>
 
@@ -69,7 +62,6 @@ export default function AttendancePage() {
           <span className="block text-base font-black tracking-[-0.02em] text-slate-800">이력 조회</span>
           <span className="mt-0.5 block text-xs font-medium text-slate-500">출퇴근 전체 이력을 확인합니다</span>
         </div>
-        <span className="app-kicker text-slate-400">History</span>
       </button>
 
       <button
@@ -87,7 +79,9 @@ export default function AttendancePage() {
               출근 완료: {new Date(attendance.checkedInAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </span>
           )}
-          {!attendance?.checkedInAt && <span className="mt-0.5 block text-xs font-medium text-slate-500">QR 스캐너를 열어 출근을 등록합니다</span>}
+          {!attendance?.checkedInAt && (
+            <span className="mt-0.5 block text-xs font-medium text-slate-500">QR 스캐너를 열어 출근을 등록합니다</span>
+          )}
         </div>
         {attendance?.id && attendance.status === 'in' && (
           <div className="absolute right-6 top-5 h-2.5 w-2.5 rounded-full bg-primary shadow-sm animate-pulse" />
@@ -109,7 +103,9 @@ export default function AttendancePage() {
               퇴근 완료: {new Date(attendance.checkedOutAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </span>
           )}
-          {!attendance?.checkedOutAt && <span className="mt-0.5 block text-xs font-medium text-slate-500">퇴근 전에도 동일하게 QR 인증이 필요합니다</span>}
+          {!attendance?.checkedOutAt && (
+            <span className="mt-0.5 block text-xs font-medium text-slate-500">퇴근 전에도 동일하게 QR 인증이 필요합니다</span>
+          )}
         </div>
       </button>
 

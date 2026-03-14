@@ -1,3 +1,4 @@
+import { useLayoutEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Clock, ClockIcon, Home, HomeIcon, Menu, MenuIcon } from 'lucide-react';
 
@@ -17,6 +18,22 @@ export function GlobalLayout() {
 
   const hideNavPaths = [ROUTES.login, ROUTES.register] as string[];
   const shouldShowNav = !hideNavPaths.includes(location.pathname);
+
+  useLayoutEffect(() => {
+    const resetScroll = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    resetScroll();
+
+    const frame = window.requestAnimationFrame(resetScroll);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
+  }, [location.pathname]);
 
   return (
     <div className="relative min-h-screen px-3 pb-3 pt-[max(0.75rem,var(--safe-top))] text-slate-800 antialiased sm:px-5">

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import dayjs from 'dayjs';
 import { Calendar, LogIn, LogOut as LogOutIcon, X } from 'lucide-react';
 
@@ -40,12 +41,42 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
       .catch((e) => Toast.error(getErrorCodeMessage(e)));
   }, [isOpen, startDate, endDate]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const scrollY = window.scrollY;
+    const originalBodyStyle = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      width: document.body.style.width,
+      overflow: document.body.style.overflow,
+    };
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.body.style.position = originalBodyStyle.position;
+      document.body.style.top = originalBodyStyle.top;
+      document.body.style.width = originalBodyStyle.width;
+      document.body.style.overflow = originalBodyStyle.overflow;
+      window.scrollTo(0, scrollY);
+    };
+  }, [isOpen]);
+
   if (!isOpen) {
     return null;
   }
 
-  return (
-    <div className="fixed inset-0 z-100 flex flex-col bg-slate-50 h-dvh w-full overflow-hidden">
+  return createPortal(
+    <div className="fixed inset-0 z-[220] flex flex-col bg-slate-50 h-dvh w-full overflow-hidden">
       <div className="bg-white shadow-sm flex-none">
         <div className="px-5 pt-5 pb-5">
           <header className="flex items-center justify-between mb-6">
@@ -135,6 +166,7 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
