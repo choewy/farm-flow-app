@@ -50,28 +50,36 @@ export function InvitationForm({ setEmail, setSuccess }: InvitationFormProps) {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm overflow-hidden relative">
-      <div className="relative">
-        <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
-          <UserPlus size={24} className="stroke-[1.5px]" />
+    <div className="app-panel px-6 py-6">
+      <div className="relative z-10">
+        <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-[1.4rem] bg-primary/10 text-primary">
+          <UserPlus size={24} className="stroke-[1.7px]" />
         </div>
 
         <div className="mb-3">
-          <h2 className="text-xl font-bold text-slate-800 tracking-tight">농장 초대장을 발송하세요</h2>
-          <p className="text-sm text-slate-500 mt-2 font-medium leading-relaxed">
-            이메일 주소를 입력하면 해당 사용자에게 <br />
-            현재 농장으로의 초대 링크가 발송됩니다.
+          <p className="app-kicker text-primary/70">Invitation</p>
+          <h2 className="mt-2 text-[1.55rem] font-black tracking-[-0.04em] text-slate-800">농장 초대장을 발송하세요</h2>
+          <p className="mt-2 text-sm font-medium leading-relaxed text-slate-500">
+            이메일 주소를 입력하면 해당 사용자에게 현재 농장으로 바로 연결되는 초대 링크가 발송됩니다.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+        <div className="mt-4 flex flex-wrap gap-2">
+          <span className="app-chip app-chip-primary">
+            <Send size={14} />
+            즉시 메일 발송
+          </span>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-5 space-y-4">
           <InvitationInput
-            labelText="Email Address"
+            labelText="초대할 이메일"
             inputProps={{
               type: 'email',
               placeholder: 'user@example.com',
               autoComplete: 'off',
               autoFocus: true,
+              autoCapitalize: 'none',
             }}
             registerProps={register('email')}
             errors={errors}
@@ -80,7 +88,7 @@ export function InvitationForm({ setEmail, setSuccess }: InvitationFormProps) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 bg-primary text-white rounded-xl font-bold text-base shadow-sm hover:opacity-95 active:scale-[0.98] transition-all disabled:opacity-50 disabled:grayscale flex items-center justify-center space-x-2"
+            className="app-button app-button-primary"
           >
             <Send size={18} className="stroke-[2px]" />
             <span>보내기</span>

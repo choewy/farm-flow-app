@@ -3,8 +3,8 @@ import { ROUTES } from '@app/shared/routes';
 
 export default function LoginPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] w-full">
-      <div className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+    <div className="app-page app-page-auth items-center">
+      <div className="app-panel w-full px-6 py-7">
         <AuthTitle title="Farm Flow" description="로그인" />
         <AuthLoginForm />
         <AuthAnchor to={ROUTES.register} comment="계정이 없으신가요?" text="회원가입" />

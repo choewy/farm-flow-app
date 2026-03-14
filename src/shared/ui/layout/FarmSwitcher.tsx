@@ -46,20 +46,20 @@ export function FarmSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-white/40 border border-white/40 hover:bg-white/60 transition-all active:scale-95 shadow-sm"
+        className="flex items-center space-x-2 rounded-2xl border border-[rgba(98,88,68,0.12)] bg-white/70 px-3 py-2 shadow-[0_10px_22px_rgba(41,43,23,0.08)] transition-all active:scale-95"
       >
-        <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-        <span className="text-[11px] font-black text-slate-700 uppercase tracking-wider max-w-22.5 truncate">
+        <div className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
+        <span className="max-w-22.5 truncate text-[11px] font-black uppercase tracking-[0.18em] text-slate-700">
           {currentFarm?.name || 'Select Farm'}
         </span>
         <ChevronDown size={14} className={`text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && farms.length > 0 && (
-        <div className="absolute right-0 mt-3 w-64 bg-white/90 backdrop-blur-2xl rounded-4xl shadow-premium-lg ring-1 ring-slate-100 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200 origin-top-right">
+        <div className="absolute right-0 z-50 mt-3 w-64 origin-top-right overflow-hidden rounded-[1.75rem] border border-[rgba(98,88,68,0.1)] bg-[rgba(255,252,247,0.92)] shadow-premium-lg backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-200">
           <div className="p-3 space-y-1">
-            <div className="px-4 py-3 border-b border-slate-50 mb-1">
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">접속 농장 전환</p>
+            <div className="mb-1 border-b border-[rgba(98,88,68,0.08)] px-4 py-3">
+              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">접속 농장 전환</p>
             </div>
 
             {farms.map(({ farm, role: farmRole }) => {
@@ -69,17 +69,17 @@ export function FarmSwitcher() {
                 <button
                   key={farm.id}
                   onClick={() => handleFarmSelect(farm.id)}
-                  className={`w-full flex items-center justify-between p-3 rounded-2xl transition-all ${
-                    isActive ? 'bg-primary/10 text-primary shadow-sm' : 'text-slate-600 hover:bg-slate-50/80 active:bg-slate-100/50'
+                  className={`w-full flex items-center justify-between rounded-2xl p-3 transition-all ${
+                    isActive ? 'bg-primary/10 text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]' : 'text-slate-600 hover:bg-white/70 active:bg-slate-100/60'
                   }`}
                 >
                   <div className="flex items-center space-x-3 text-left">
-                    <div className={`p-2 rounded-xl ${isActive ? 'bg-white shadow-sm' : 'bg-slate-50'}`}>
+                    <div className={`rounded-xl p-2 ${isActive ? 'bg-white shadow-sm' : 'bg-slate-50'}`}>
                       <ShieldCheck size={16} className={isActive ? 'text-primary' : 'text-slate-400'} />
                     </div>
                     <div>
-                      <p className={`text-sm font-bold truncate max-w-30 ${isActive ? 'text-primary' : 'text-slate-800'}`}>{farm.name}</p>
-                      <p className={`text-[10px] uppercase tracking-widest font-black ${isActive ? 'text-primary/60' : 'text-slate-400'}`}>
+                      <p className={`max-w-30 truncate text-sm font-bold ${isActive ? 'text-primary' : 'text-slate-800'}`}>{farm.name}</p>
+                      <p className={`text-[10px] font-black uppercase tracking-widest ${isActive ? 'text-primary/60' : 'text-slate-400'}`}>
                         {farmRole?.name ?? '일반 사용자'}
                       </p>
                     </div>
@@ -94,8 +94,8 @@ export function FarmSwitcher() {
             })}
           </div>
 
-          <div className="bg-slate-50/50 px-5 py-3 border-t border-slate-50">
-            <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest text-center">Farm Flow Identity Service</p>
+          <div className="border-t border-[rgba(98,88,68,0.08)] bg-slate-50/50 px-5 py-3">
+            <p className="text-center text-[9px] font-black uppercase tracking-widest text-slate-300">Farm Flow Identity Service</p>
           </div>
         </div>
       )}

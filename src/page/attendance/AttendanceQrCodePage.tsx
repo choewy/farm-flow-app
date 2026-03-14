@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { QrCode, RefreshCw, Smartphone } from 'lucide-react';
 import { QRCodeCanvas } from 'qrcode.react';
 
 import { API_BASE_URL } from '@app/config';
@@ -69,35 +70,58 @@ export default function AttendanceQrCodePage() {
     createQr();
   }, [seconds, deviceId, data?.id]);
 
+  const progress = `${(Math.min(seconds, 59) / 59) * 100}%`;
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] w-full">
-      <div className="w-full bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col items-center space-y-6">
-        <div className="text-center space-y-1.5">
-          <h1 className="text-xl font-bold tracking-tight text-slate-800">출퇴근 QR</h1>
-          <p className="text-sm text-slate-500">앱 스캐너를 통해 아래 코드를 스캔하세요</p>
-        </div>
-
-        <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-          {data?.id ? (
-            <QRCodeCanvas value={data.id} size={220} level="H" marginSize={3} className="rounded-xl" />
-          ) : (
-            <div className="w-55 h-55 flex items-center justify-center bg-white rounded-xl text-slate-400 animate-pulse text-sm border border-slate-200">
-              QR 로딩 중...
+    <div className="app-page app-page-centered items-center">
+      <div className="app-panel w-full px-5 py-5">
+        <div className="relative z-10 flex flex-col items-center space-y-6">
+          <div className="text-center">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-[1.4rem] bg-primary/10 text-primary">
+              <QrCode size={26} />
             </div>
-          )}
-        </div>
+            <h1 className="mt-4 text-[1.45rem] font-black tracking-[-0.04em] text-slate-800">출퇴근 QR</h1>
+            <p className="mt-2 text-sm font-medium text-slate-500">모바일 스캐너로 아래 코드를 읽으면 바로 출퇴근 처리됩니다.</p>
+          </div>
 
-        <div className="w-full text-center">
-          <div className="inline-flex items-center space-x-2 bg-slate-50 border border-slate-200 text-slate-600 px-4 py-2 rounded-xl font-bold text-sm">
-            <svg className="w-4 h-4 animate-spin text-primary" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-            <span>{seconds}초 후 갱신됨</span>
+          <div className="flex flex-wrap justify-center gap-2">
+            <span className="app-chip app-chip-primary">
+              <Smartphone size={14} />
+              모바일 스캔 전용
+            </span>
+            <span className="app-chip">
+              <RefreshCw size={14} />
+              1분마다 자동 갱신
+            </span>
+          </div>
+
+          <div className="rounded-[2rem] border border-[rgba(98,88,68,0.08)] bg-white p-4 shadow-[0_18px_40px_rgba(41,43,23,0.08)]">
+            <div className="rounded-[1.5rem] bg-[linear-gradient(180deg,#fbfaf5_0%,#f6f1e5_100%)] p-4">
+              {data?.id ? (
+                <QRCodeCanvas value={data.id} size={220} level="H" marginSize={3} className="rounded-xl" />
+              ) : (
+                <div className="flex h-[220px] w-[220px] items-center justify-center rounded-[1.35rem] border border-slate-200 bg-white text-sm text-slate-400 animate-pulse">
+                  QR 로딩 중...
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="w-full">
+            <div className="flex items-center justify-between text-xs font-bold text-slate-500">
+              <span>다음 갱신까지</span>
+              <span>{seconds}초</span>
+            </div>
+            <div className="app-progress mt-2">
+              <div className="app-progress-bar" style={{ width: progress }} />
+            </div>
+          </div>
+
+          <div className="app-note w-full">
+            <p className="text-sm font-semibold text-slate-700">화면을 켠 상태로 유지해 주세요.</p>
+            <p className="mt-1 text-xs font-medium leading-relaxed text-slate-500">
+              코드가 자동으로 새로 발급되므로 직원이 순서대로 스캔하기에 적합한 화면입니다.
+            </p>
           </div>
         </div>
       </div>

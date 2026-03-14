@@ -8,21 +8,27 @@ export type InvitationSuccessProps = {
 
 export function InvitationSuccess({ email, setSuccess }: InvitationSuccessProps) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 animate-in fade-in zoom-in-95 duration-300">
-      <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
-        <CheckCircle2 size={40} className="stroke-2" />
+    <div className="app-panel animate-in fade-in zoom-in-95 duration-300 px-6 py-7">
+      <div className="relative z-10 flex flex-col items-center text-center">
+        <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-[1.7rem] bg-primary/10 text-primary">
+          <CheckCircle2 size={40} className="stroke-2" />
+        </div>
+        <p className="app-kicker text-primary/70">Invitation Sent</p>
+        <h2 className="mt-2 text-[1.5rem] font-black tracking-[-0.04em] text-slate-800">초대장 발송 완료</h2>
+        <p className="mt-3 text-sm font-medium leading-relaxed text-slate-500">
+          <span className="font-bold text-primary">{email}</span>
+          <br />
+          주소로 초대장이 발송되었습니다.
+        </p>
+        <div className="app-note mt-6 w-full">
+          <p className="text-xs font-medium leading-relaxed text-slate-500">
+            메일이 보이지 않으면 스팸함을 확인해 주세요. 필요한 경우 같은 화면에서 다시 초대할 수 있습니다.
+          </p>
+        </div>
+        <button onClick={() => setSuccess(false)} className="app-button app-button-primary mt-6">
+          <span>다시 초대하기</span>
+        </button>
       </div>
-      <h2 className="text-xl font-bold text-slate-800 tracking-tight text-center mb-3">초대장 발송 완료</h2>
-      <p className="text-center text-slate-500 font-medium mb-8 leading-relaxed text-sm">
-        <span className="text-primary font-bold">{email}</span>로 <br />
-        초대장이 발송되었습니다.
-      </p>
-      <button
-        onClick={() => setSuccess(false)}
-        className="w-full py-4 bg-primary text-white rounded-2xl font-bold shadow-sm active:scale-95 transition-all flex items-center justify-center space-x-2"
-      >
-        <span>다시 초대하기</span>
-      </button>
     </div>
   );
 }

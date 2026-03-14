@@ -1,41 +1,79 @@
+import { CalendarClock, Sprout, SunMedium } from 'lucide-react';
+
 import { useAuthStore } from '@app/shared/stores';
 
 export default function HomePage() {
-  const { user, role } = useAuthStore();
+  const { user, role, farm } = useAuthStore();
 
   return (
-    <div className="flex flex-col space-y-4 w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
-      {/* Welcome Section */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex items-center space-x-5">
-        <div className="relative">
-          <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-            <span className="text-2xl font-bold">{user?.name?.charAt(0) || 'U'}</span>
+    <div className="app-page animate-in fade-in slide-in-from-bottom-4 duration-300">
+      <section className="app-hero px-6 py-6">
+        <div className="relative z-10 flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <p className="app-kicker text-white/70">Today&apos;s Field</p>
+            <h1 className="mt-2 text-[1.8rem] font-black leading-tight tracking-[-0.04em]">
+              {user?.name || '사용자'}님,
+              <br />
+              오늘도 좋은 흐름으로 시작해요.
+            </h1>
+            <p className="mt-3 max-w-64 text-sm font-medium leading-relaxed text-white/78">
+              {farm?.name || '현재 농장'}에서 출퇴근과 멤버 운영을 한 번에 관리할 수 있어요.
+            </p>
           </div>
-          <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-primary border-2 border-white flex items-center justify-center" />
-        </div>
-        <div className="flex flex-col">
-          <p className="text-xs font-semibold text-slate-400 mb-0.5">환영합니다</p>
-          <h1 className="text-xl font-bold text-slate-800 tracking-tight">
-            <span className="text-primary">{user?.name || '사용자'}님</span>
-          </h1>
-          <div className="mt-2 inline-flex">
-            <span className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-100 text-[10px] font-bold text-slate-500 tracking-wider">
-              {role?.name || '일반 사용자'}
-            </span>
+          <div className="flex h-[4.75rem] w-[4.75rem] shrink-0 items-center justify-center rounded-[1.65rem] bg-white/18 backdrop-blur-sm">
+            <span className="text-3xl font-black">{user?.name?.charAt(0) || 'U'}</span>
           </div>
         </div>
-      </div>
+        <div className="relative z-10 mt-5 flex flex-wrap gap-2">
+          <span className="app-chip border-white/20 bg-white/16 text-white">
+            <Sprout size={14} />
+            {role?.name || '일반 사용자'}
+          </span>
+          <span className="app-chip border-white/20 bg-white/16 text-white">
+            <CalendarClock size={14} />
+            모바일 PWA 준비 완료
+          </span>
+        </div>
+      </section>
 
-      {/* Summary Section */}
-      <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
-        <div className="flex flex-col">
-          <h3 className="text-xs font-bold text-slate-400 tracking-wide mb-1">오늘의 한마디</h3>
-          <p className="text-sm font-semibold text-slate-700">오늘도 활기찬 하루 되세요!</p>
+      <section className="grid grid-cols-2 gap-3">
+        <article className="app-card p-4">
+          <div className="flex items-center justify-between">
+            <span className="app-kicker text-primary/60">Farm</span>
+            <div className="rounded-2xl bg-primary/10 p-2 text-primary">
+              <Sprout size={18} />
+            </div>
+          </div>
+          <p className="mt-4 text-lg font-black tracking-[-0.03em] text-slate-800">{farm?.name || '농장 선택 필요'}</p>
+          <p className="mt-1 text-sm font-medium text-slate-500">현재 접속 중인 작업 공간</p>
+        </article>
+
+        <article className="app-card p-4">
+          <div className="flex items-center justify-between">
+            <span className="app-kicker text-warning/70">Mood</span>
+            <div className="rounded-2xl bg-warning/10 p-2 text-warning">
+              <SunMedium size={18} />
+            </div>
+          </div>
+          <p className="mt-4 text-lg font-black tracking-[-0.03em] text-slate-800">활기찬 하루</p>
+          <p className="mt-1 text-sm font-medium text-slate-500">오늘도 안전하고 가볍게 기록하세요</p>
+        </article>
+      </section>
+
+      <section className="app-panel px-5 py-5">
+        <div className="relative z-10 flex items-start justify-between gap-4">
+          <div>
+            <p className="app-kicker text-accent/70">Quick Summary</p>
+            <h2 className="mt-2 text-xl font-black tracking-[-0.03em] text-slate-800">모바일 앱처럼 빠르게 확인</h2>
+            <p className="mt-2 text-sm font-medium leading-relaxed text-slate-500">
+              하단 탭으로 출퇴근, 메뉴, 관리 기능을 오가며 필요한 작업에 바로 진입할 수 있습니다.
+            </p>
+          </div>
+          <div className="rounded-[1.4rem] bg-accent/10 p-3 text-accent">
+            <CalendarClock size={22} />
+          </div>
         </div>
-        <div className="h-10 w-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-400">
-          ✨
-        </div>
-      </div>
+      </section>
     </div>
   );
 }

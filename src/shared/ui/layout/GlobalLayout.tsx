@@ -19,20 +19,21 @@ export function GlobalLayout() {
   const shouldShowNav = !hideNavPaths.includes(location.pathname);
 
   return (
-    <div className="flex min-h-screen bg-slate-50 font-sans text-slate-800 antialiased">
-      <div className="mx-auto flex w-full max-w-md flex-col bg-slate-50 relative overflow-hidden">
+    <div className="relative min-h-screen px-3 pb-3 pt-[max(0.75rem,var(--safe-top))] text-slate-800 antialiased sm:px-5">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-linear-to-b from-white/30 to-transparent" />
+      <div className="mx-auto flex min-h-[calc(100vh-var(--safe-top)-0.75rem)] w-full max-w-md flex-col overflow-hidden rounded-[2rem] border border-white/45 bg-white/20 shadow-[0_24px_70px_rgba(41,43,23,0.16)] backdrop-blur-[6px]">
         {shouldShowNav && <GlobalHeader />}
 
-        <main className={`flex-1 w-full overflow-hidden ${shouldShowNav ? 'pt-16 pb-20' : ''}`}>
-          <div className="p-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+        <main className={`relative flex-1 w-full overflow-hidden ${shouldShowNav ? 'pt-20 pb-28' : 'pb-6 pt-4'}`}>
+          <div className="absolute inset-0 bg-linear-to-b from-white/14 via-white/6 to-transparent" />
+          <div className="relative p-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <Outlet />
           </div>
         </main>
 
         {shouldShowNav && (
-          <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-slate-200 z-50">
-            {/* Safe area padding for iOS */}
-            <div className="grid grid-cols-3 gap-1 px-4 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
+          <nav className="fixed bottom-[max(0.75rem,var(--safe-bottom))] left-1/2 z-50 w-full max-w-md -translate-x-1/2 px-4">
+            <div className="grid grid-cols-3 gap-2 rounded-[1.75rem] border border-white/60 bg-[rgba(255,252,247,0.82)] p-2 shadow-[0_20px_40px_rgba(41,43,23,0.16)] backdrop-blur-2xl">
               {NAV_ITEMS.map((navItem) => {
                 const isActive = location.pathname === navItem.path;
                 const Icon = isActive ? navItem.activeIcon : navItem.icon;
@@ -40,12 +41,12 @@ export function GlobalLayout() {
                   <button
                     key={navItem.name}
                     onClick={() => navigate(navItem.path)}
-                    className={`relative flex flex-col items-center justify-center rounded-xl py-2 transition-all duration-200 active:bg-slate-50 ${
-                      isActive ? 'text-primary' : 'text-slate-400 hover:text-slate-600'
+                    className={`relative flex flex-col items-center justify-center rounded-2xl py-2.5 transition-all duration-200 ${
+                      isActive ? 'bg-primary/10 text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]' : 'text-slate-400 hover:bg-white/45 hover:text-slate-700'
                     }`}
                   >
-                    <Icon className={`w-6 h-6 mb-1 z-10 ${isActive ? 'stroke-[2px]' : 'stroke-[1.5px]'}`} />
-                    <span className="text-[10px] font-semibold z-10 tracking-wide">{navItem.name}</span>
+                    <Icon className={`z-10 mb-1 h-5 w-5 ${isActive ? 'stroke-[2.25px]' : 'stroke-[1.8px]'}`} />
+                    <span className="z-10 text-[10px] font-black tracking-[0.18em]">{navItem.name}</span>
                   </button>
                 );
               })}

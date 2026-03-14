@@ -27,11 +27,11 @@ export function MenuSection({ openLogoutModal }: MenuSectionProps) {
       })}
 
       <button
-        className="group w-full flex items-center justify-between p-5 bg-white rounded-2xl border border-slate-200 shadow-sm transition-all active:scale-[0.98] active:bg-red-50"
+        className="app-card group flex w-full items-center justify-between p-5 transition-all active:scale-[0.98]"
         onClick={openLogoutModal}
       >
         <div className="flex items-center space-x-4">
-          <div className="p-2.5 rounded-xl bg-red-50 text-red-500 transition-transform group-hover:scale-110">
+          <div className="rounded-[1.1rem] bg-red-50 p-2.5 text-red-500 transition-transform group-hover:scale-110">
             <LogOut size={20} className="stroke-2" />
           </div>
           <span className="font-bold text-red-500 tracking-tight">로그아웃</span>

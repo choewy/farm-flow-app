@@ -8,20 +8,20 @@ export function MenuSectionItem(props: MenuSectionProps) {
 
   return (
     <div key={props.title} className="animate-in fade-in slide-in-from-bottom-4 duration-300 fill-mode-both">
-      <h3 className="text-xs font-bold text-slate-400 mb-2.5 ml-1">{props.title}</h3>
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <h3 className="app-kicker mb-3 ml-1 text-slate-400">{props.title}</h3>
+      <div className="app-panel overflow-hidden p-2">
         {props.items
           .filter((item) => item.visible)
           .map((item, idx, arr) => (
             <button
               key={item.name}
               onClick={() => item.path !== '#' && navigate(item.path)}
-              className={`group w-full flex items-center justify-between p-4 hover:bg-slate-50 transition-all active:bg-slate-100 ${
-                idx !== arr.length - 1 ? 'border-b border-slate-100' : ''
+              className={`group flex w-full items-center justify-between rounded-[1.35rem] p-4 text-left transition-all hover:bg-white/80 ${
+                idx !== arr.length - 1 ? 'mb-1' : ''
               }`}
             >
               <div className="flex items-center space-x-4">
-                <div className={`p-2.5 rounded-xl ${item.background} ${item.color} transition-transform group-hover:scale-110`}>
+                <div className={`rounded-[1.1rem] p-2.5 ${item.background} ${item.color} transition-transform group-hover:scale-110`}>
                   <item.icon size={20} className="stroke-2" />
                 </div>
                 <span className="font-bold text-slate-700 tracking-tight">{item.name}</span>

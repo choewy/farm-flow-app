@@ -7,7 +7,7 @@ export default function InvitationPage() {
   const [success, setSuccess] = useState(false);
 
   return (
-    <div className="flex flex-col space-y-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-300 justify-center min-h-[70vh]">
+    <div className="app-page app-page-centered animate-in fade-in slide-in-from-bottom-4 duration-300">
       {success ? (
         <InvitationSuccess email={email} setSuccess={setSuccess} />
       ) : (

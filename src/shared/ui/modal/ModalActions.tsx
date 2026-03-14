@@ -31,7 +31,7 @@ export function ModalActions({
       <button
         onClick={onCancel}
         disabled={isConfirmLoading}
-        className="w-full py-3.5 text-slate-400 font-bold hover:text-slate-600 transition-colors rounded-xl"
+        className="app-button app-button-secondary"
       >
         {cancelText}
       </button>

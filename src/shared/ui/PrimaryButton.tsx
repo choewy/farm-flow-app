@@ -15,22 +15,19 @@ export function PrimaryButton({
   type = 'submit',
   variant = 'primary',
 }: PrimaryButtonProps) {
-  const baseClasses =
-    'w-full py-3.5 font-bold rounded-xl transition-all flex justify-center items-center active:scale-[0.98] shadow-sm tracking-wide';
+  const baseClasses = 'app-button';
 
   const variantClasses = {
-    primary: 'bg-primary hover:bg-primary-dark text-white',
-    danger: 'bg-danger hover:bg-red-600 text-white',
+    primary: 'app-button-primary',
+    danger: 'app-button-danger',
   };
-
-  const disabledClasses = disabled || isLoading ? 'opacity-50 cursor-not-allowed active:scale-100' : '';
 
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled || isLoading}
-      className={`${baseClasses} ${variantClasses[variant]} ${disabledClasses}`}
+      className={`${baseClasses} ${variantClasses[variant]}`}
     >
       {isLoading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <span>{text}</span>}
     </button>

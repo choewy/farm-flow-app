@@ -11,12 +11,12 @@ export function AuthAnchor({ to, comment, text }: AuthAnchorProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="text-center text-sm pt-2">
-      <span className="text-slate-500 mr-1">{comment}</span>
+    <div className="pt-2 text-center text-sm">
+      <span className="mr-1 font-medium text-slate-500">{comment}</span>
       <button
         type="button"
         onClick={() => navigate(to, { state: location.state })}
-        className="font-semibold text-primary-dark hover:text-[#3d6e2c] transition-colors ml-1"
+        className="ml-1 font-bold text-primary-dark transition-colors hover:text-[#3d6e2c]"
       >
         {text}
       </button>
