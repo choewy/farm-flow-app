@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Sprout } from 'lucide-react';
 
 import { FarmSwitcher } from './FarmSwitcher';
 
@@ -48,16 +48,20 @@ export function GlobalHeader({ title }: GlobalHeaderProps) {
     <header className="fixed left-1/2 top-[max(0.75rem,var(--safe-top))] z-50 w-full max-w-md -translate-x-1/2 px-4">
       <div className="app-panel app-panel-strong overflow-visible flex h-16 items-center justify-between px-4">
         <div className="flex items-center space-x-2">
-          {!isRootPage && (
+          {isRootPage ? (
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl from-primary/18 via-accent/14 to-primary/8 text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]">
+              <Sprout size={22} className="stroke-[2.5px]" />
+            </div>
+          ) : (
             <button
-              onClick={() => navigate(-1)}
               className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/70 text-slate-700 transition hover:bg-white"
+              onClick={() => navigate(-1)}
             >
               <ChevronLeft size={22} className="stroke-[2.5px]" />
             </button>
           )}
           <div className="min-w-0">
-            <p className="app-kicker text-primary/70">{isRootPage ? 'Farm Flow' : 'Workspace'}</p>
+            <p className="app-kicker text-primary/70">{isRootPage ? 'Farm Flow' : 'Farm Flow'}</p>
             <h1 className="truncate text-[1.02rem] font-black tracking-[-0.03em] text-slate-800">{getPageTitle()}</h1>
           </div>
         </div>
