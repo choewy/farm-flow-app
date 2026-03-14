@@ -95,8 +95,8 @@ export default function AttendanceQrCodePage() {
             </span>
           </div>
 
-          <div className="rounded-[2rem] border border-[rgba(98,88,68,0.08)] bg-white p-4 shadow-[0_18px_40px_rgba(41,43,23,0.08)]">
-            <div className="rounded-[1.5rem] bg-[linear-gradient(180deg,#fbfaf5_0%,#f6f1e5_100%)] p-4">
+          <div className="rounded-[2rem] border border-[rgba(148,163,184,0.16)] bg-white p-4 shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
+            <div className="rounded-[1.5rem] bg-[linear-gradient(180deg,#f8fdff_0%,#edf7ff_100%)] p-4">
               {data?.id ? (
                 <QRCodeCanvas value={data.id} size={220} level="H" marginSize={3} className="rounded-xl" />
               ) : (

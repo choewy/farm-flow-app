@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Check, ChevronDown, ShieldCheck } from 'lucide-react';
 
 import { authApi } from '@app/feature/auth';
@@ -8,23 +9,70 @@ import { Toast } from '@app/shared/toast';
 
 export function FarmSwitcher() {
   const { farm: currentFarm, user, role, setSession } = useAuthStore();
-  const { rows: farms, fetchFarms } = useFarmStore();
+  const { rows: farms, loading, fetchFarms } = useFarmStore();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
 
   useEffect(() => {
-    fetchFarms();
+    void fetchFarms();
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (event: PointerEvent) => {
+      const target = event.target as Node;
+      const isInsideTrigger = dropdownRef.current?.contains(target);
+      const isInsideMenu = menuRef.current?.contains(target);
+
+      if (!isInsideTrigger && !isInsideMenu) {
         setIsOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('pointerdown', handleClickOutside);
+    return () => document.removeEventListener('pointerdown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (isOpen && !loading && farms.length === 0) {
+      void fetchFarms();
+    }
+  }, [isOpen, loading, farms.length, fetchFarms]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const updatePosition = () => {
+      if (!buttonRef.current) {
+        return;
+      }
+
+      const rect = buttonRef.current.getBoundingClientRect();
+      const menuWidth = 256;
+      const viewportPadding = 16;
+      const left = Math.min(
+        Math.max(viewportPadding, rect.right - menuWidth),
+        window.innerWidth - menuWidth - viewportPadding,
+      );
+
+      setMenuPosition({
+        top: rect.bottom + 12,
+        left,
+      });
+    };
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [isOpen]);
 
   const handleFarmSelect = async (farmId: string) => {
     if (farmId === currentFarm?.id) {
@@ -43,9 +91,11 @@ export function FarmSwitcher() {
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative z-[60]" ref={dropdownRef}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        ref={buttonRef}
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
         className="flex items-center space-x-2 rounded-2xl border border-[rgba(98,88,68,0.12)] bg-white/70 px-3 py-2 shadow-[0_10px_22px_rgba(41,43,23,0.08)] transition-all active:scale-95"
       >
         <div className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
@@ -55,50 +105,68 @@ export function FarmSwitcher() {
         <ChevronDown size={14} className={`text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      {isOpen && farms.length > 0 && (
-        <div className="absolute right-0 z-50 mt-3 w-64 origin-top-right overflow-hidden rounded-[1.75rem] border border-[rgba(98,88,68,0.1)] bg-[rgba(255,252,247,0.92)] shadow-premium-lg backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-200">
-          <div className="p-3 space-y-1">
-            <div className="mb-1 border-b border-[rgba(98,88,68,0.08)] px-4 py-3">
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">접속 농장 전환</p>
+      {isOpen &&
+        createPortal(
+          <div
+            ref={menuRef}
+            className="fixed z-[120] w-64 overflow-hidden rounded-[1.75rem] border border-[rgba(98,88,68,0.1)] bg-[rgba(255,252,247,0.96)] shadow-premium-lg backdrop-blur-2xl"
+            style={{ top: menuPosition.top, left: menuPosition.left }}
+          >
+            <div className="p-3 space-y-1">
+              <div className="mb-1 border-b border-[rgba(98,88,68,0.08)] px-4 py-3">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">접속 농장 전환</p>
+              </div>
+
+              {loading && <div className="px-4 py-6 text-center text-sm font-medium text-slate-500">농장 목록을 불러오는 중...</div>}
+
+              {!loading && farms.length === 0 && (
+                <div className="px-4 py-6 text-center text-sm font-medium leading-relaxed text-slate-500">표시할 농장이 없습니다.</div>
+              )}
+
+              {!loading &&
+                farms.map(({ farm, role: farmRole }) => {
+                  const isActive = farm.id === currentFarm?.id;
+
+                  return (
+                    <button
+                      key={farm.id}
+                      type="button"
+                      onClick={() => handleFarmSelect(farm.id)}
+                      className={`w-full flex items-center justify-between rounded-2xl p-3 transition-all ${
+                        isActive
+                          ? 'bg-primary/10 text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]'
+                          : 'text-slate-600 hover:bg-white/70 active:bg-slate-100/60'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3 text-left">
+                        <div className={`rounded-xl p-2 ${isActive ? 'bg-white shadow-sm' : 'bg-slate-50'}`}>
+                          <ShieldCheck size={16} className={isActive ? 'text-primary' : 'text-slate-400'} />
+                        </div>
+                        <div>
+                          <p className={`max-w-30 truncate text-sm font-bold ${isActive ? 'text-primary' : 'text-slate-800'}`}>{farm.name}</p>
+                          <p
+                            className={`text-[10px] font-black uppercase tracking-widest ${isActive ? 'text-primary/60' : 'text-slate-400'}`}
+                          >
+                            {farmRole?.name ?? '일반 사용자'}
+                          </p>
+                        </div>
+                      </div>
+                      {isActive && (
+                        <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center text-white">
+                          <Check size={14} className="stroke-[3.5px]" />
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
             </div>
 
-            {farms.map(({ farm, role: farmRole }) => {
-              const isActive = farm.id === currentFarm?.id;
-
-              return (
-                <button
-                  key={farm.id}
-                  onClick={() => handleFarmSelect(farm.id)}
-                  className={`w-full flex items-center justify-between rounded-2xl p-3 transition-all ${
-                    isActive ? 'bg-primary/10 text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]' : 'text-slate-600 hover:bg-white/70 active:bg-slate-100/60'
-                  }`}
-                >
-                  <div className="flex items-center space-x-3 text-left">
-                    <div className={`rounded-xl p-2 ${isActive ? 'bg-white shadow-sm' : 'bg-slate-50'}`}>
-                      <ShieldCheck size={16} className={isActive ? 'text-primary' : 'text-slate-400'} />
-                    </div>
-                    <div>
-                      <p className={`max-w-30 truncate text-sm font-bold ${isActive ? 'text-primary' : 'text-slate-800'}`}>{farm.name}</p>
-                      <p className={`text-[10px] font-black uppercase tracking-widest ${isActive ? 'text-primary/60' : 'text-slate-400'}`}>
-                        {farmRole?.name ?? '일반 사용자'}
-                      </p>
-                    </div>
-                  </div>
-                  {isActive && (
-                    <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center text-white">
-                      <Check size={14} className="stroke-[3.5px]" />
-                    </div>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="border-t border-[rgba(98,88,68,0.08)] bg-slate-50/50 px-5 py-3">
-            <p className="text-center text-[9px] font-black uppercase tracking-widest text-slate-300">Farm Flow Identity Service</p>
-          </div>
-        </div>
-      )}
+            <div className="border-t border-[rgba(98,88,68,0.08)] bg-slate-50/50 px-5 py-3">
+              <p className="text-center text-[9px] font-black uppercase tracking-widest text-slate-300">Farm Flow Identity Service</p>
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

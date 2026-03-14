@@ -17,8 +17,8 @@ export default defineConfig({
         name: 'FarmFlow',
         short_name: 'FarmFlow',
         description: 'PWA for Farm Flow App with QR Attendance',
-        theme_color: '#f6f1e5',
-        background_color: '#f6f1e5',
+        theme_color: '#f4fbff',
+        background_color: '#f4fbff',
         display: 'standalone',
         orientation: 'portrait',
         icons: [

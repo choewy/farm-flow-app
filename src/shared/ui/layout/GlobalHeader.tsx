@@ -46,7 +46,7 @@ export function GlobalHeader({ title }: GlobalHeaderProps) {
 
   return (
     <header className="fixed left-1/2 top-[max(0.75rem,var(--safe-top))] z-50 w-full max-w-md -translate-x-1/2 px-4">
-      <div className="app-panel app-panel-strong flex h-16 items-center justify-between px-4">
+      <div className="app-panel app-panel-strong overflow-visible flex h-16 items-center justify-between px-4">
         <div className="flex items-center space-x-2">
           {!isRootPage && (
             <button
