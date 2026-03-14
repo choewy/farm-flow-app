@@ -3,6 +3,7 @@ import { Calendar, LogIn, LogOut as LogOutIcon, X } from 'lucide-react';
 
 import { attendanceApi, AttendanceListRequestParam } from '../api';
 
+import { DateTime } from '@app/shared/helpers';
 import { Attendance } from '@app/shared/models';
 
 interface AttendanceHistoryModalProps {
@@ -98,7 +99,9 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
               className="bg-white rounded-3xl p-5 shadow-sm ring-1 ring-slate-100 flex items-center justify-between transition-all hover:shadow-md"
             >
               <div>
-                <div className="text-sm font-bold text-slate-800 mb-2">{record.workDate}</div>
+                <div className="text-sm font-bold text-slate-800 mb-2">
+                  {record.workDate}({DateTime.formatDay(record.workDate)})
+                </div>
                 <div className="flex items-center space-x-3 text-xs text-slate-500 font-medium">
                   <span className="flex items-center text-primary">
                     <LogIn size={13} className="mr-1.5" />
@@ -117,7 +120,9 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
                 {record.status === 'in' ? (
                   <span className="px-3 py-1.5 rounded-full bg-primary/10 text-primary text-[11px] font-bold">근무 중</span>
                 ) : (
-                  <span className="px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 text-[11px] font-bold">퇴근</span>
+                  <span className="px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 text-[11px] font-bold">
+                    {DateTime.formatTime(record.seconds)}
+                  </span>
                 )}
               </div>
             </div>
