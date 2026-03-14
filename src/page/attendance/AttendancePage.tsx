@@ -70,8 +70,7 @@ export function AttendancePage() {
             <LogIn size={32} />
           </div>
           <div className="text-left">
-            <span className="text-lg font-bold text-slate-800 block">출근하기</span>
-            <p className="text-sm text-slate-400">QR 코드를 스캔하여 일과를 시작하세요</p>
+            <span className="text-lg font-bold text-slate-800 block">출근</span>
           </div>
           {attendance?.id && (
             <div className="absolute top-6 right-8 h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(143,207,114,0.6)]" />
@@ -87,8 +86,7 @@ export function AttendancePage() {
             <LogOutIcon size={32} />
           </div>
           <div className="text-left">
-            <span className="text-lg font-bold text-slate-800 block">퇴근하기</span>
-            <p className="text-sm text-slate-400">일과를 마무리하고 퇴근 처리합니다</p>
+            <span className="text-lg font-bold text-slate-800 block">퇴근</span>
           </div>
         </button>
       </div>
