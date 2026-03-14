@@ -5,7 +5,7 @@ import { FarmListRow } from '../api';
 
 import { authApi } from '@app/feature/auth';
 import { getErrorCodeMessage } from '@app/shared/api';
-import { Farm, PermissionKey } from '@app/shared/models';
+import { Farm } from '@app/shared/models';
 import { ROUTES } from '@app/shared/routes';
 import { useAuthStore } from '@app/shared/stores';
 import { Toast } from '@app/shared/toast';
@@ -20,7 +20,6 @@ export function FarmListItem({ row, openUpdateModal, openDeleteModal }: FarmList
   const navigate = useNavigate();
   const { farm, setSession } = useAuthStore();
 
-  const permissionKeys = row.role.permissionKeys ?? [];
   const isCurrentFarm = row.farm.id === farm?.id;
 
   const handleCheckInFarm = async (farmId: string) => {
@@ -50,7 +49,7 @@ export function FarmListItem({ row, openUpdateModal, openDeleteModal }: FarmList
           </div>
         </div>
         <div className="flex items-center space-x-1">
-          {permissionKeys.includes(PermissionKey.Update) && (
+          {row.role.super && (
             <button
               onClick={() => openUpdateModal(row.farm)}
               className="p-2.5 rounded-xl hover:bg-slate-50 text-slate-400 hover:text-primary transition-all active:scale-95"
@@ -59,7 +58,7 @@ export function FarmListItem({ row, openUpdateModal, openDeleteModal }: FarmList
               <Edit3 size={18} />
             </button>
           )}
-          {permissionKeys.includes(PermissionKey.Delete) && (
+          {row.role.super && (
             <button
               onClick={() => openDeleteModal(row.farm)}
               className="p-2.5 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-500 transition-all active:scale-95"

@@ -2,6 +2,7 @@ import { authApi } from '@app/feature/auth';
 import { useAuthStore } from '@app/shared/stores';
 import { Toast } from '@app/shared/toast';
 import { Modal } from '@app/shared/ui/modal';
+import { ModalActions } from '@app/shared/ui/modal/ModalActions';
 
 export type LogoutModalProps = {
   isOpen: boolean;
@@ -11,7 +12,7 @@ export type LogoutModalProps = {
 export function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
   const { clearSession } = useAuthStore();
 
-  const handleDelete = async () => {
+  const handleLogout = async () => {
     await authApi.logout().catch();
     onClose();
     Toast.info('로그아웃되었습니다.');
@@ -23,18 +24,14 @@ export function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
   }
 
   return (
-    <Modal title="로그아웃" description={`로그아웃을 하시겠습니까?`} onClose={onClose}>
-      <div className="pt-6">
-        <button
-          className="w-full py-4 bg-red-500 text-white rounded-3xl font-bold shadow-premium transition-all active:scale-[0.98] disabled:opacity-50 disabled:grayscale"
-          onClick={handleDelete}
-        >
-          로그아웃
-        </button>
-        <button onClick={onClose} className="w-full py-4 mt-2 text-slate-400 font-bold hover:text-slate-600 transition-colors">
-          취소
-        </button>
-      </div>
+    <Modal title="로그아웃" description="로그아웃을 하시겠습니까?" onClose={onClose}>
+      <ModalActions
+        confirmText="로그아웃"
+        cancelText="취소"
+        confirmVariant="danger"
+        onConfirm={handleLogout}
+        onCancel={onClose}
+      />
     </Modal>
   );
 }
