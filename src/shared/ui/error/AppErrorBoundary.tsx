@@ -32,7 +32,7 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
 
     this.setState({ isReloading: true }, () => {
       sessionStorage.setItem(RELOAD_STORAGE_KEY, String(Date.now()));
-      window.location.reload();
+      void this.reloadApp();
     });
   }
 
@@ -49,8 +49,39 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
 
   private handleManualReload = () => {
     sessionStorage.removeItem(RELOAD_STORAGE_KEY);
-    window.location.reload();
+    this.setState({ isReloading: true }, () => {
+      void this.reloadApp();
+    });
   };
+
+  private async reloadApp() {
+    await Promise.allSettled([this.unregisterServiceWorkers(), this.clearCacheStorage()]);
+    window.location.replace(this.createReloadUrl());
+  }
+
+  private async unregisterServiceWorkers() {
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    await Promise.allSettled(registrations.map((registration) => registration.unregister()));
+  }
+
+  private async clearCacheStorage() {
+    if (!('caches' in window)) {
+      return;
+    }
+
+    const cacheKeys = await caches.keys();
+    await Promise.allSettled(cacheKeys.map((cacheKey) => caches.delete(cacheKey)));
+  }
+
+  private createReloadUrl() {
+    const url = new URL(window.location.href);
+    url.searchParams.set('__refresh', String(Date.now()));
+    return url.toString();
+  }
 
   render() {
     if (!this.state.hasError) {
@@ -61,7 +92,7 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
       <div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-white px-6 text-center text-slate-700">
         <div className="space-y-2">
           <h1 className="text-xl font-semibold text-slate-900">
-            {this.state.isReloading ? '페이지를 새로고침하고 있어요.' : '문제가 발생했어요.'}
+            {this.state.isReloading ? '새 버전이 배포되었습니다.' : '문제가 발생했어요.'}
           </h1>
           <p className="text-sm leading-6 text-slate-500">
             {this.state.isReloading
