@@ -4,8 +4,8 @@ import {
   memberApi,
   MemberDeleteModal,
   MemberEditModal,
-  MemberFooter,
   MemberHeader,
+  MemberInfo,
   MemberList,
   MemberListResponse,
   MemberResponse,
@@ -54,10 +54,10 @@ export default function MemberPage() {
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
 
   return (
-    <div className="flex flex-col space-y-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
+    <div className="flex flex-col space-y-2 w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
       <MemberHeader total={response.total} />
+      <MemberInfo />
       <MemberList loading={loading} rows={response.rows} openUpdateModal={openUpdateModal} openDeleteModal={openDeleteModal} />
-      <MemberFooter />
       {selectedRow && (
         <>
           <MemberEditModal isOpen={isUpdateModalOpen} row={selectedRow} fetchData={fetchData} onClose={closeUpdateModal} />

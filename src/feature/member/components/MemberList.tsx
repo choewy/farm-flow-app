@@ -30,5 +30,5 @@ export function MemberList({ loading, rows, openUpdateModal, openDeleteModal }: 
     );
   };
 
-  return <div className="space-y-4">{renderComponent()}</div>;
+  return <div className="space-y-1">{renderComponent()}</div>;
 }

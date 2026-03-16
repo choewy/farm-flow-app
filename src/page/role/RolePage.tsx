@@ -5,8 +5,8 @@ import {
   RoleCreateModal,
   RoleDeleteModal,
   RoleDetailModal,
-  RoleFooter,
   RoleHeader,
+  RoleInfo,
   RoleList,
   RoleListResponse,
   RoleUpdateModal,
@@ -66,8 +66,9 @@ export default function RolePage() {
   };
 
   return (
-    <div className="flex flex-col space-y-6 w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
+    <div className="flex flex-col space-y-2 w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
       <RoleHeader total={response.total} openCreateModal={() => setIsCreateModalOpen(true)} />
+      <RoleInfo />
       <RoleList
         loading={loading}
         rows={response.rows}
@@ -76,10 +77,15 @@ export default function RolePage() {
         openDeleteModal={openDeleteModal}
       />
       <RoleCreateModal isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} fetchRoles={fetchRoles} />
-      <RoleFooter />
+
       {selectedRow && (
         <>
-          <RoleDetailModal key={`detail-${selectedRow.id}`} isOpen={isDetailModalOpen} selectedRow={selectedRow} onClose={() => setIsDetailModalOpen(false)} />
+          <RoleDetailModal
+            key={`detail-${selectedRow.id}`}
+            isOpen={isDetailModalOpen}
+            selectedRow={selectedRow}
+            onClose={() => setIsDetailModalOpen(false)}
+          />
           <RoleUpdateModal
             key={`update-${selectedRow.id}`}
             isOpen={isUpdateModalOpen}

@@ -21,15 +21,10 @@ export function FarmList({ openUpdateModal, openDeleteModal }: FarmListProps) {
     }
 
     if (rows.length === 0) {
-      return (
-        <ListEmpty
-          message="상단의 버튼을 눌러 관리하실 첫 번째 농장을 만들어 보세요."
-          icon={ShieldCheck}
-        />
-      );
+      return <ListEmpty message="상단의 버튼을 눌러 관리하실 첫 번째 농장을 만들어 보세요." icon={ShieldCheck} />;
     }
     return (
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-3">
         {rows.map((row) => (
           <FarmListItem key={row.farm.id} row={row} openUpdateModal={openUpdateModal} openDeleteModal={openDeleteModal} />
         ))}
@@ -41,5 +36,5 @@ export function FarmList({ openUpdateModal, openDeleteModal }: FarmListProps) {
     fetchFarms();
   }, []);
 
-  return <section className="space-y-4 px-1">{renderComponent()}</section>;
+  return <section className="space-y-1 px-1">{renderComponent()}</section>;
 }

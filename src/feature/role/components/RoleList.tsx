@@ -36,5 +36,5 @@ export function RoleList({ loading, rows, openDetailModal, openUpdateModal, open
     );
   };
 
-  return <div className="space-y-4">{renderComponent()}</div>;
+  return <div className="space-y-1">{renderComponent()}</div>;
 }
