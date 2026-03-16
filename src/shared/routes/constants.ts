@@ -13,4 +13,5 @@ export const ROUTES = {
   roles: '/roles',
   invitation: '/invitation',
   invitationAccept: '/invitation/accept',
+  payrolls: '/payrolls',
 } as const;

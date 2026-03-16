@@ -76,7 +76,7 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-[220] flex flex-col bg-slate-50 h-dvh w-full overflow-hidden">
+    <div className="fixed inset-0 z-220 flex flex-col bg-slate-50 h-dvh w-full overflow-hidden">
       <div className="bg-white shadow-sm flex-none">
         <div className="px-5 pt-5 pb-5">
           <header className="flex items-center justify-between mb-6">
@@ -126,10 +126,7 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
       <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-8 space-y-3">
         {rows.length > 0 ? (
           rows.map((row) => (
-            <div
-              key={row.id}
-              className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex items-center justify-between"
-            >
+            <div key={row.id} className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex items-center justify-between">
               <div>
                 <div className="text-sm font-bold text-slate-800 mb-1.5">
                   {row.workDate}({DateTime.formatDay(row.workDate)})

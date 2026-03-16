@@ -10,3 +10,4 @@ export type Role = {
 
 export type AuthRole = Pick<Role, 'id' | 'name' | 'required' | 'super' | 'permissionKeys'>;
 export type MemberRole = Pick<Role, 'id' | 'name' | 'required' | 'super'>;
+export type PayrollRole = Pick<Role, 'id' | 'name' | 'required' | 'super'>;

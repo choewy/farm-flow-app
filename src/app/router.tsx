@@ -9,6 +9,7 @@ import { InvitationAcceptPage, InvitationPage } from '@app/page/invitation';
 import { LoginPage } from '@app/page/login';
 import { MemberPage } from '@app/page/member';
 import { MenuPage } from '@app/page/menu';
+import { PayrollPage } from '@app/page/payroll';
 import { ProfilePage } from '@app/page/profile';
 import { RegisterPage } from '@app/page/register';
 import { RolePage } from '@app/page/role';
@@ -71,6 +72,11 @@ export const router = createBrowserRouter([
               />
             ),
             children: [{ index: true, element: <RolePage /> }],
+          },
+          {
+            path: ROUTES.payrolls,
+            element: <PermissionRoute permissionKeys={[PermissionKey.PayrollRead]} />,
+            children: [{ index: true, element: <PayrollPage /> }],
           },
         ],
       },

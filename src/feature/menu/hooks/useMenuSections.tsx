@@ -1,4 +1,4 @@
-import { Bell, LayoutList, QrCode, Settings, ShieldPlus, TicketSlash, UserPlus, UsersRound } from 'lucide-react';
+import { Bell, QrCode, Settings, ShieldCheck, Sprout, Ticket, UserPlus, UsersRound, Wallet } from 'lucide-react';
 
 import { MenuSectionProps } from '../types';
 
@@ -12,19 +12,19 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
       items: [
         {
           name: '내 농장 목록',
-          icon: LayoutList,
+          icon: Sprout,
           path: ROUTES.farms,
           visible: true,
-          color: 'text-blue-500',
-          background: 'bg-blue-50',
+          color: 'text-emerald-600',
+          background: 'bg-emerald-50',
         },
         {
           name: '초대코드 입력',
-          icon: TicketSlash,
+          icon: Ticket,
           path: ROUTES.invitationAccept,
           visible: true,
-          color: 'text-slate-500',
-          background: 'bg-slate-50',
+          color: 'text-cyan-600',
+          background: 'bg-cyan-50',
         },
       ],
     },
@@ -32,14 +32,30 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
       title: 'Farm Services',
       items: [
         {
+          name: '출퇴근 QR 생성',
+          icon: QrCode,
+          path: ROUTES.attendanceQrCode,
+          visible: permissionKeys.includes(PermissionKey.AttendanceQrCreate),
+          color: 'text-violet-600',
+          background: 'bg-violet-50',
+        },
+        {
+          name: '멤버 초대',
+          icon: UserPlus,
+          path: ROUTES.invitation,
+          visible: permissionKeys.includes(PermissionKey.InvitationCreate),
+          color: 'text-sky-600',
+          background: 'bg-sky-50',
+        },
+        {
           name: '역할 관리',
-          icon: ShieldPlus,
+          icon: ShieldCheck,
           path: ROUTES.roles,
           visible: permissionKeys.some((permissionKey) =>
             [PermissionKey.RoleRead, PermissionKey.RoleCreate, PermissionKey.RoleUpdate, PermissionKey.RoleRemove].includes(permissionKey),
           ),
-          color: 'text-indigo-500',
-          background: 'bg-indigo-50',
+          color: 'text-amber-600',
+          background: 'bg-amber-50',
         },
         {
           name: '멤버 관리',
@@ -50,24 +66,16 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
               permissionKey,
             ),
           ),
-          color: 'text-indigo-500',
-          background: 'bg-indigo-50',
+          color: 'text-blue-600',
+          background: 'bg-blue-50',
         },
         {
-          name: '멤버 초대',
-          icon: UserPlus,
-          path: ROUTES.invitation,
-          visible: permissionKeys.includes(PermissionKey.InvitationCreate),
-          color: 'text-indigo-500',
-          background: 'bg-indigo-50',
-        },
-        {
-          name: '출퇴근 QR 생성',
-          icon: QrCode,
-          path: ROUTES.attendanceQrCode,
-          visible: permissionKeys.includes(PermissionKey.AttendanceQrCreate),
-          color: 'text-primary',
-          background: 'bg-primary/10',
+          name: '급여 정산',
+          icon: Wallet,
+          path: ROUTES.payrolls,
+          visible: permissionKeys.includes(PermissionKey.PayrollRead),
+          color: 'text-emerald-700',
+          background: 'bg-emerald-50',
         },
       ],
     },
