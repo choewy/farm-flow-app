@@ -38,10 +38,7 @@ export function Modal({ title, description, onClose, footer, children, mobilePos
   }, []);
 
   return createPortal(
-    <div
-      className="fixed inset-0 z-[200] overflow-y-auto bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 z-200 overflow-y-auto bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200" onClick={onClose}>
       <div
         className={`flex min-h-full justify-center p-3 pt-[max(0.75rem,var(--safe-top))] pb-[max(0.75rem,var(--safe-bottom))] sm:items-center sm:p-4 ${
           mobilePosition === 'center' ? 'items-center' : 'items-end'
@@ -59,9 +56,7 @@ export function Modal({ title, description, onClose, footer, children, mobilePos
               </button>
             </div>
 
-            <div className="mb-6">
-              {description && <p className="text-sm text-slate-500 font-medium leading-relaxed">{description}</p>}
-            </div>
+            <div className="mb-6">{description && <p className="text-sm text-slate-500 font-medium leading-relaxed">{description}</p>}</div>
             {children}
           </div>
 

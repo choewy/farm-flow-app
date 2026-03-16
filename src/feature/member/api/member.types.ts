@@ -1,9 +1,11 @@
 import { ListResponse } from '@app/shared/api';
-import { MemberRole, MemberUser } from '@app/shared/models';
+import { Member } from '@app/shared/models';
 
-export type MemberResponse = {
-  user: MemberUser;
-  role: MemberRole;
+export type MemberResponse = Member;
+export type MemberListResponse = ListResponse<Member>;
+
+export type MemberUpdateRequestData = {
+  roleId?: string;
+  payRatePerHour?: number;
+  payDeductionAmount?: number;
 };
-
-export type MemberListResponse = ListResponse<MemberResponse>;

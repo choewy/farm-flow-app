@@ -1,9 +1,9 @@
-import { MemberListResponse } from './member.types';
+import { MemberListResponse, MemberUpdateRequestData } from './member.types';
 
 import { http } from '@app/shared/api';
 
 const list = () => http.get<MemberListResponse>('members');
-const update = (id: string, roleId: string) => http.patch<void>(`members/${id}`, { roleId });
+const update = (id: string, data: MemberUpdateRequestData) => http.patch<void>(`members/${id}`, data);
 const remove = (id: string) => http.delete<void>(`members/${id}`);
 
 export const memberApi = {

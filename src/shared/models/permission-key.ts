@@ -9,6 +9,7 @@ export enum PermissionKey {
   RoleRemove = 'role.remove',
   MemberRead = 'member.read',
   MemberRoleUpdate = 'member.role.update',
+  MemberPayUpdate = 'member.pay.update',
   MemberRemove = 'member.remove',
 }
 
@@ -21,6 +22,7 @@ export const PERMISSION_LABEL: Partial<Record<PermissionKey, string>> = {
   [PermissionKey.RoleRemove]: '역할 삭제',
   [PermissionKey.MemberRead]: '멤버 조회',
   [PermissionKey.MemberRoleUpdate]: '멤버 권한 관리',
+  [PermissionKey.MemberPayUpdate]: '멤버 급여 관리',
   [PermissionKey.MemberRemove]: '멤버 삭제',
 };
 

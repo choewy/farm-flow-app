@@ -74,9 +74,9 @@ export function FormMoneyInput<T extends object>({
           onChange={handleChange}
           type="text"
           inputMode="numeric"
-          className="min-w-0 flex-1 rounded-l-[1.25rem] border-0 bg-transparent pl-4 pr-1 py-[0.95rem] text-right text-[0.92rem] text-(--app-text) outline-none placeholder:text-[rgba(91,114,133,0.58)]"
+          className="min-w-0 flex-1 rounded-l-[1.25rem] border-0 bg-transparent pl-4 pr-1 py-[0.9rem] text-right text-[0.86rem] text-(--app-text) outline-none placeholder:text-[rgba(91,114,133,0.58)]"
         />
-        <span className="shrink-0 pr-4 text-sm font-semibold text-slate-400">{suffixText}</span>
+        <span className="shrink-0 pr-4 text-[0.8rem] font-semibold text-slate-400">{suffixText}</span>
       </div>
       {error && <p className="ml-1 mt-1 animate-in slide-in-from-top-1 text-xs font-bold text-danger">{String(error.message ?? '')}</p>}
     </div>

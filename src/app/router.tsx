@@ -57,7 +57,9 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.members,
             element: (
-              <PermissionRoute permissionKeys={[PermissionKey.MemberRead, PermissionKey.MemberRoleUpdate, PermissionKey.MemberRemove]} />
+              <PermissionRoute
+                permissionKeys={[PermissionKey.MemberRead, PermissionKey.MemberRoleUpdate, PermissionKey.MemberPayUpdate, PermissionKey.MemberRemove]}
+              />
             ),
             children: [{ index: true, element: <MemberPage /> }],
           },

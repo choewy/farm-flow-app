@@ -8,9 +8,9 @@ import {
   MemberInfo,
   MemberList,
   MemberListResponse,
-  MemberResponse,
 } from '@app/feature/member';
 import { getErrorCodeMessage } from '@app/shared/api';
+import { Member } from '@app/shared/models';
 import { Toast } from '@app/shared/toast';
 
 export default function MemberPage() {
@@ -20,7 +20,7 @@ export default function MemberPage() {
     rows: [],
   });
 
-  const [selectedRow, setSelectedRow] = useState<MemberResponse | null>(null);
+  const [selectedRow, setSelectedRow] = useState<Member | null>(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -40,18 +40,25 @@ export default function MemberPage() {
     fetchData();
   }, [fetchData]);
 
-  const openUpdateModal = (row: MemberResponse) => {
+  const openUpdateModal = (row: Member) => {
     setSelectedRow(row);
     setIsUpdateModalOpen(true);
   };
 
-  const openDeleteModal = (row: MemberResponse) => {
+  const openDeleteModal = (row: Member) => {
     setSelectedRow(row);
     setIsDeleteModalOpen(true);
   };
 
-  const closeUpdateModal = () => setIsUpdateModalOpen(false);
-  const closeDeleteModal = () => setIsDeleteModalOpen(false);
+  const closeUpdateModal = () => {
+    setIsUpdateModalOpen(false);
+    setSelectedRow(null);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedRow(null);
+  };
 
   return (
     <div className="flex flex-col space-y-2 w-full animate-in fade-in slide-in-from-bottom-4 duration-300">

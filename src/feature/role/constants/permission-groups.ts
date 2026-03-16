@@ -13,6 +13,6 @@ export const PERMISSION_GROUPS: PermissionGroup[] = [
   },
   {
     title: '멤버 관리',
-    keys: [PermissionKey.MemberRead, PermissionKey.MemberRoleUpdate, PermissionKey.MemberRemove],
+    keys: [PermissionKey.MemberRead, PermissionKey.MemberRoleUpdate, PermissionKey.MemberPayUpdate, PermissionKey.MemberRemove],
   },
 ];

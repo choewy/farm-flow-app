@@ -46,7 +46,9 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
           icon: UsersRound,
           path: ROUTES.members,
           visible: permissionKeys.some((permissionKey) =>
-            [PermissionKey.MemberRead, PermissionKey.MemberRoleUpdate, PermissionKey.MemberRemove].includes(permissionKey),
+            [PermissionKey.MemberRead, PermissionKey.MemberRoleUpdate, PermissionKey.MemberPayUpdate, PermissionKey.MemberRemove].includes(
+              permissionKey,
+            ),
           ),
           color: 'text-indigo-500',
           background: 'bg-indigo-50',
