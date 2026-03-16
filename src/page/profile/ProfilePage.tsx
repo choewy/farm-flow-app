@@ -17,18 +17,7 @@ export default function ProfilePage() {
         <article className="app-panel px-2 py-2">
           <div className="relative z-10 grid">
             <div className="flex items-start gap-4 rounded-[1.35rem] bg-white/75 p-4">
-              <div className="rounded-2xl bg-primary/10 p-2 text-primary">
-                <CircleUserRound size={18} />
-              </div>
-              <div className="min-w-0">
-                <span className="app-kicker text-primary/65">이름</span>
-                <p className="mt-2 text-base font-black tracking-[-0.02em] text-slate-800">{user?.name || '사용자'}</p>
-                <p className="mt-1 text-sm font-medium text-slate-500">현재 로그인한 계정 이름</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 rounded-[1.35rem] bg-white/75 p-4">
-              <div className="rounded-[1.2rem] bg-sky-50 p-3 text-sky-600">
+              <div className="rounded-2xl bg-primary/10 p-2.5 text-sky-600">
                 <Mail size={18} />
               </div>
               <div className="min-w-0">
@@ -39,7 +28,18 @@ export default function ProfilePage() {
             </div>
 
             <div className="flex items-start gap-4 rounded-[1.35rem] bg-white/75 p-4">
-              <div className="rounded-2xl bg-accent/10 p-2 text-accent">
+              <div className="rounded-2xl bg-primary/10 p-2.5 text-primary">
+                <CircleUserRound size={18} />
+              </div>
+              <div className="min-w-0">
+                <span className="app-kicker text-primary/65">이름</span>
+                <p className="mt-2 text-base font-black tracking-[-0.02em] text-slate-800">{user?.name || '사용자'}</p>
+                <p className="mt-1 text-sm font-medium text-slate-500">현재 로그인한 계정 이름</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 rounded-[1.35rem] bg-white/75 p-4">
+              <div className="rounded-2xl bg-accent/10 p-2.5 text-accent">
                 <BadgeCheck size={18} />
               </div>
               <div className="min-w-0">
@@ -64,6 +64,7 @@ export default function ProfilePage() {
               <div className="min-w-0">
                 <p className="app-kicker text-emerald-700/70">접속한 농장</p>
                 <p className="mt-2 text-base font-black tracking-[-0.02em] text-slate-800">{farm?.name || '선택된 농장 없음'}</p>
+                <p className="mt-1 text-sm font-medium text-slate-500">현재 접속한 농장 이름</p>
               </div>
             </div>
             <div className="flex items-start gap-4 rounded-[1.35rem] bg-white/75 p-4">
@@ -73,15 +74,18 @@ export default function ProfilePage() {
               <div className="min-w-0">
                 <p className="app-kicker text-violet-700/70">현재 역할</p>
                 <p className="mt-2 text-base font-black tracking-[-0.02em] text-slate-800">{role?.name || '역할 없음'}</p>
+                <p className="mt-1 text-sm font-medium text-slate-500">현재 접속한 농장의 역할</p>
               </div>
             </div>
           </div>
         </article>
+      </section>
 
+      <section className="space-y-3">
         <article className="app-panel px-5 py-5">
           <div className="relative z-10 flex items-start gap-4">
-            <div className="rounded-[1.2rem] bg-slate-100 p-3 text-slate-500">
-              <Smartphone size={20} />
+            <div className="rounded-2xl bg-slate-100 p-2.5 text-slate-500">
+              <Smartphone size={18} />
             </div>
             <div className="min-w-0">
               <p className="app-kicker text-slate-500">Device ID</p>
