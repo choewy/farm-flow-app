@@ -95,15 +95,13 @@
   --app-text: #14212b;
   --app-gradient: linear-gradient(135deg, #14b8a6 0%, #38bdf8 52%, #60a5fa 100%);
   background:
-    radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 42%),
-    linear-gradient(180deg, #f4fbff 0%, #eef7ff 48%, #f8fbff 100%);
+    radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 42%), linear-gradient(180deg, #f4fbff 0%, #eef7ff 48%, #f8fbff 100%);
 }
 
 html {
   min-height: 100%;
   background:
-    radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 42%),
-    linear-gradient(180deg, #f4fbff 0%, #eef7ff 48%, #f8fbff 100%);
+    radial-gradient(circle at top, rgba(56, 189, 248, 0.2), transparent 42%), linear-gradient(180deg, #f4fbff 0%, #eef7ff 48%, #f8fbff 100%);
 }
 
 body {

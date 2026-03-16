@@ -7,9 +7,10 @@ export type ModalProps = PropsWithChildren & {
   description?: string | ReactElement;
   footer?: string;
   onClose: () => void;
+  mobilePosition?: 'bottom' | 'center';
 };
 
-export function Modal({ title, description, onClose, footer, children }: ModalProps) {
+export function Modal({ title, description, onClose, footer, children, mobilePosition = 'bottom' }: ModalProps) {
   useEffect(() => {
     const scrollY = window.scrollY;
     const originalBodyStyle = {
@@ -42,7 +43,9 @@ export function Modal({ title, description, onClose, footer, children }: ModalPr
       onClick={onClose}
     >
       <div
-        className="flex min-h-full items-end justify-center p-3 pt-[max(0.75rem,var(--safe-top))] pb-[max(0.75rem,var(--safe-bottom))] sm:items-center sm:p-4"
+        className={`flex min-h-full justify-center p-3 pt-[max(0.75rem,var(--safe-top))] pb-[max(0.75rem,var(--safe-bottom))] sm:items-center sm:p-4 ${
+          mobilePosition === 'center' ? 'items-center' : 'items-end'
+        }`}
       >
         <div
           className="relative flex w-full max-w-sm max-h-[calc(100dvh-max(1rem,var(--safe-top))-max(1rem,var(--safe-bottom)))] flex-col overflow-hidden rounded-[1.75rem] border border-slate-100 bg-white shadow-xl animate-in zoom-in-95 duration-200"

@@ -36,11 +36,11 @@ export function GlobalLayout() {
   }, [location.pathname]);
 
   return (
-    <div className="relative min-h-screen px-3 pb-3 pt-[max(0.75rem,var(--safe-top))] text-slate-800 antialiased sm:px-5">
+    <div className="relative min-h-screen px-3 pb-3 pt-[max(0.75rem, var(--safe-top))] text-slate-800 antialiased sm:px-5">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-linear-to-b from-white/30 to-transparent" />
       {shouldShowNav && <GlobalHeader />}
 
-      <div className="mx-auto flex min-h-[calc(100vh-var(--safe-top)-0.75rem)] w-full max-w-md flex-col overflow-hidden rounded-[2rem] border border-white/45 bg-white/20 shadow-[0_24px_70px_rgba(41,43,23,0.16)] backdrop-blur-[6px]">
+      <div className="mx-auto flex min-h-[calc(100vh-var(--safe-top)-0.75rem)] w-full max-w-md flex-col overflow-hidden rounded-4xl border border-white/45 bg-white/20 shadow-[0_24px_70px_rgba(41,43,23,0.16)] backdrop-blur-[6px]">
         <main className={`relative flex-1 w-full overflow-hidden ${shouldShowNav ? 'pt-20 pb-28' : 'pb-6 pt-4'}`}>
           <div className="absolute inset-0 bg-linear-to-b from-white/14 via-white/6 to-transparent" />
           <div className="relative p-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
@@ -60,7 +60,9 @@ export function GlobalLayout() {
                   key={navItem.name}
                   onClick={() => navigate(navItem.path)}
                   className={`relative flex flex-col items-center justify-center rounded-2xl py-2.5 transition-all duration-200 ${
-                    isActive ? 'bg-primary/10 text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]' : 'text-slate-400 hover:bg-white/45 hover:text-slate-700'
+                    isActive
+                      ? 'bg-primary/10 text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.35)]'
+                      : 'text-slate-400 hover:bg-white/45 hover:text-slate-700'
                   }`}
                 >
                   <Icon className={`z-10 mb-1 h-5 w-5 ${isActive ? 'stroke-[2.25px]' : 'stroke-[1.8px]'}`} />

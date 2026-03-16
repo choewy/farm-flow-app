@@ -24,7 +24,7 @@ export function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
   }
 
   return (
-    <Modal title="로그아웃" description="로그아웃을 하시겠습니까?" onClose={onClose}>
+    <Modal title="로그아웃" description="로그아웃을 하시겠습니까?" onClose={onClose} mobilePosition="center">
       <ModalActions
         confirmText="로그아웃"
         cancelText="취소"
