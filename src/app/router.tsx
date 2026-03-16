@@ -14,12 +14,14 @@ import { RegisterPage } from '@app/page/register';
 import { RolePage } from '@app/page/role';
 import { PermissionKey } from '@app/shared/models';
 import { ROUTES } from '@app/shared/routes';
+import { AppRouteError } from '@app/shared/ui/error';
 import { GlobalLayout } from '@app/shared/ui/layout';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <GlobalLayout />,
+    errorElement: <AppRouteError />,
     children: [
       {
         element: <PublicOnlyRoute />,

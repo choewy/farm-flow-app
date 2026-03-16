@@ -10,8 +10,49 @@ type AppErrorBoundaryState = {
   isReloading: boolean;
 };
 
-const RELOAD_STORAGE_KEY = 'farm-flow:error-boundary:last-reload-at';
-const RELOAD_COOLDOWN_MS = 10_000;
+export const RELOAD_STORAGE_KEY = 'farm-flow:error-boundary:last-reload-at';
+export const RELOAD_COOLDOWN_MS = 10_000;
+
+export const canRecoverByReload = () => {
+  const lastReloadAt = sessionStorage.getItem(RELOAD_STORAGE_KEY);
+
+  if (!lastReloadAt) {
+    return true;
+  }
+
+  const elapsed = Date.now() - Number(lastReloadAt);
+  return Number.isFinite(elapsed) && elapsed > RELOAD_COOLDOWN_MS;
+};
+
+export const unregisterServiceWorkers = async () => {
+  if (!('serviceWorker' in navigator)) {
+    return;
+  }
+
+  const registrations = await navigator.serviceWorker.getRegistrations();
+  await Promise.allSettled(registrations.map((registration) => registration.unregister()));
+};
+
+export const clearCacheStorage = async () => {
+  if (!('caches' in window)) {
+    return;
+  }
+
+  const cacheKeys = await caches.keys();
+  await Promise.allSettled(cacheKeys.map((cacheKey) => caches.delete(cacheKey)));
+};
+
+export const createReloadUrl = () => {
+  const url = new URL(window.location.href);
+  url.searchParams.set('__refresh', String(Date.now()));
+  return url.toString();
+};
+
+export const recoverAppByReload = async () => {
+  sessionStorage.setItem(RELOAD_STORAGE_KEY, String(Date.now()));
+  await Promise.allSettled([unregisterServiceWorkers(), clearCacheStorage()]);
+  window.location.replace(createReloadUrl());
+};
 
 export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorBoundaryState> {
   state: AppErrorBoundaryState = {
@@ -26,62 +67,21 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Unhandled React error caught by AppErrorBoundary.', error, errorInfo);
 
-    if (!this.canReload()) {
+    if (!canRecoverByReload()) {
       return;
     }
 
     this.setState({ isReloading: true }, () => {
-      sessionStorage.setItem(RELOAD_STORAGE_KEY, String(Date.now()));
-      void this.reloadApp();
+      void recoverAppByReload();
     });
-  }
-
-  private canReload() {
-    const lastReloadAt = sessionStorage.getItem(RELOAD_STORAGE_KEY);
-
-    if (!lastReloadAt) {
-      return true;
-    }
-
-    const elapsed = Date.now() - Number(lastReloadAt);
-    return Number.isFinite(elapsed) && elapsed > RELOAD_COOLDOWN_MS;
   }
 
   private handleManualReload = () => {
     sessionStorage.removeItem(RELOAD_STORAGE_KEY);
     this.setState({ isReloading: true }, () => {
-      void this.reloadApp();
+      void recoverAppByReload();
     });
   };
-
-  private async reloadApp() {
-    await Promise.allSettled([this.unregisterServiceWorkers(), this.clearCacheStorage()]);
-    window.location.replace(this.createReloadUrl());
-  }
-
-  private async unregisterServiceWorkers() {
-    if (!('serviceWorker' in navigator)) {
-      return;
-    }
-
-    const registrations = await navigator.serviceWorker.getRegistrations();
-    await Promise.allSettled(registrations.map((registration) => registration.unregister()));
-  }
-
-  private async clearCacheStorage() {
-    if (!('caches' in window)) {
-      return;
-    }
-
-    const cacheKeys = await caches.keys();
-    await Promise.allSettled(cacheKeys.map((cacheKey) => caches.delete(cacheKey)));
-  }
-
-  private createReloadUrl() {
-    const url = new URL(window.location.href);
-    url.searchParams.set('__refresh', String(Date.now()));
-    return url.toString();
-  }
 
   render() {
     if (!this.state.hasError) {
