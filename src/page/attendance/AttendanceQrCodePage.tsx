@@ -24,6 +24,7 @@ export default function AttendanceQrCodePage() {
       await attendanceQrApi.create(deviceId);
       setSeconds(59);
     } finally {
+      setSeconds((prev) => prev - 1);
       creatingRef.current = false;
     }
   };
@@ -63,7 +64,7 @@ export default function AttendanceQrCodePage() {
   }, [deviceId, data?.id]);
 
   useEffect(() => {
-    if (!deviceId || !data?.id || seconds !== 0) {
+    if (!deviceId || !data?.id || seconds > 0) {
       return;
     }
 
@@ -94,12 +95,12 @@ export default function AttendanceQrCodePage() {
             </span>
           </div>
 
-          <div className="rounded-[2rem] border border-[rgba(148,163,184,0.16)] bg-white p-4 shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
-            <div className="rounded-[1.5rem] bg-[linear-gradient(180deg,#f8fdff_0%,#edf7ff_100%)] p-4">
+          <div className="rounded-4xl border border-[rgba(148,163,184,0.16)] bg-white p-4 shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
+            <div className="rounded-3xl bg-[linear-gradient(180deg,#f8fdff_0%,#edf7ff_100%)] p-4">
               {data?.id ? (
                 <QRCodeCanvas value={data.id} size={220} level="H" marginSize={3} className="rounded-xl" />
               ) : (
-                <div className="flex h-[220px] w-[220px] items-center justify-center rounded-[1.35rem] border border-slate-200 bg-white text-sm text-slate-400 animate-pulse">
+                <div className="flex h-55 w-55 items-center justify-center rounded-[1.35rem] border border-slate-200 bg-white text-sm text-slate-400 animate-pulse">
                   QR 로딩 중...
                 </div>
               )}
@@ -109,7 +110,7 @@ export default function AttendanceQrCodePage() {
           <div className="w-full">
             <div className="flex items-center justify-between text-xs font-bold text-slate-500">
               <span>다음 갱신까지</span>
-              <span>{seconds}초</span>
+              <span>{seconds < 0 ? 0 : seconds}초</span>
             </div>
             <div className="app-progress mt-2">
               <div className="app-progress-bar" style={{ width: progress }} />
