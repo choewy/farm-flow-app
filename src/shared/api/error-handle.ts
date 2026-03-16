@@ -10,7 +10,6 @@ const errorMessages: Record<ErrorCode, string> = {
   [ErrorCode.ExpiredToken]: '토큰이 만료되었습니다.',
   [ErrorCode.InvalidQrCode]: '유효하지 않은 QR 코드입니다.',
   [ErrorCode.ExceedFarmCount]: '농장 최대 생성 개수를 초과하였습니다.',
-  [ErrorCode.ForbiddenFarmUser]: '접근 권한이 없는 농장입니다.',
   [ErrorCode.FarmNotFound]: '농장 정보를 찾을 수 없습니다.',
   [ErrorCode.InvalidInvitationCode]: '유효하지 않은 초대코드입니다.',
   [ErrorCode.ForbiddenPermission]: '접근 권한이 없습니다.',
