@@ -9,6 +9,7 @@ import { InvitationAcceptPage, InvitationPage } from '@app/page/invitation';
 import { LoginPage } from '@app/page/login';
 import { MemberPage } from '@app/page/member';
 import { MenuPage } from '@app/page/menu';
+import { ProfilePage } from '@app/page/profile';
 import { RegisterPage } from '@app/page/register';
 import { RolePage } from '@app/page/role';
 import { PermissionKey } from '@app/shared/models';
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute requireFarm={false} unauthenticatedRedirectTo={ROUTES.login} />,
         children: [
           { path: ROUTES.menu, element: <MenuPage /> },
+          { path: ROUTES.profile, element: <ProfilePage /> },
           { path: ROUTES.farms, element: <FarmListPage /> },
           { path: ROUTES.invitationAccept, element: <InvitationAcceptPage /> },
         ],

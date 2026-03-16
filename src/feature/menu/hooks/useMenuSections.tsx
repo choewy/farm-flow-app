@@ -83,7 +83,7 @@ export function useMenuSectionProps(permissionKeys: PermissionKey[]): MenuSectio
         {
           name: '계정 설정',
           icon: Settings,
-          path: '#',
+          path: ROUTES.profile,
           visible: true,
           color: 'text-slate-500',
           background: 'bg-slate-50',

@@ -4,6 +4,7 @@ export const ROUTES = {
   home: '/',
   attendance: '/attendance',
   attendanceQrCode: '/attendance/qrcode',
+  profile: '/profile',
   menu: '/menu',
   scan: '/scan',
   me: '/me',

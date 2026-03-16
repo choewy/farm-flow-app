@@ -39,6 +39,8 @@ export function GlobalHeader({ title }: GlobalHeaderProps) {
         return '멤버 초대';
       case ROUTES.invitationAccept:
         return '초대코드 입력';
+      case ROUTES.profile:
+        return '내 프로필';
       default:
         return 'Farm Flow';
     }
