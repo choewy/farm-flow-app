@@ -20,9 +20,9 @@ const farmUpdateSchema = z.object({
     .pipe(z.number().int('시급은 원 단위로 입력하세요.').min(0, '시급은 0원 이상이어야 합니다.')),
   payDeductionAmount: z
     .string()
-    .min(1, '급여 공제액을 입력하세요.')
+    .min(1, '월 공제액을 입력하세요.')
     .transform((value) => Formatter.toInt(value))
-    .pipe(z.number().int('급여 공제액은 원 단위로 입력하세요.').min(0, '급여 공제액은 0원 이상이어야 합니다.')),
+    .pipe(z.number().int('월 공제액은 원 단위로 입력하세요.').min(0, '월 공제액은 0원 이상이어야 합니다.')),
 });
 
 type FarmUpdateFormData = z.infer<typeof farmUpdateSchema>;
@@ -70,15 +70,15 @@ export function FarmUpdateModalForm({ farm, onClose }: FarmUpdateModalFormProps)
       />
 
       <FormMoneyInput
-        labelText="시급(단위 : 원/1시간)"
+        labelText="시급"
         inputProps={{ placeholder: '시급을 입력하세요' }}
         registerProps={register('payRatePerHour')}
         errors={errors}
       />
 
       <FormMoneyInput
-        labelText="급여 공제액(단위 : 원/1개월)"
-        inputProps={{ placeholder: '급여 공제액을 입력하세요' }}
+        labelText="월 공제액"
+        inputProps={{ placeholder: '월 공제액을 입력하세요' }}
         registerProps={register('payDeductionAmount')}
         errors={errors}
       />
