@@ -1,0 +1,84 @@
+import type { ErrorInfo, ReactNode } from 'react';
+import { Component } from 'react';
+
+type AppErrorBoundaryProps = {
+  children: ReactNode;
+};
+
+type AppErrorBoundaryState = {
+  hasError: boolean;
+  isReloading: boolean;
+};
+
+const RELOAD_STORAGE_KEY = 'farm-flow:error-boundary:last-reload-at';
+const RELOAD_COOLDOWN_MS = 10_000;
+
+export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorBoundaryState> {
+  state: AppErrorBoundaryState = {
+    hasError: false,
+    isReloading: false,
+  };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Unhandled React error caught by AppErrorBoundary.', error, errorInfo);
+
+    if (!this.canReload()) {
+      return;
+    }
+
+    this.setState({ isReloading: true }, () => {
+      sessionStorage.setItem(RELOAD_STORAGE_KEY, String(Date.now()));
+      window.location.reload();
+    });
+  }
+
+  private canReload() {
+    const lastReloadAt = sessionStorage.getItem(RELOAD_STORAGE_KEY);
+
+    if (!lastReloadAt) {
+      return true;
+    }
+
+    const elapsed = Date.now() - Number(lastReloadAt);
+    return Number.isFinite(elapsed) && elapsed > RELOAD_COOLDOWN_MS;
+  }
+
+  private handleManualReload = () => {
+    sessionStorage.removeItem(RELOAD_STORAGE_KEY);
+    window.location.reload();
+  };
+
+  render() {
+    if (!this.state.hasError) {
+      return this.props.children;
+    }
+
+    return (
+      <div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-white px-6 text-center text-slate-700">
+        <div className="space-y-2">
+          <h1 className="text-xl font-semibold text-slate-900">
+            {this.state.isReloading ? '페이지를 새로고침하고 있어요.' : '문제가 발생했어요.'}
+          </h1>
+          <p className="text-sm leading-6 text-slate-500">
+            {this.state.isReloading
+              ? '페이지를 다시 불러옵니다.'
+              : '새 버전이 배포된 직후 캐시 충돌로 오류가 날 수 있어요. 다시 불러오면 대부분 해결됩니다.'}
+          </p>
+        </div>
+        {!this.state.isReloading ? (
+          <button
+            type="button"
+            onClick={this.handleManualReload}
+            className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white"
+          >
+            다시 불러오기
+          </button>
+        ) : null}
+      </div>
+    );
+  }
+}

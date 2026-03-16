@@ -6,10 +6,11 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 
 import { AuthBootstrap } from '@app/feature/auth';
+import { AppErrorBoundary } from '@app/shared/ui/error';
 
 export function App() {
   return (
-    <>
+    <AppErrorBoundary>
       <ToastContainer
         position="bottom-center"
         autoClose={3000}
@@ -28,6 +29,6 @@ export function App() {
       <AuthBootstrap>
         <RouterProvider router={router} />
       </AuthBootstrap>
-    </>
+    </AppErrorBoundary>
   );
 }
