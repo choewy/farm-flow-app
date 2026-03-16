@@ -1,4 +1,4 @@
-import { BriefcaseBusiness, CircleUserRound, Mail, Smartphone, Sprout } from 'lucide-react';
+import { BadgeCheck, BriefcaseBusiness, CircleUserRound, Mail, Smartphone, Sprout } from 'lucide-react';
 
 import { useAuthStore } from '@app/shared/stores';
 
@@ -39,8 +39,8 @@ export default function ProfilePage() {
             </div>
 
             <div className="flex items-start gap-4 rounded-[1.35rem] bg-white/75 p-4">
-              <div className="rounded-2xl bg-primary/10 p-2 text-primary">
-                <CircleUserRound size={18} />
+              <div className="rounded-2xl bg-accent/10 p-2 text-accent">
+                <BadgeCheck size={18} />
               </div>
               <div className="min-w-0">
                 <span className="app-kicker text-accent/70">상태</span>
