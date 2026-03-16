@@ -25,7 +25,7 @@ export function MenuSection({ openLogoutModal }: MenuSectionProps) {
 
         return <MenuSectionItem key={`menu-section-${i}`} {...props} />;
       })}
-
+      <h3 className="app-kicker mb-3 ml-1 text-slate-400">Session</h3>
       <button
         className="app-card group flex w-full items-center justify-between p-5 transition-all active:scale-[0.98]"
         onClick={openLogoutModal}
@@ -36,7 +36,6 @@ export function MenuSection({ openLogoutModal }: MenuSectionProps) {
           </div>
           <span className="font-bold text-red-500 tracking-tight">로그아웃</span>
         </div>
-        <p className="text-[10px] font-bold text-red-300 uppercase tracking-widest">Session</p>
       </button>
     </div>
   );

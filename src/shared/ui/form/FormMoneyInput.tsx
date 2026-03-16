@@ -46,15 +46,11 @@ export function FormMoneyInput<T extends object>({
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { selectionStart, value } = event.target;
     const formattedValue = Formatter.toMoney(value);
-    const digitIndex = countDigits(value.slice(0, selectionStart ?? value.length));
+    const digitIndex = countDigits(value.slice(0, selectionStart ?? formattedValue.length));
 
-    registerProps.onChange({
-      target: {
-        name: registerProps.name,
-        value: formattedValue,
-      },
-      type: 'change',
-    });
+    event.target.value = formattedValue;
+    registerProps.onChange(event);
+    inputProps?.onChange?.(event);
 
     requestAnimationFrame(() => {
       const nextCaretPosition = getCaretPositionFromDigitIndex(formattedValue, digitIndex);
