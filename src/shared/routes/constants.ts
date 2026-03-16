@@ -6,6 +6,7 @@ export const ROUTES = {
   attendanceQrCode: '/attendance/qrcode',
   menu: '/menu',
   scan: '/scan',
+  me: '/me',
   farms: '/farms',
   members: '/members',
   roles: '/roles',

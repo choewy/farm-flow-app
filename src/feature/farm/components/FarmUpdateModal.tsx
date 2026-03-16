@@ -15,7 +15,13 @@ export function FarmUpdateModal({ isOpen, onClose, farm }: FarmUpdateModalProps)
   }
 
   return (
-    <Modal title="농장 수정" description="농장 정보를 수정하세요." footer="Farm Flow Management System" onClose={onClose}>
+    <Modal
+      title="농장 정보 수정"
+      description="농장 정보를 수정하세요."
+      footer="Farm Flow Management System"
+      onClose={onClose}
+      mobilePosition="center"
+    >
       <FarmUpdateModalForm farm={farm} onClose={onClose} />
     </Modal>
   );

@@ -10,6 +10,8 @@ export type FarmListResponse = ListResponse<FarmListRow>;
 
 export type FarmCreateRequestData = {
   name: string;
+  payRatePerHour: number;
+  payDeductionAmount: number;
 };
 
 export type FarmCreateResponse = {
@@ -18,6 +20,8 @@ export type FarmCreateResponse = {
 
 export type FarmUpdateRequestData = {
   name: string;
+  payRatePerHour: number;
+  payDeductionAmount: number;
 };
 
 export type FarmUpdateResponse = {

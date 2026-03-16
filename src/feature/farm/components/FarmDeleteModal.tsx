@@ -15,7 +15,7 @@ export function FarmDeleteModal({ isOpen, onClose, farm }: FarmDeleteModalProps)
   }
 
   return (
-    <Modal title="농장 삭제" footer="Farm Flow Management System" onClose={onClose}>
+    <Modal title="농장 삭제" footer="Farm Flow Management System" onClose={onClose} mobilePosition="center">
       <FarmDeleteModalContent farm={farm} onClose={onClose} />
     </Modal>
   );
