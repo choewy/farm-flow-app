@@ -53,10 +53,7 @@ export function FarmSwitcher() {
       const rect = buttonRef.current.getBoundingClientRect();
       const menuWidth = 256;
       const viewportPadding = 16;
-      const left = Math.min(
-        Math.max(viewportPadding, rect.right - menuWidth),
-        window.innerWidth - menuWidth - viewportPadding,
-      );
+      const left = Math.min(Math.max(viewportPadding, rect.right - menuWidth), window.innerWidth - menuWidth - viewportPadding);
 
       setMenuPosition({
         top: rect.bottom + 12,
@@ -91,7 +88,7 @@ export function FarmSwitcher() {
   };
 
   return (
-    <div className="relative z-[60]" ref={dropdownRef}>
+    <div className="relative z-60" ref={dropdownRef}>
       <button
         ref={buttonRef}
         type="button"
@@ -109,7 +106,7 @@ export function FarmSwitcher() {
         createPortal(
           <div
             ref={menuRef}
-            className="fixed z-[120] w-64 overflow-hidden rounded-[1.75rem] border border-[rgba(98,88,68,0.1)] bg-[rgba(255,252,247,0.96)] shadow-premium-lg backdrop-blur-2xl"
+            className="fixed z-120 w-64 overflow-hidden rounded-[1.75rem] border border-[rgba(98,88,68,0.1)] bg-[rgba(255,252,247,0.96)] shadow-premium-lg backdrop-blur-2xl"
             style={{ top: menuPosition.top, left: menuPosition.left }}
           >
             <div className="p-3 space-y-1">
@@ -143,7 +140,9 @@ export function FarmSwitcher() {
                           <ShieldCheck size={16} className={isActive ? 'text-primary' : 'text-slate-400'} />
                         </div>
                         <div>
-                          <p className={`max-w-30 truncate text-sm font-bold ${isActive ? 'text-primary' : 'text-slate-800'}`}>{farm.name}</p>
+                          <p className={`max-w-30 truncate text-sm font-bold ${isActive ? 'text-primary' : 'text-slate-800'}`}>
+                            {farm.name}
+                          </p>
                           <p
                             className={`text-[10px] font-black uppercase tracking-widest ${isActive ? 'text-primary/60' : 'text-slate-400'}`}
                           >

@@ -38,7 +38,7 @@ export function AuthBootstrap({ children }: Readonly<PropsWithChildren>) {
   }, [setSession, clearSession, setHydrated]);
 
   if (!isHydrated) {
-    return <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 text-sm text-gray-500">세션 확인 중...</div>;
+    return <div className="flex min-h-dvh items-center justify-center bg-gray-50 text-sm text-gray-500" />;
   }
 
   return <>{children}</>;

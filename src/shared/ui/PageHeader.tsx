@@ -44,7 +44,7 @@ export function PageHeader({ icon: Icon, label, title, count, actionButton, colo
   return (
     <div className="app-panel mb-2 flex items-center justify-between gap-4 px-5 py-5">
       <div className="flex min-w-0 items-center space-x-4">
-        <div className={`flex h-[3.25rem] w-[3.25rem] shrink-0 items-center justify-center rounded-[1.35rem] ${colorStyles.badge}`}>
+        <div className={`flex h-13 w-13 shrink-0 items-center justify-center rounded-[1.35rem] ${colorStyles.badge}`}>
           <Icon size={24} />
         </div>
         <div className="min-w-0">

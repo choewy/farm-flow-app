@@ -13,10 +13,17 @@ export function App() {
       <ToastContainer
         position="bottom-center"
         autoClose={3000}
-        closeButton={true}
+        closeButton={false}
         limit={1}
         pauseOnHover={false}
         pauseOnFocusLoss={false}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        draggable={false}
+        theme="light"
+        className="app-toast-container"
+        toastClassName={(context) => `app-toast app-toast-${context?.type ?? 'default'}`}
       />
       <AuthBootstrap>
         <RouterProvider router={router} />

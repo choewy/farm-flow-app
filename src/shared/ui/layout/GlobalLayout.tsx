@@ -36,14 +36,16 @@ export function GlobalLayout() {
   }, [location.pathname]);
 
   return (
-    <div className="relative min-h-screen px-3 pb-3 pt-[max(0.75rem, var(--safe-top))] text-slate-800 antialiased sm:px-5">
+    <div className="relative flex min-h-dvh flex-col box-border px-3 pb-3 pt-[max(0.75rem, var(--safe-top))] text-slate-800 antialiased sm:px-5">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-linear-to-b from-white/30 to-transparent" />
       {shouldShowNav && <GlobalHeader />}
 
-      <div className="mx-auto flex min-h-[calc(100vh-var(--safe-top)-0.75rem)] w-full max-w-md flex-col overflow-hidden rounded-4xl border border-white/45 bg-white/20 shadow-[0_24px_70px_rgba(41,43,23,0.16)] backdrop-blur-[6px]">
-        <main className={`relative flex-1 w-full overflow-hidden ${shouldShowNav ? 'pt-20 pb-28' : 'pb-6 pt-4'}`}>
+      <div className="mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-hidden rounded-4xl border border-white/45 bg-white/20 shadow-[0_24px_70px_rgba(41,43,23,0.16)] backdrop-blur-[6px]">
+        <main
+          className={`relative flex flex-1 w-full flex-col overflow-hidden ${shouldShowNav ? 'pt-20 pb-28' : 'justify-center pb-6 pt-4'}`}
+        >
           <div className="absolute inset-0 bg-linear-to-b from-white/14 via-white/6 to-transparent" />
-          <div className="relative p-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+          <div className="relative flex min-h-full flex-col p-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <Outlet />
           </div>
         </main>
