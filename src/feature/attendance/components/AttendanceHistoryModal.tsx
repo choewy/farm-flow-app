@@ -98,7 +98,7 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="bg-transparent text-[13px] font-bold text-slate-700 outline-none w-full"
+                    className="w-full bg-transparent text-[0.92rem] font-bold text-slate-700 outline-none"
                   />
                 </div>
               </div>
@@ -109,7 +109,7 @@ export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryMod
                     type="date"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
-                    className="bg-transparent text-[13px] font-bold text-slate-700 outline-none w-full"
+                    className="w-full bg-transparent text-[0.92rem] font-bold text-slate-700 outline-none"
                   />
                 </div>
               </div>

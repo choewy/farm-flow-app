@@ -11,17 +11,21 @@ export type RoleListItemProps = {
 };
 
 export function RoleListItem({ row, openDetailModal, openUpdateModal, openDeleteModal }: RoleListItemProps) {
-  const handleClick = (e: MouseEvent<HTMLElement>) => {
-    switch (e.currentTarget.id) {
-      case 'role-update-modal':
+  const handleClick = (e: MouseEvent, mode: 'detail' | 'update' | 'remove') => {
+    if (mode !== 'detail') {
+      e.stopPropagation();
+    }
+
+    switch (mode) {
+      case 'update':
         openUpdateModal(row);
         break;
 
-      case 'role-remove-modal':
+      case 'remove':
         openDeleteModal(row);
         break;
 
-      default:
+      case 'detail':
         openDetailModal(row);
     }
   };
@@ -29,7 +33,7 @@ export function RoleListItem({ row, openDetailModal, openUpdateModal, openDelete
   return (
     <div
       className="group relative flex items-center justify-between rounded-2xl bg-white p-4 border border-slate-200 shadow-sm transition-all duration-300 hover:shadow-md active:scale-[0.99]"
-      onClick={handleClick}
+      onClick={(e) => handleClick(e, 'detail')}
     >
       <div className="flex items-center space-x-4">
         <div
@@ -59,18 +63,16 @@ export function RoleListItem({ row, openDetailModal, openUpdateModal, openDelete
         {!row.required && (
           <>
             <button
-              id="role-update-button"
               title="역할 수정"
               className="p-2 rounded-xl text-slate-400 hover:bg-slate-50 hover:text-primary transition-all duration-200"
-              onClick={handleClick}
+              onClick={(e) => handleClick(e, 'update')}
             >
               <Settings size={18} />
             </button>
             <button
-              id="role-remove-button"
               title="역할 삭제"
               className="p-2 rounded-xl text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all duration-200"
-              onClick={handleClick}
+              onClick={(e) => handleClick(e, 'remove')}
             >
               <Trash2 size={18} />
             </button>

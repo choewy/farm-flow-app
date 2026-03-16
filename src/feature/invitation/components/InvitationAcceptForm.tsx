@@ -98,7 +98,7 @@ export function InvitationAcceptForm() {
             name={`invitation-accept-digit-${idx}`}
             inputMode="numeric"
             pattern="[0-9]*"
-            className={`h-15 w-10 rounded-[1.15rem] border-2 bg-slate-50 text-center text-xl font-black transition-all outline-none focus:ring-4 focus:ring-primary/10 sm:h-16 sm:w-11 sm:text-2xl ${
+            className={`h-15 w-10 rounded-[1.15rem] border-2 bg-slate-50 text-center text-[1.1rem] font-black transition-all outline-none focus:ring-4 focus:ring-primary/10 sm:h-16 sm:w-11 sm:text-[1.35rem] ${
               error ? 'border-red-200 text-red-500' : digit ? 'border-primary/30 text-primary' : 'border-slate-100 text-slate-800'
             }`}
             maxLength={1}

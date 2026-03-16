@@ -46,16 +46,22 @@ export default function RolePage() {
 
   const openDetailModal = (row: Role) => {
     setSelectedRow(row);
+    setIsUpdateModalOpen(false);
+    setIsDeleteModalOpen(false);
     setIsDetailModalOpen(true);
   };
 
   const openUpdateModal = (row: Role) => {
     setSelectedRow(row);
+    setIsDetailModalOpen(false);
+    setIsDeleteModalOpen(false);
     setIsUpdateModalOpen(true);
   };
 
   const openDeleteModal = (row: Role) => {
     setSelectedRow(row);
+    setIsDetailModalOpen(false);
+    setIsUpdateModalOpen(false);
     setIsDeleteModalOpen(true);
   };
 
@@ -73,14 +79,16 @@ export default function RolePage() {
       <RoleFooter />
       {selectedRow && (
         <>
-          <RoleDetailModal isOpen={isDetailModalOpen} selectedRow={selectedRow} onClose={() => setIsDetailModalOpen(false)} />
+          <RoleDetailModal key={`detail-${selectedRow.id}`} isOpen={isDetailModalOpen} selectedRow={selectedRow} onClose={() => setIsDetailModalOpen(false)} />
           <RoleUpdateModal
+            key={`update-${selectedRow.id}`}
             isOpen={isUpdateModalOpen}
             selectedRow={selectedRow}
             onClose={() => setIsUpdateModalOpen(false)}
             fetchRoles={fetchRoles}
           />
           <RoleDeleteModal
+            key={`delete-${selectedRow.id}`}
             isOpen={isDeleteModalOpen}
             selectedRow={selectedRow}
             onClose={() => setIsDeleteModalOpen(false)}

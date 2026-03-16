@@ -51,7 +51,7 @@ export function RoleUpdateModal({ isOpen, selectedRow, onClose, fetchRoles }: Ro
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="예: 매니저"
-            className="w-full px-6 py-4 bg-slate-50 border-none rounded-3xl text-slate-800 font-bold placeholder:text-slate-300 focus:ring-2 focus:ring-primary/20 transition-all"
+            className="app-input rounded-3xl border-none bg-slate-50 px-6 py-4 font-bold placeholder:text-slate-300 focus:ring-2 focus:ring-primary/20"
           />
         </div>
 
