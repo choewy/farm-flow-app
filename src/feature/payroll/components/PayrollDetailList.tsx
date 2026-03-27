@@ -16,10 +16,12 @@ type PayrollDetailListProps = {
   rows: PayrollTargetDetailResponse[];
   loading: boolean;
   canUpdateAttendance: boolean | undefined;
+  deletingRowId?: string | null;
   onEditTime: (row: PayrollTargetDetailResponse) => void;
+  onRemove: (row: PayrollTargetDetailResponse) => void;
 };
 
-export function PayrollDetailList({ rows, loading, canUpdateAttendance, onEditTime }: PayrollDetailListProps) {
+export function PayrollDetailList({ rows, loading, canUpdateAttendance, deletingRowId, onEditTime, onRemove }: PayrollDetailListProps) {
   if (loading) {
     return <ListLoader message="정산 상세 내역을 불러오는 중..." />;
   }
@@ -31,7 +33,14 @@ export function PayrollDetailList({ rows, loading, canUpdateAttendance, onEditTi
   return (
     <div className="space-y-3">
       {rows.map((row) => (
-        <PayrollDetailListCard key={row.id} row={row} canUpdateAttendance={canUpdateAttendance} onEditTime={onEditTime} />
+        <PayrollDetailListCard
+          key={row.id}
+          row={row}
+          canUpdateAttendance={canUpdateAttendance}
+          deletingRowId={deletingRowId}
+          onEditTime={onEditTime}
+          onRemove={onRemove}
+        />
       ))}
     </div>
   );

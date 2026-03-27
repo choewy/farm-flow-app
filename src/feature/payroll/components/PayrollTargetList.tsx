@@ -13,7 +13,9 @@ type PayrollTargetListProps = {
   endDate: string;
   canReviewPayroll: boolean | undefined;
   canUpdatePayroll: boolean | undefined;
+  checkingUserId?: string | null;
   onEditPayroll: (row: PayrollTargetResponse) => void;
+  onCheckPayroll: (row: PayrollTargetResponse) => void;
 };
 
 export function PayrollTargetList({
@@ -23,7 +25,9 @@ export function PayrollTargetList({
   endDate,
   canReviewPayroll,
   canUpdatePayroll,
+  checkingUserId,
   onEditPayroll,
+  onCheckPayroll,
 }: PayrollTargetListProps) {
   const navigate = useNavigate();
 
@@ -115,6 +119,17 @@ export function PayrollTargetList({
                 {row.payDeductionAmount > 0 ? `-${Formatter.toMoney(row.payDeductionAmount)}` : '0'}원
               </p>
             </div>
+          </div>
+
+          <div className="mt-3 flex justify-end">
+            <button
+              type="button"
+              onClick={() => onCheckPayroll(row)}
+              disabled={checkingUserId === row.user.id}
+              className="inline-flex items-center rounded-xl bg-primary px-3.5 py-2 text-[11px] font-black text-white shadow-[0_10px_24px_rgba(14,165,233,0.18)] transition-all hover:opacity-95 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {checkingUserId === row.user.id ? '처리 중...' : '정산처리'}
+            </button>
           </div>
         </div>
       ))}

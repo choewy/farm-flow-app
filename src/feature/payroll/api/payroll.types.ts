@@ -38,6 +38,11 @@ export type PayrollTargetDetailListResponse = ListResponse<PayrollTargetDetailRe
 };
 
 export type PayrollTargetDetailUpdateRequestBody = {
-  checkedInAt?: string; // ISO;
-  checkedOutAt?: string; // ISO;
+  checkedInAt?: string;
+  checkedOutAt?: string;
+};
+
+export type PayrollCheckRequestBody = {
+  startDate?: Date;
+  endDate?: Date;
 };

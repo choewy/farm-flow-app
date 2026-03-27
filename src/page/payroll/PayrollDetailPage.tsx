@@ -13,6 +13,7 @@ import { getErrorCodeMessage } from '@app/shared/api';
 import { PermissionKey } from '@app/shared/models';
 import { useAuthStore } from '@app/shared/stores';
 import { Toast } from '@app/shared/toast';
+import { Modal, ModalActions } from '@app/shared/ui/modal';
 
 type PayrollDetailLocationState = {
   userName?: string;
@@ -38,7 +39,9 @@ export default function PayrollDetailPage() {
   const [detail, setDetail] = useState<PayrollTargetDetailListResponse | null>(null);
   const [timeEditTarget, setTimeEditTarget] = useState<TimeEditTarget | null>(null);
   const [payrollEditTarget, setPayrollEditTarget] = useState<PayrollEditTarget | null>(null);
+  const [removeTarget, setRemoveTarget] = useState<PayrollTargetDetailResponse | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [deletingRowId, setDeletingRowId] = useState<string | null>(null);
   const canUpdateAttendance = role?.super || role?.permissionKeys.includes(PermissionKey.AttendanceHistoryUpdate);
   const canUpdatePayroll = role?.super || role?.permissionKeys.includes(PermissionKey.MemberPayUpdate);
 
@@ -134,6 +137,24 @@ export default function PayrollDetailPage() {
     }
   };
 
+  const handleRemoveAttendance = async () => {
+    if (!userId || !removeTarget) {
+      return;
+    }
+
+    try {
+      setDeletingRowId(removeTarget.id);
+      await payrollApi.removeAttendance(userId, removeTarget.id);
+      Toast.success('출퇴근 이력이 삭제되었습니다.');
+      setRemoveTarget(null);
+      await fetchDetail();
+    } catch (e) {
+      Toast.error(getErrorCodeMessage(e));
+    } finally {
+      setDeletingRowId(null);
+    }
+  };
+
   return (
     <div className="flex w-full flex-col space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-300">
       <PayrollDetailSummary
@@ -162,7 +183,14 @@ export default function PayrollDetailPage() {
           <span className="rounded-full bg-slate-200/60 px-2.5 py-1 text-xs font-bold text-slate-500">{detail?.rows.length ?? 0}건</span>
         </div>
 
-        <PayrollDetailList rows={detail?.rows ?? []} loading={loading} canUpdateAttendance={canUpdateAttendance} onEditTime={openTimeEditModal} />
+        <PayrollDetailList
+          rows={detail?.rows ?? []}
+          loading={loading}
+          canUpdateAttendance={canUpdateAttendance}
+          deletingRowId={deletingRowId}
+          onEditTime={openTimeEditModal}
+          onRemove={setRemoveTarget}
+        />
       </section>
 
       <PayrollTimeEditModal
@@ -183,6 +211,24 @@ export default function PayrollDetailPage() {
           onClose={() => setPayrollEditTarget(null)}
           onSaved={fetchDetail}
         />
+      )}
+
+      {removeTarget && (
+        <Modal
+          title="출퇴근 이력 삭제"
+          description={`${dayjs(removeTarget.workDate).format('YYYY.MM.DD')} 이력을 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.`}
+          onClose={() => setRemoveTarget(null)}
+          mobilePosition="center"
+        >
+          <ModalActions
+            confirmText="삭제"
+            cancelText="취소"
+            confirmVariant="danger"
+            onConfirm={() => void handleRemoveAttendance()}
+            onCancel={() => setRemoveTarget(null)}
+            isConfirmLoading={deletingRowId === removeTarget.id}
+          />
+        </Modal>
       )}
     </div>
   );

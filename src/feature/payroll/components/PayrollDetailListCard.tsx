@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { PencilLine } from 'lucide-react';
+import { PencilLine, Trash2 } from 'lucide-react';
 
 import { PayrollTargetDetailResponse } from '@app/feature/payroll/api';
 import { DateTime } from '@app/shared/helpers';
@@ -7,7 +7,9 @@ import { DateTime } from '@app/shared/helpers';
 type PayrollDetailListCardProps = {
   row: PayrollTargetDetailResponse;
   canUpdateAttendance: boolean | undefined;
+  deletingRowId?: string | null;
   onEditTime: (row: PayrollTargetDetailResponse) => void;
+  onRemove: (row: PayrollTargetDetailResponse) => void;
 };
 
 const STATUS_STYLE = {
@@ -28,7 +30,7 @@ function getStatusMeta(row: PayrollTargetDetailResponse) {
   return { label: '확인필요', className: STATUS_STYLE.needsCheck };
 }
 
-export function PayrollDetailListCard({ row, canUpdateAttendance, onEditTime }: PayrollDetailListCardProps) {
+export function PayrollDetailListCard({ row, canUpdateAttendance, deletingRowId, onEditTime, onRemove }: PayrollDetailListCardProps) {
   return (
     <article className="rounded-[1.45rem] border border-slate-200 bg-white px-3.5 py-3 shadow-sm">
       <div className="flex flex-col gap-2.5">
@@ -56,7 +58,7 @@ export function PayrollDetailListCard({ row, canUpdateAttendance, onEditTime }: 
           </div>
         </div>
 
-        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] items-stretch gap-2">
+        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto_auto] items-stretch gap-2">
           <div className="rounded-2xl border border-slate-100 bg-slate-50/85 px-3 py-2.5">
             <p className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-400">출근</p>
             <p className="mt-0.5 text-[0.88rem] font-black tracking-[-0.02em] text-slate-800">
@@ -69,6 +71,16 @@ export function PayrollDetailListCard({ row, canUpdateAttendance, onEditTime }: 
                 {row.checkedOutAt ? dayjs(row.checkedOutAt).format('HH:mm') : '-'}
               </p>
             </div>
+          <button
+            type="button"
+            onClick={() => onRemove(row)}
+            disabled={row.payrolled || deletingRowId === row.id}
+            className="inline-flex h-full min-h-[4rem] items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-2 text-rose-600 transition-all hover:bg-rose-100 disabled:cursor-not-allowed disabled:border-slate-100 disabled:bg-slate-100 disabled:text-slate-300"
+            aria-label="이력 삭제"
+            title="이력 삭제"
+          >
+            <Trash2 size={14} />
+          </button>
         </div>
       </div>
     </article>

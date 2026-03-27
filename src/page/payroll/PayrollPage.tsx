@@ -7,6 +7,7 @@ import { getErrorCodeMessage } from '@app/shared/api';
 import { PermissionKey } from '@app/shared/models';
 import { useAuthStore } from '@app/shared/stores';
 import { Toast } from '@app/shared/toast';
+import { Modal, ModalActions } from '@app/shared/ui/modal';
 
 export default function PayrollPage() {
   const role = useAuthStore((state) => state.role);
@@ -15,6 +16,8 @@ export default function PayrollPage() {
   const [endDate, setEndDate] = useState(dayjs().endOf('month').format('YYYY-MM-DD'));
   const [rows, setRows] = useState<PayrollTargetResponse[]>([]);
   const [payrollEditTarget, setPayrollEditTarget] = useState<PayrollTargetResponse | null>(null);
+  const [payrollCheckTarget, setPayrollCheckTarget] = useState<PayrollTargetResponse | null>(null);
+  const [checkingUserId, setCheckingUserId] = useState<string | null>(null);
   const canReviewPayroll =
     role?.super || role?.permissionKeys.includes(PermissionKey.MemberPayUpdate) || role?.permissionKeys.includes(PermissionKey.RoleUpdate);
   const canUpdatePayroll = role?.super || role?.permissionKeys.includes(PermissionKey.MemberPayUpdate);
@@ -46,6 +49,27 @@ export default function PayrollPage() {
     void fetchData();
   }, [fetchData]);
 
+  const handleCheckPayroll = async () => {
+    if (!payrollCheckTarget) {
+      return;
+    }
+
+    try {
+      setCheckingUserId(payrollCheckTarget.user.id);
+      await payrollApi.check(payrollCheckTarget.user.id, {
+        startDate: startDate ? new Date(startDate) : undefined,
+        endDate: endDate ? new Date(endDate) : undefined,
+      });
+      Toast.success('정산처리가 완료되었습니다.');
+      setPayrollCheckTarget(null);
+      await fetchData();
+    } catch (e) {
+      Toast.error(getErrorCodeMessage(e));
+    } finally {
+      setCheckingUserId(null);
+    }
+  };
+
   return (
     <div className="flex w-full flex-col space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-300">
       <PayrollFilters startDate={startDate} endDate={endDate} onStartDateChange={setStartDate} onEndDateChange={setEndDate} />
@@ -63,7 +87,9 @@ export default function PayrollPage() {
           endDate={endDate}
           canReviewPayroll={canReviewPayroll}
           canUpdatePayroll={canUpdatePayroll}
+          checkingUserId={checkingUserId}
           onEditPayroll={setPayrollEditTarget}
+          onCheckPayroll={setPayrollCheckTarget}
         />
       </section>
 
@@ -77,6 +103,23 @@ export default function PayrollPage() {
           onClose={() => setPayrollEditTarget(null)}
           onSaved={fetchData}
         />
+      )}
+
+      {payrollCheckTarget && (
+        <Modal
+          title="정산 처리 확인"
+          description={`${payrollCheckTarget.user.name}님의 급여 정산을 처리하시겠습니까? 이 작업 후 목록 상태가 변경될 수 있습니다.`}
+          onClose={() => setPayrollCheckTarget(null)}
+          mobilePosition="center"
+        >
+          <ModalActions
+            confirmText="정산 처리"
+            cancelText="취소"
+            onConfirm={() => void handleCheckPayroll()}
+            onCancel={() => setPayrollCheckTarget(null)}
+            isConfirmLoading={checkingUserId === payrollCheckTarget.user.id}
+          />
+        </Modal>
       )}
     </div>
   );
