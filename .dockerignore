@@ -1,4 +1,7 @@
 node_modules
 dist
+scripts
 .git
+.husky
 .env
+.env.local
