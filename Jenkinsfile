@@ -69,8 +69,8 @@ pipeline {
 
           rsync -av --delete "./$TEMP_DIST_DIR/" "./$DIST_DIR"
 
-          find "./$DIST_DIR" -type d -exec chmod 755 {} \;
-          find "./$DIST_DIR" -type f -exec chmod 644 {} \;
+          find "./$DIST_DIR" -type d -exec chmod 755 {} +
+          find "./$DIST_DIR" -type f -exec chmod 644 {} +
         '''
       }
     }
