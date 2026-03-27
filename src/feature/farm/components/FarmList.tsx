@@ -33,8 +33,8 @@ export function FarmList({ openUpdateModal, openDeleteModal }: FarmListProps) {
   };
 
   useEffect(() => {
-    fetchFarms();
-  }, []);
+    void fetchFarms();
+  }, [fetchFarms]);
 
   return <section className="space-y-1 px-1">{renderComponent()}</section>;
 }

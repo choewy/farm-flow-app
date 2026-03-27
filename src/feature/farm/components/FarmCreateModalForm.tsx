@@ -50,7 +50,7 @@ export function FarmCreateModalForm({ onClose }: FarmCreateModalFormProps) {
   const onSubmit = async ({ name, payRatePerHour, payDeductionAmount }: FarmCreateFormData) => {
     try {
       await farmApi.create({ name, payRatePerHour, payDeductionAmount });
-      await fetchFarms();
+      await fetchFarms({ force: true });
       Toast.success(`"${name}" 농장이 생성되었습니다.`);
       onClose();
     } catch (e) {

@@ -52,7 +52,7 @@ export function FarmUpdateModalForm({ farm, onClose }: FarmUpdateModalFormProps)
   const onSubmit = async ({ name, payRatePerHour, payDeductionAmount }: FarmUpdateFormData) => {
     try {
       await farmApi.update(farm.id, { name, payRatePerHour, payDeductionAmount });
-      await fetchFarms();
+      await fetchFarms({ force: true });
       onClose();
       Toast.success('저장되었습니다.');
     } catch (e) {

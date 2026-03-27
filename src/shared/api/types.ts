@@ -10,6 +10,8 @@ export type ListResponse<T> = {
 export type ErrorResponse<T = unknown> = {
   errorCode: ErrorCode;
   statusCode: HttpStatusCode;
-  message: string;
+  clientErrorMessage: string;
+  systemErrorMessage: string;
+  isUnknownError: boolean;
   details: T;
 };

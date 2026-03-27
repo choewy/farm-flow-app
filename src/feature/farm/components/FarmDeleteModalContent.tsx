@@ -22,7 +22,7 @@ export function FarmDeleteModalContent({ farm, onClose }: FarmDeleteModalContent
     try {
       setLoading(true);
       await farmApi.remove(farm.id);
-      await fetchFarms();
+      await fetchFarms({ force: true });
       onClose();
       Toast.success(`"${farm.name}" 농장이 삭제되었습니다.`);
     } catch (e) {
@@ -52,4 +52,3 @@ export function FarmDeleteModalContent({ farm, onClose }: FarmDeleteModalContent
     </>
   );
 }
-

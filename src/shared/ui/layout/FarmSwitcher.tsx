@@ -18,7 +18,7 @@ export function FarmSwitcher() {
 
   useEffect(() => {
     void fetchFarms();
-  }, []);
+  }, [fetchFarms]);
 
   useEffect(() => {
     const handleClickOutside = (event: PointerEvent) => {
@@ -35,10 +35,10 @@ export function FarmSwitcher() {
   }, []);
 
   useEffect(() => {
-    if (isOpen && !loading && farms.length === 0) {
-      void fetchFarms();
+    if (isOpen) {
+      void fetchFarms({ force: true });
     }
-  }, [isOpen, loading, farms.length, fetchFarms]);
+  }, [isOpen, fetchFarms]);
 
   useEffect(() => {
     if (!isOpen) {
