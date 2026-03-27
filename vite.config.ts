@@ -13,6 +13,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+      workbox: {
+        navigateFallbackDenylist: [/^\/jenkins/, /^\/api/],
+      },
       manifest: {
         name: 'FarmFlow',
         short_name: 'FarmFlow',
