@@ -8,4 +8,9 @@ export type AttendanceListRequestParam = {
   endDate?: Date;
 };
 
+export type AttendanceUpdateRequestData = {
+  checkedInAt?: string;
+  checkedOutAt?: string;
+};
+
 export type AttendanceListResponse = ListResponse<Attendance>;

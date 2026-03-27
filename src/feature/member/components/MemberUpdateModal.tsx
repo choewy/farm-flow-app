@@ -96,26 +96,21 @@ export function MemberEditModal({ isOpen, row, fetchData, onClose }: MemberEditM
       payDeductionAmount?: number;
     } = {};
 
-    if (canUpdateRole && roleId !== row.role.id) {
-      payload.roleId = roleId;
-    }
-
-    if (canUpdatePay) {
-      if (payRatePerHour !== row.payRatePerHour) {
-        payload.payRatePerHour = payRatePerHour;
-      }
-
-      if (payDeductionAmount !== row.payDeductionAmount) {
-        payload.payDeductionAmount = payDeductionAmount;
-      }
-    }
-
     if (Object.keys(payload).length === 0) {
       return;
     }
 
     try {
-      await memberApi.update(row.user.id, payload);
+      if (canUpdateRole) {
+        await memberApi.updateRole(row.user.id, { roleId });
+      }
+
+      if (canUpdatePay) {
+        await memberApi.updatePayroll(row.user.id, {
+          payRatePerHour,
+          payDeductionAmount,
+        });
+      }
       await fetchData();
       onClose();
       Toast.success('저장되었습니다.');

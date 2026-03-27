@@ -41,7 +41,14 @@ export function GlobalHeader({ title }: GlobalHeaderProps) {
         return '초대코드 입력';
       case ROUTES.profile:
         return '내 프로필';
+      case ROUTES.payrolls:
+        return '급여 정산';
+
       default:
+        if (location.pathname.startsWith('/payrolls/')) {
+          return '급여 정산 상세';
+        }
+
         return 'Farm Flow';
     }
   };

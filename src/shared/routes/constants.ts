@@ -14,4 +14,5 @@ export const ROUTES = {
   invitation: '/invitation',
   invitationAccept: '/invitation/accept',
   payrolls: '/payrolls',
+  payrollsDetail: '/payrolls/:userId',
 } as const;

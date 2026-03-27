@@ -16,8 +16,8 @@ type AttendanceHistoryModalProps = {
 };
 
 export function AttendanceHistoryModal({ isOpen, onClose }: AttendanceHistoryModalProps) {
-  const [startDate, setStartDate] = useState<string>(dayjs().subtract(6, 'day').format('YYYY-MM-DD'));
-  const [endDate, setEndDate] = useState<string>(dayjs().format('YYYY-MM-DD'));
+  const [startDate, setStartDate] = useState<string>(dayjs().startOf('month').format('YYYY-MM-DD'));
+  const [endDate, setEndDate] = useState<string>(dayjs().endOf('month').format('YYYY-MM-DD'));
   const [rows, setRows] = useState<Attendance[]>([]);
 
   useEffect(() => {
