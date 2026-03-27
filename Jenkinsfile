@@ -6,6 +6,7 @@ pipeline {
       when {
         beforeAgent true
         anyOf {
+          changeset "Jenkinsfile"
           changeset "Dockerfile"
           changeset "package.json"
           changeset "pnpm-lock.yaml"
@@ -35,6 +36,7 @@ pipeline {
       when {
         beforeAgent true
         anyOf {
+          changeset "Jenkinsfile"
           changeset "Dockerfile"
           changeset "package.json"
           changeset "pnpm-lock.yaml"
@@ -52,7 +54,12 @@ pipeline {
           set -eu
 
           timestamp=$(date +%s)
-          DIST_DIR=dist
+          DIST_DIR=/www/app
+          
+          if [ ! -d "$DIST_DIR" ]; then
+            mkdir -p "$DIST_DIR"
+          fi
+          
           TEMP_DIST_DIR="dist_$timestamp"
 
           cleanup() {
@@ -65,10 +72,10 @@ pipeline {
             --output "type=local,dest=./$TEMP_DIST_DIR" \
             .
 
-          rsync -av --delete "./$TEMP_DIST_DIR/" "./$DIST_DIR"
+          rsync -av --delete "./$TEMP_DIST_DIR/" "$DIST_DIR"
 
-          find "./$DIST_DIR" -type d -exec chmod 755 {} +
-          find "./$DIST_DIR" -type f -exec chmod 644 {} +
+          find "$DIST_DIR" -type d -exec chmod 755 {} +
+          find "$DIST_DIR" -type f -exec chmod 644 {} +
         '''
       }
     }
