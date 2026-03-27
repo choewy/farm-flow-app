@@ -6,7 +6,6 @@ pipeline {
       when {
         beforeAgent true
         anyOf {
-          changeset "Jenkinsfile"
           changeset "Dockerfile"
           changeset "package.json"
           changeset "pnpm-lock.yaml"
@@ -36,7 +35,6 @@ pipeline {
       when {
         beforeAgent true
         anyOf {
-          changeset "Jenkinsfile"
           changeset "Dockerfile"
           changeset "package.json"
           changeset "pnpm-lock.yaml"
